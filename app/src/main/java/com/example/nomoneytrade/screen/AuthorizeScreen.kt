@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.nomoneytrade.R
+import com.example.nomoneytrade.ui.utils.UiUtilsTextField
 
 
 @Composable
@@ -62,42 +63,7 @@ fun AuthorizeScreen() {
                 .padding(top = 10.dp),
         )
 
-        var email by remember { mutableStateOf("") }
-        TextField(
-            value = email,
-            onValueChange = { email = it },
-            label = {
-                Text(
-                    text ="email",
-                    color = MaterialTheme.colors.primary
-                )
-            },
-            shape = RoundedCornerShape(30f),
-            modifier = Modifier
-                .align(CenterHorizontally)
-                .padding(top = 15.dp)
-                .border(
-                    border = BorderStroke(3.dp, MaterialTheme.colors.primary),
-                    shape = RoundedCornerShape(
-                        corner = CornerSize(30f),
-                    )
-                ),
-            colors = TextFieldDefaults.textFieldColors(
-                focusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                backgroundColor = MaterialTheme.colors.onPrimary,
-            ),
-        )
-
-        var password by remember { mutableStateOf("") }
-        TextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("password") },
-            modifier = Modifier
-                .align(CenterHorizontally)
-                .padding(top = 15.dp),
-        )
+        UiUtilsTextField(label = "email", padding = 15)
+        UiUtilsTextField(label = "password", padding = 15)
     }
 }

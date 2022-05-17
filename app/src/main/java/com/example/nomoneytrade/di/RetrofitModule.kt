@@ -13,7 +13,7 @@ import kotlinx.serialization.json.Json
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-const val BASE_URL = ""
+const val BASE_URL = "https://nomoneytrade.threadjava800.repl.co/"
 
 @Module
 @InstallIn(SingletonComponent::class)

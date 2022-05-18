@@ -16,7 +16,7 @@ class AuthViewModel @Inject constructor(val api: Api) : ViewModel() {
     val effect = MutableStateFlow<AuthEffect?>(AuthEffect.None)
 
     fun signUpClick() {
-
+        effect.value = AuthEffect.NavigateSignUp
     }
 
     suspend fun singUp(email: String, username: String, password: String) {

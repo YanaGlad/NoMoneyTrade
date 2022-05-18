@@ -10,6 +10,7 @@ import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -19,13 +20,76 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import com.example.nomoneytrade.R
+import com.example.nomoneytrade.SIGN_UP_SCREEN
+import com.example.nomoneytrade.mvi.effect.AuthEffect
+import com.example.nomoneytrade.mvi.event.AuthEvent
 import com.example.nomoneytrade.ui.utils.UiUtilsTextField
-
+import kotlinx.coroutines.flow.collect
 
 @Composable
-fun AuthorizeScreen(navController: NavController) {
+fun AuthorizeScreen(navController: NavController, viewModel: AuthViewModel = hiltViewModel()) {
+    observeViewModel(navController, viewModel )
+    SetupUi(viewModel)
+}
+
+@Composable
+private fun observeViewModel(navController: NavController, viewModel: AuthViewModel) {
+    val stateEventObserver = Observer<AuthEvent?> {
+        it ?: return@Observer
+
+        when (it) {
+            AuthEvent.Fail -> {
+
+            }
+
+            AuthEvent.Loading -> {
+
+            }
+
+            is AuthEvent.Success -> {
+
+            }
+        }
+    }
+
+    val stateEffectObserver = Observer<AuthEffect?> {
+        it ?: return@Observer
+
+        when (it) {
+            AuthEffect.NavigateShowcase -> {
+
+            }
+            AuthEffect.NavigateSignUp -> {
+                navController.navigate(SIGN_UP_SCREEN)
+            }
+            AuthEffect.None -> {
+
+            }
+        }
+    }
+    LaunchedEffect(viewModel) {
+        viewModel.effect.collect { state ->
+            when (state) {
+                AuthEffect.NavigateShowcase -> {
+
+                }
+                AuthEffect.NavigateSignUp -> {
+                    navController.navigate(SIGN_UP_SCREEN)
+                }
+                AuthEffect.None -> {
+
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SetupUi(viewModel: AuthViewModel) {
 
     Column {
         Image(
@@ -70,6 +134,7 @@ fun AuthorizeScreen(navController: NavController) {
 
         ExtendedFloatingActionButton(
             onClick = {
+                viewModel.signUpClick()
                 //TODO navigation to sign up
             },
             modifier = Modifier

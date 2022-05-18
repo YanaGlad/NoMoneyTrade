@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -38,7 +39,7 @@ fun AuthorizeScreen(navController: NavController) {
         )
 
         Text(
-            text = "NoMoneyTrade", //TODO replace with data from string.xml
+            text = stringResource(R.string.app_name),
             textAlign = TextAlign.Center,
             fontSize = 30.sp,
             modifier = Modifier.fillMaxWidth(),
@@ -46,7 +47,17 @@ fun AuthorizeScreen(navController: NavController) {
         )
 
         Text(
-            text = "Authentication", //TODO replace with data from string.xml
+            text = stringResource(R.string.exchange_service),
+            textAlign = TextAlign.Center,
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 5.dp),
+        )
+
+        Text(
+            text = stringResource(R.string.authentication),
             textAlign = TextAlign.Center,
             fontSize = 18.sp,
             modifier = Modifier
@@ -54,8 +65,8 @@ fun AuthorizeScreen(navController: NavController) {
                 .padding(top = 10.dp),
         )
 
-        UiUtilsTextField(label = "email", padding = 15)
-        UiUtilsTextField(label = "password", padding = 15)
+        UiUtilsTextField(label = stringResource(R.string.email), padding = 15)
+        UiUtilsTextField(label = stringResource(R.string.password), padding = 15)
 
         ExtendedFloatingActionButton(
             onClick = {
@@ -70,7 +81,7 @@ fun AuthorizeScreen(navController: NavController) {
             backgroundColor = MaterialTheme.colors.primary,
             text = {
                 Text(
-                    text = "Sign up",
+                    text = stringResource(R.string.sign_in),
                     fontSize = 15.sp,
                     color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier
@@ -78,6 +89,14 @@ fun AuthorizeScreen(navController: NavController) {
                         .wrapContentWidth(),
                 )
             }
+        )
+
+        Text(
+            text = stringResource(R.string.no_account_yet),
+            textAlign = TextAlign.Center,
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }

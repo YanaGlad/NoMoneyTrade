@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Negare</string>
+    <string name="sign_in">Sign in</string>
+    <string name="no_account_yet">Don`t have an account yet? Sign up!</string>
+    <string name="exchange_service">Goods exchange service</string>
+    <string name="authentication">Authentication</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+</resources>

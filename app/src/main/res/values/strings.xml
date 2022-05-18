@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">NoMoneyTrade</string>
+    <string name="app_name">Negare</string> <!-- NegPec -->
+    <string name="sign_in">Войти</string>
+    <string name="no_account_yet">Еще нет аккаунта? Зарегистрируйтесь!</string>
+    <string name="exchange_service">Сервис обмена товарами</string>
+    <string name="authentication">Аутентификация</string>
+    <string name="email">почта</string>
+    <string name="password">пароль</string>
 </resources>

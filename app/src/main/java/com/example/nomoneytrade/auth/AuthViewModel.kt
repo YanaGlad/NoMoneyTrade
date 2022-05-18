@@ -15,6 +15,10 @@ class AuthViewModel @Inject constructor(val api: Api) : ViewModel() {
     val state = MutableStateFlow<AuthEvent>(AuthEvent.Loading)
     val effect = MutableStateFlow<AuthEffect?>(AuthEffect.None)
 
+    fun signUpClick() {
+
+    }
+
     suspend fun singUp(email: String, username: String, password: String) {
         val response = api.signUp(
             email = email,
@@ -30,7 +34,7 @@ class AuthViewModel @Inject constructor(val api: Api) : ViewModel() {
                         username = username,
                         password = password,
                     ),
-                    effect = AuthEffect.Navigate
+                    effect = AuthEffect.NavigateShowcase
                 )
             )
         } else {
@@ -38,8 +42,16 @@ class AuthViewModel @Inject constructor(val api: Api) : ViewModel() {
         }
     }
 
-    suspend fun singIn() {
+    suspend fun singIn(login: String, password: String) {
+        val response = api.signIn(
+            login = login,
+            password = password,
+        )
+        if (response.isSuccessful) {
 
+        } else {
+
+        }
     }
 
     suspend fun signOut() {

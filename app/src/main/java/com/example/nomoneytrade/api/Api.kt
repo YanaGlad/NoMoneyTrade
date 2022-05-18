@@ -6,19 +6,19 @@ import retrofit2.http.Path
 
 interface Api {
 
-    @POST("signin")
+    @POST("/auth/signin")
     suspend fun signIn(
-        @Path("username") username: String,
+        @Path("login") login: String,
         @Path("password") password: String,
     ): Response<Boolean>
 
-    @POST("signup")
+    @POST("/auth/signup")
     suspend fun signUp(
         @Path("email") email: String,
         @Path("username") username: String,
         @Path("password") password: String,
     ): Response<Boolean>
 
-    @POST("signout")
+    @POST("/auth/signout")
     suspend fun signOut(): Response<Boolean>
 }

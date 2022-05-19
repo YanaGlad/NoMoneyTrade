@@ -1,21 +1,35 @@
 package com.example.nomoneytrade.auth
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.nomoneytrade.api.Api
 import com.example.nomoneytrade.mvi.effect.AuthEffect
 import com.example.nomoneytrade.mvi.event.AuthEvent
 import com.example.nomoneytrade.mvi.state.AuthState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewModel @Inject constructor(val api: Api) : ViewModel() {
+class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
 
-    val state = MutableStateFlow<AuthEvent>(AuthEvent.Loading)
+    val event = MutableStateFlow<AuthEvent>(AuthEvent.Loading)
     val effect = MutableStateFlow<AuthEffect?>(AuthEffect.None)
+    private var state = AuthState(
+        email = "",
+        username = "",
+        password = "",
+    )
 
-    fun signUpClick() {
+    fun signUpClick(username: String, password: String) {
+        event.value = AuthEvent.Loading
+        this.viewModelScope.launch {
+            singIn(username, password)
+        }
+    }
+
+    fun navigateToSignUp() {
         effect.value = AuthEffect.NavigateSignUp
     }
 
@@ -27,18 +41,16 @@ class AuthViewModel @Inject constructor(val api: Api) : ViewModel() {
         )
 
         if (response.isSuccessful) {
-            state.emit(
+            state = state.copy(username = username, password = password, email = email)
+
+            event.emit(
                 AuthEvent.Success(
-                    state = AuthState(
-                        email = email,
-                        username = username,
-                        password = password,
-                    ),
+                    state = state,
                     effect = AuthEffect.NavigateShowcase
                 )
             )
         } else {
-            state.emit(AuthEvent.Fail)
+            event.emit(AuthEvent.Error)
         }
     }
 
@@ -48,13 +60,19 @@ class AuthViewModel @Inject constructor(val api: Api) : ViewModel() {
             password = password,
         )
         if (response.isSuccessful) {
-
+            state = state.copy(username = login, password = password)
+            event.emit(
+                AuthEvent.Success(
+                    state = state,
+                    effect = AuthEffect.NavigateShowcase
+                )
+            )
         } else {
-
+            event.emit(AuthEvent.Error)
         }
     }
 
-    suspend fun signOut() {
+    suspend fun logOut() {
 
     }
 }

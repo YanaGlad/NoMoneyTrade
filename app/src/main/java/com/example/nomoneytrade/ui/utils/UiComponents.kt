@@ -21,14 +21,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ColumnScope.UiUtilsTextField(label: String, padding: Int) {
-    var text by remember { mutableStateOf("") }
+fun ColumnScope.UiUtilsTextField(text: String, label: String, padding: Int, action: (String) -> Unit) {
+
     TextField(
         value = text,
-        onValueChange = { text = it },
+        onValueChange = { action(it) },
         label = {
             Text(
-                text =label,
+                text = label,
                 color = MaterialTheme.colors.primary
             )
         },

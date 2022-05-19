@@ -11,5 +11,6 @@ sealed class AuthEvent {
         effect: AuthEffect,
     ): AuthEvent()
     object Loading: AuthEvent()
-    object Fail: AuthEvent()
+    object FailedToLogin: AuthEvent()
+    object Error: AuthEvent()
 }

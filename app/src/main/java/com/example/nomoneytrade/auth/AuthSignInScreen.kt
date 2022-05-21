@@ -40,8 +40,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
-class AuthSignInScreen(private val navController: NavController, private val viewModel: AuthViewModel) :
-    ComposeScreen<AuthViewModel>(navController, viewModel) {
+class AuthSignInScreen(private val navController: NavController, private val viewModel: AuthViewModel) : ComposeScreen<AuthViewModel>(navController, viewModel) {
 
     override val ON_CLOSE_DESTINATION: String = SHOWCASE_SCREEN
     override val showCloseButton: Boolean = true
@@ -133,7 +132,9 @@ class AuthSignInScreen(private val navController: NavController, private val vie
                     is AuthEvent.FailedToLogin -> {}
                 }
             }
+        }
 
+        LaunchedEffect(viewModel) {
             viewModel.effect.collect { state ->
                 when (state) {
                     is AuthEffect.NavigateShowcase -> {

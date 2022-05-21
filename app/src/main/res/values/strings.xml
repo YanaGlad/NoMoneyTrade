@@ -1,9 +1,14 @@
 <resources>
-    <string name="app_name">Negare</string> <!-- NegPec -->
+    <string name="app_name">Swapper</string> <!-- NegPec, Negare-->
     <string name="sign_in">Войти</string>
+    <string name="sign_up">Зарегестрироваться</string>
+    <string name="already_have_account">Уже есть аккаунт? Войдите!</string>
     <string name="no_account_yet">Еще нет аккаунта? Зарегистрируйтесь!</string>
     <string name="exchange_service">Сервис обмена товарами</string>
     <string name="authentication">Аутентификация</string>
+    <string name="registration">Регистрация</string>
     <string name="email">почта</string>
     <string name="password">пароль</string>
+    <string name="username">Имя пользователя</string>
+    <string name="confirmPassword">Подтвердите пароль</string>
 </resources>

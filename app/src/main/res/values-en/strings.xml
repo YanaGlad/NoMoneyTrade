@@ -1,9 +1,14 @@
 <resources>
-    <string name="app_name">Negare</string>
+    <string name="app_name">Swapper</string>
     <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="already_have_account">Already have an account? Sign in!</string>
     <string name="no_account_yet">Don`t have an account yet? Sign up!</string>
     <string name="exchange_service">Goods exchange service</string>
     <string name="authentication">Authentication</string>
+    <string name="registration">Registration</string>
     <string name="email">email</string>
     <string name="password">password</string>
+    <string name="username">Username</string>
+    <string name="confirmPassword">Confirm password</string>
 </resources>

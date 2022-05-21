@@ -1,6 +1,6 @@
 package com.example.nomoneytrade.di
 
-import com.example.nomoneytrade.api.Api
+import com.example.nomoneytrade.api.AuthApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import kotlinx.serialization.json.Json
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 
 const val BASE_URL = "https://nomoneytrade.threadjava800.repl.co/"
@@ -39,7 +40,7 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun getApi(retrofit: Retrofit): Api {
-        return retrofit.create(Api::class.java)
+    fun getAuthApi(@Named("Auth") retrofit: Retrofit): AuthApi {
+        return retrofit.create(AuthApi::class.java)
     }
 }

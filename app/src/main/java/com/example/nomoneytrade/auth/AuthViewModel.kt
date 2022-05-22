@@ -50,7 +50,6 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
         val response = api.signUp(signUpBody)
 
         if (response.isSuccessful) {
-            Log.d("Resp", response.body().toString())
             val jsonUser = response.body()!!
             state = state.copy(
                 user = User(
@@ -83,7 +82,6 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
         val signInBody = SignInBody(login, password)
         val response = api.signIn(signInBody)
         if (response.isSuccessful) {
-            Log.d("Resp", response.body().toString())
             val jsonUser = response.body()!!
             state = state.copy(
                 user = User(

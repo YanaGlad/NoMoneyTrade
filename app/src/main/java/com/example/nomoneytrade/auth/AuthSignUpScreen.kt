@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -27,14 +29,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.nomoneytrade.R
+import com.example.nomoneytrade.SHOWCASE_SCREEN
 import com.example.nomoneytrade.SIGN_IN_SCREEN
+import com.example.nomoneytrade.SIGN_UP_SCREEN
+import com.example.nomoneytrade.mvi.effect.AuthEffect
+import com.example.nomoneytrade.mvi.event.AuthEvent
 import com.example.nomoneytrade.ui.utils.ComposeScreen
 import com.example.nomoneytrade.ui.utils.UiUtilsExtendedFloatingButton
 import com.example.nomoneytrade.ui.utils.UiUtilsTextField
-import kotlinx.coroutines.launch
 
 
 class AuthSignUpScreen(private val navController: NavController, private val viewModel: AuthViewModel) :
@@ -48,6 +52,39 @@ class AuthSignUpScreen(private val navController: NavController, private val vie
 
     @Composable
     override fun Screen() {
+
+        val eventState = viewModel.event.collectAsState()
+
+        when (val event = eventState.value) {
+            is AuthEvent.Error -> {}
+            is AuthEvent.Loading -> {
+
+            }
+            is AuthEvent.Success -> {
+                 viewModel.navigate()
+            }
+            is AuthEvent.FailedToLogin -> {
+
+            }
+            AuthEvent.None -> {}
+        }
+
+        val effectState = viewModel.effect.collectAsState()
+
+        when (val effect = effectState.value) {
+            is AuthEffect.NavigateShowcase -> {
+
+            }
+            is AuthEffect.Navigate -> {
+                navController.navigate(SHOWCASE_SCREEN)
+                viewModel.effect.value = AuthEffect.None
+            }
+            is AuthEffect.None -> {
+            }
+        }
+
+        var progressState by remember { mutableStateOf(false) }
+
         Toolbar()
         Column(modifier = Modifier.fillMaxWidth()) {
 
@@ -108,12 +145,8 @@ class AuthSignUpScreen(private val navController: NavController, private val vie
                 confirmPassword = text
             }
 
-            UiUtilsExtendedFloatingButton(stringResource(R.string.sign_up)) {
-                viewModel.run {
-                    viewModelScope.launch { //TODO launch scopes in viewModel class
-                       //TODO  sign up
-                    }
-                }
+            UiUtilsExtendedFloatingButton(stringResource(R.string.sign_up), showProgress = progressState) {
+                viewModel.signUpClick(username = username, password = password, email = email)
             }
 
             Text(

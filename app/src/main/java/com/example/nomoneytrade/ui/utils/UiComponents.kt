@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.FloatingActionButtonDefaults
@@ -37,7 +38,7 @@ import com.example.nomoneytrade.R
 import kotlinx.coroutines.launch
 
 @Composable
-fun ColumnScope.UiUtilsTextField(text: String, label: String, padding: Int, action: (String) -> Unit) {
+fun ColumnScope.UiUtilsTextField(text: String, label: String, padding: Int, color: Color = MaterialTheme.colors.primary, action: (String) -> Unit) {
 
     TextField(
         value = text,
@@ -45,7 +46,7 @@ fun ColumnScope.UiUtilsTextField(text: String, label: String, padding: Int, acti
         label = {
             Text(
                 text = label,
-                color = MaterialTheme.colors.primary
+                color = MaterialTheme.colors.primary,
             )
         },
         shape = RoundedCornerShape(30f),
@@ -60,6 +61,7 @@ fun ColumnScope.UiUtilsTextField(text: String, label: String, padding: Int, acti
                 )
             ),
         colors = TextFieldDefaults.textFieldColors(
+            textColor = color,
             focusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
@@ -117,7 +119,7 @@ fun ColumnScope.UiUtilsBackButton(navController: NavController, destination: Str
 }
 
 @Composable
-fun ColumnScope.UiUtilsExtendedFloatingButton(text: String, onClick: () -> Unit) {
+fun ColumnScope.UiUtilsExtendedFloatingButton(text: String, showProgress: Boolean = false, onClick: () -> Unit) {
 
     ExtendedFloatingActionButton(
         onClick = {
@@ -131,14 +133,18 @@ fun ColumnScope.UiUtilsExtendedFloatingButton(text: String, onClick: () -> Unit)
         elevation = FloatingActionButtonDefaults.elevation(0.dp),
         backgroundColor = MaterialTheme.colors.primary,
         text = {
+            if (showProgress) {
+                CircularProgressIndicator(color = MaterialTheme.colors.onPrimary)
+            }
             Text(
                 text = text,
                 fontSize = 18.sp,
-                color = MaterialTheme.colors.onPrimary,
+                color = if (!showProgress) MaterialTheme.colors.onPrimary else Color.Transparent,
                 modifier = Modifier
                     .weight(5f)
                     .wrapContentWidth(),
             )
+
         }
     )
 }

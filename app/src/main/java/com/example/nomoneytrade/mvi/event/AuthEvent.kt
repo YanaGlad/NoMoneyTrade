@@ -13,4 +13,5 @@ sealed class AuthEvent {
     object Loading: AuthEvent()
     object FailedToLogin: AuthEvent()
     object Error: AuthEvent()
+    object None: AuthEvent()
 }

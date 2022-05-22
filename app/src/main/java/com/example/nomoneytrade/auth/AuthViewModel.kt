@@ -14,26 +14,34 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
 
-    val event = MutableStateFlow<AuthEvent>(AuthEvent.Loading)
+    val event = MutableStateFlow<AuthEvent>(AuthEvent.None)
     val effect = MutableStateFlow<AuthEffect?>(AuthEffect.None)
+
     private var state = AuthState(
         email = "",
         username = "",
         password = "",
     )
 
-    fun signUpClick(username: String, password: String) {
+    fun signInClick(username: String, password: String) {
         event.value = AuthEvent.Loading
         this.viewModelScope.launch {
             singIn(username, password)
         }
     }
 
-    fun navigateToSignUp() {
-        effect.value = AuthEffect.NavigateSignUp
+    fun signUpClick(username: String, password: String, email: String) {
+        event.value = AuthEvent.Loading
+        this.viewModelScope.launch {
+            singUp(username, password, email)
+        }
     }
 
-    suspend fun singUp(email: String, username: String, password: String) {
+    fun navigate() {
+        effect.value = AuthEffect.Navigate
+    }
+
+    private suspend fun singUp(email: String, username: String, password: String) {
         val response = api.signUp(
             email = email,
             username = username,
@@ -68,7 +76,7 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
                 )
             )
         } else {
-            event.emit(AuthEvent.Error)
+            event.emit(AuthEvent.FailedToLogin)
         }
     }
 

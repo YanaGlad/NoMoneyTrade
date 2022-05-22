@@ -11,3 +11,9 @@ internal val PrimaryLight = Color(0xFF2E46CF)
 internal val PrimaryDark = Color(0xFF7489FF)
 internal val OnPrimaryLight = Color(0xFFFFFFFF)
 internal val OnPrimaryDark = Color(0xFF000000)
+
+internal val SurfaceDark = Color(0xFF494949)
+internal val SurfaceLight = Color(0xFFF1F9FF)
+
+val TagColor1Light = Color(0xFF673AB7)
+val TagColor1Dark = Color(0xFFBBA3E6)

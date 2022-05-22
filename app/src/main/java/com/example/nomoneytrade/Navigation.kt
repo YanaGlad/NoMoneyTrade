@@ -7,14 +7,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.nomoneytrade.auth.AuthSignInScreen
 import com.example.nomoneytrade.auth.AuthSignUpScreen
-import com.example.nomoneytrade.products.ShowcaseScreen
+import com.example.nomoneytrade.showcase.ShowcaseScreen
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
     NavHost(navController, startDestination = SIGN_IN_SCREEN) {  //temp
         composable(SIGN_IN_SCREEN) { AuthSignInScreen(navController, hiltViewModel()).ShowScreen() }
-        composable(SHOWCASE_SCREEN) { ShowcaseScreen(navController) }
+        composable(SHOWCASE_SCREEN) { ShowcaseScreen(navController, hiltViewModel()).ShowScreen() }
         composable(SIGN_UP_SCREEN) { AuthSignUpScreen(navController, hiltViewModel()).ShowScreen() }
     }
 }

@@ -48,9 +48,8 @@ class AuthSignUpScreen(private val navController: NavController, private val vie
 
     @Composable
     override fun Screen() {
-
+        Toolbar()
         Column(modifier = Modifier.fillMaxWidth()) {
-            Toolbar()
 
             Box(modifier = Modifier
                 .wrapContentWidth()

@@ -17,7 +17,6 @@ abstract class ComposeScreen<VM> constructor(private val navController: NavContr
 
     @Composable
     fun ShowScreen() {
-        ObserveViewModel()
         BackHandler()
         Screen()
     }
@@ -53,7 +52,4 @@ abstract class ComposeScreen<VM> constructor(private val navController: NavContr
 
     @Composable
     protected abstract fun Screen()
-
-    @Composable
-    protected abstract fun ObserveViewModel()
 }

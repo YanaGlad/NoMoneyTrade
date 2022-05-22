@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -84,7 +86,7 @@ class AuthSignInScreen(private val navController: NavController, private val vie
             }
         }
 
-        Column {
+        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
             Toolbar()
             Image(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_handshake),
@@ -146,10 +148,5 @@ class AuthSignInScreen(private val navController: NavController, private val vie
                     },
             )
         }
-    }
-
-    @Composable
-    override fun ObserveViewModel() {
-
     }
 }

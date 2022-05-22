@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,7 +22,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -33,7 +34,6 @@ import androidx.navigation.NavController
 import com.example.nomoneytrade.R
 import com.example.nomoneytrade.SHOWCASE_SCREEN
 import com.example.nomoneytrade.SIGN_IN_SCREEN
-import com.example.nomoneytrade.SIGN_UP_SCREEN
 import com.example.nomoneytrade.mvi.effect.AuthEffect
 import com.example.nomoneytrade.mvi.event.AuthEvent
 import com.example.nomoneytrade.ui.utils.ComposeScreen
@@ -61,7 +61,7 @@ class AuthSignUpScreen(private val navController: NavController, private val vie
 
             }
             is AuthEvent.Success -> {
-                 viewModel.navigate()
+                viewModel.navigate()
             }
             is AuthEvent.FailedToLogin -> {
 
@@ -86,7 +86,9 @@ class AuthSignUpScreen(private val navController: NavController, private val vie
         var progressState by remember { mutableStateOf(false) }
 
         Toolbar()
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())) {
 
             Box(modifier = Modifier
                 .wrapContentWidth()
@@ -161,10 +163,5 @@ class AuthSignUpScreen(private val navController: NavController, private val vie
                     },
             )
         }
-    }
-
-    @Composable
-    override fun ObserveViewModel() {
-
     }
 }

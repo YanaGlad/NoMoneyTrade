@@ -11,6 +11,7 @@
         <item name="colorSecondary">@color/app_black</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/app_white</item>
+        <item name="colorOnSurface">#FF95CDFF</item>
 
     </style>
 </resources>

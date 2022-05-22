@@ -25,3 +25,7 @@ const val SIGN_UP_SCREEN = "sign_up_screen"
 
 //showcase
 const val SHOWCASE_SCREEN = "showcase_screen"
+
+//Bottom
+const val PROFILE_SCREEN = "profile_screen"
+const val SUGGESTIONS_SCREEN = "notifications_screen"

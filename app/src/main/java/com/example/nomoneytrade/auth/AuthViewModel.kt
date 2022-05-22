@@ -44,6 +44,10 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
         effect.value = AuthEffect.Navigate
     }
 
+    fun navigateShowcase() {
+        effect.value = AuthEffect.NavigateShowcase
+    }
+
     private suspend fun signUp(email: String, username: String, password: String) {
         val signUpBody = SignUpBody(username, email, password)
 
@@ -96,7 +100,7 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
             event.emit(
                 AuthEvent.Success(
                     state = state,
-                    effect = AuthEffect.NavigateShowcase
+                    effect = AuthEffect.NavigateShowcase //TODO
                 )
             )
         } else {

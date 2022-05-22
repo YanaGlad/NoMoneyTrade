@@ -52,15 +52,17 @@ class AuthSignUpScreen(private val navController: NavController, private val vie
 
     @Composable
     override fun Screen() {
+        var progressState by remember { mutableStateOf(false) }
 
         val eventState = viewModel.event.collectAsState()
 
         when (val event = eventState.value) {
             is AuthEvent.Error -> {}
             is AuthEvent.Loading -> {
-
+                progressState = true
             }
             is AuthEvent.Success -> {
+                progressState = false
                 viewModel.navigate()
             }
             is AuthEvent.FailedToLogin -> {
@@ -82,8 +84,6 @@ class AuthSignUpScreen(private val navController: NavController, private val vie
             is AuthEffect.None -> {
             }
         }
-
-        var progressState by remember { mutableStateOf(false) }
 
         Toolbar()
         Column(modifier = Modifier

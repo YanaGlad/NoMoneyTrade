@@ -65,6 +65,7 @@ class AuthSignInScreen(private val navController: NavController, private val vie
             is AuthEvent.Success -> {
                 colorState = color
                 progressState = false
+                viewModel.navigateShowcase()
             }
             is AuthEvent.FailedToLogin -> {
                 colorState = Color.Red
@@ -76,7 +77,8 @@ class AuthSignInScreen(private val navController: NavController, private val vie
 
         when (val effect = effectState.value) {
             is AuthEffect.NavigateShowcase -> {
-
+                navController.navigate(SHOWCASE_SCREEN)
+                viewModel.effect.value = AuthEffect.None
             }
             is AuthEffect.Navigate -> {
                 navController.navigate(SIGN_UP_SCREEN)

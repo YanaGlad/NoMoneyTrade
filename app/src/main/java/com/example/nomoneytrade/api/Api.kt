@@ -1,25 +1,29 @@
 package com.example.nomoneytrade.api
 
+import com.example.nomoneytrade.api.requests.SignInBody
+import com.example.nomoneytrade.api.requests.SignUpBody
+import com.example.nomoneytrade.api.responses.BaseResponse
 import com.example.nomoneytrade.auth.entity.User
 import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface Api {
 
-    @POST("/auth/signin/{login}/{password}")
+    @Headers("Content-Type: application/json")
+    @POST("/auth/signin")
     suspend fun signIn(
-        @Path("login") login: String,
-        @Path("password") password: String,
+        @Body signInBody: SignInBody
     ): Response<User>
 
-    @POST("/auth/signup/{email}/{username}/{password}")
+    @Headers("Content-Type: application/json")
+    @POST("/auth/signup")
     suspend fun signUp(
-        @Path("email") email: String,
-        @Path("username") username: String,
-        @Path("password") password: String,
-    ): Response<String>
+        @Body signUpBody: SignUpBody
+    ): Response<User>
 
     @POST("/auth/signout")
-    suspend fun signOut(): Response<String>
+    suspend fun signOut(): Response<BaseResponse>
 }

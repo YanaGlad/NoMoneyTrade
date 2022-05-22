@@ -9,7 +9,7 @@ sealed class NavigationItem(val _title: String, val destination: String, val ico
 
     class Profile(val title: String) : NavigationItem(_title = title, destination = PROFILE_SCREEN, icon = R.drawable.ic_profile)
     class Showcase(val title: String) : NavigationItem(_title = title, destination = SHOWCASE_SCREEN, icon = R.drawable.ic_listing)
-    class Suggestions(val title: String) : NavigationItem(_title = title, destination = SUGGESTIONS_SCREEN, icon = R.drawable.ic_notification)
+    class Suggestions(val title: String) : NavigationItem(_title = title, destination = SUGGESTIONS_SCREEN, icon = R.drawable.ic_message_v2)
 }
 
 

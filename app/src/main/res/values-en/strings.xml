@@ -11,4 +11,7 @@
     <string name="password">password</string>
     <string name="username">Username</string>
     <string name="confirmPassword">Confirm password</string>
+    <string name="offers">Offers</string>
+    <string name="listings">Listings</string>
+    <string name="profile">Profile</string>
 </resources>

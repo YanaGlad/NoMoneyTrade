@@ -11,4 +11,7 @@
     <string name="password">пароль</string>
     <string name="username">Имя пользователя</string>
     <string name="confirmPassword">Подтвердите пароль</string>
+    <string name="offers">Запросы</string>
+    <string name="listings">Объявления</string>
+    <string name="profile">Профиль</string>
 </resources>

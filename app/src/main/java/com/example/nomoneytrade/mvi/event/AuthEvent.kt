@@ -7,8 +7,8 @@ import com.example.nomoneytrade.mvi.state.AuthState
 
 sealed class AuthEvent {
     class Success(
-        state: AuthState,
-        effect: AuthEffect,
+        val state: AuthState,
+        val effect: AuthEffect,
     ): AuthEvent()
     object Loading: AuthEvent()
     object FailedToLogin: AuthEvent()

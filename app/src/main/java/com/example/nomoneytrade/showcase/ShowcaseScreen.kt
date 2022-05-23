@@ -71,12 +71,11 @@ private fun ProductList(list: List<ProductPreview>) {
             .verticalScroll(rememberScrollState())
         ) {
 
-            list.filter {
-                it.title.lowercase(Locale.getDefault()).contains(textState.value.text.lowercase(Locale.getDefault()))
+            list.filter { product ->
+                product.title.lowercase(Locale.getDefault()).contains(textState.value.text.lowercase(Locale.getDefault()))
+            }.forEach {
+                ProductListItem(productPreview = it)
             }
-                .forEach {
-                    ProductListItem(productPreview = it)
-                }
         }
     }
 }

@@ -4,7 +4,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.nomoneytrade.auth.AuthSignInScreen
 import com.example.nomoneytrade.showcase.ShowcaseScreen
 import com.example.nomoneytrade.ui.utils.BottomNavigationBar
 

@@ -16,10 +16,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.example.nomoneytrade.R
+import com.example.nomoneytrade.mvi.event.BottomNavEvent
 import com.example.nomoneytrade.ui.navigation.NavigationItem
 
 @Composable
-fun BottomNavigationBar( ) {
+fun BottomNavigationBar(onClick: (BottomNavEvent) -> Unit) {
     val items = listOf(
         NavigationItem.Offers(stringResource(R.string.offers)),
         NavigationItem.Showcase(stringResource(R.string.listings)),
@@ -48,7 +49,7 @@ fun BottomNavigationBar( ) {
                 alwaysShowLabel = true,
                 selected = false,
                 onClick = {
-                    navController.navigate(item.destination)
+                    onClick(item.event)
                 }
             )
         }

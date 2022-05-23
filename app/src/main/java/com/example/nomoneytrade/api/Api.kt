@@ -3,12 +3,11 @@ package com.example.nomoneytrade.api
 import com.example.nomoneytrade.api.requests.SignInBody
 import com.example.nomoneytrade.api.requests.SignUpBody
 import com.example.nomoneytrade.api.responses.BaseResponse
-import com.example.nomoneytrade.auth.entity.User
+import com.example.nomoneytrade.api.dto.User
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
-import retrofit2.http.Path
 
 interface Api {
 

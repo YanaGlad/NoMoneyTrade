@@ -15,7 +15,7 @@ fun Navigation() {
     val navController = rememberNavController()
     NavHost(navController, startDestination = MAIN_SCREEN) {  //temp
         composable(MAIN_SCREEN) { MainScreen(navController) }
-        composable(PROFILE_SCREEN) { ProfileScreen(navController, hiltViewModel()).ShowScreen() }
+      //  composable(PROFILE_SCREEN) { ProfileScreen(navController, hiltViewModel()).ShowScreen() }
         composable(SIGN_IN_SCREEN) { AuthSignInScreen(navController, hiltViewModel()).ShowScreen() }
         composable(SHOWCASE_SCREEN) { ShowcaseScreen(navController, hiltViewModel()).ShowScreen() }
         composable(SIGN_UP_SCREEN) { AuthSignUpScreen(navController, hiltViewModel()).ShowScreen() }

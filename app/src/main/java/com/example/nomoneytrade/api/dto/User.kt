@@ -1,4 +1,4 @@
-package com.example.nomoneytrade.auth.entity
+package com.example.nomoneytrade.api.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

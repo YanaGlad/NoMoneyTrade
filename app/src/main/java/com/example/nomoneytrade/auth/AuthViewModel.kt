@@ -1,14 +1,12 @@
 package com.example.nomoneytrade.auth
 
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nomoneytrade.api.Api
 import com.example.nomoneytrade.api.requests.SignInBody
 import com.example.nomoneytrade.api.requests.SignUpBody
-import com.example.nomoneytrade.auth.entity.User
+import com.example.nomoneytrade.api.dto.User
 import com.example.nomoneytrade.mvi.effect.AuthEffect
 import com.example.nomoneytrade.mvi.event.AuthEvent
 import com.example.nomoneytrade.mvi.state.AuthState

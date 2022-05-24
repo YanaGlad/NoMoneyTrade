@@ -1,5 +1,9 @@
 package com.example.nomoneytrade.profile.entity
 
+interface UserI
+
+object NoImpl: UserI
+
 data class Profile(
     val id: Int,
     val username: String,
@@ -9,4 +13,4 @@ data class Profile(
     val city: String,
     val address: String,
     val phoneNumber: String,
-)
+): UserI

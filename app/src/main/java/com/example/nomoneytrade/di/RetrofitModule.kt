@@ -10,6 +10,7 @@ import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -27,7 +28,7 @@ object RetrofitModule {
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(15, TimeUnit.SECONDS)
 
-        val contentType = MediaType.get("application/json")
+        val contentType = "application/json".toMediaType()
         val json = Json { ignoreUnknownKeys = true }
 
         return Retrofit.Builder()

@@ -3,6 +3,7 @@ package com.example.nomoneytrade.auth
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.nomoneytrade.CURRENT_USER_ID
 import com.example.nomoneytrade.api.Api
 import com.example.nomoneytrade.api.requests.SignInBody
 import com.example.nomoneytrade.api.requests.SignUpBody
@@ -63,6 +64,8 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
                 )
             )
 
+            CURRENT_USER_ID = jsonUser.id
+
             event.emit(
                 AuthEvent.Success(
                     state = state,
@@ -94,6 +97,8 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
                     jsonUser.isEnabled
                 )
             )
+
+            CURRENT_USER_ID = jsonUser.id
 
             event.emit(
                 AuthEvent.Success(

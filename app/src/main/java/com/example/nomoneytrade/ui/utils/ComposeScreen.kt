@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.example.nomoneytrade.R
 
 abstract class ComposeScreen<VM> constructor(private val navController: NavController, private val viewModel: VM) {
     abstract val ON_CLOSE_DESTINATION: String?
@@ -23,7 +24,7 @@ abstract class ComposeScreen<VM> constructor(private val navController: NavContr
 
     @Composable
     protected fun ColumnScope.DefaultScreen(custom: () -> Unit) {
-        ON_CLOSE_DESTINATION?.let { UiUtilsCloseButton(navController = navController, destination = it) }
+        ON_CLOSE_DESTINATION?.let { UiUtilsToolbarButton(navController = navController, destination = it, icon = R.drawable.ic_close) }
         custom()
     }
 
@@ -33,12 +34,12 @@ abstract class ComposeScreen<VM> constructor(private val navController: NavContr
             Column(Modifier
                 .weight(1f)
                 .wrapContentHeight()) {
-                if (showBackButton) ON_BACK_DESTINATION?.let { UiUtilsBackButton(navController = navController, destination = it) }
+                if (showBackButton) ON_BACK_DESTINATION?.let { UiUtilsToolbarButton(navController = navController, destination = it, icon = R.drawable.ic_back) }
             }
             Column(Modifier
                 .weight(1f)
                 .wrapContentHeight()) {
-                if (showCloseButton) ON_CLOSE_DESTINATION?.let { UiUtilsCloseButton(navController = navController, destination = it) }
+                if (showCloseButton) ON_CLOSE_DESTINATION?.let { UiUtilsToolbarButton(navController = navController, destination = it,  icon = R.drawable.ic_close) }
             }
         }
     }

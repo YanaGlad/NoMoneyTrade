@@ -1,11 +1,15 @@
 package com.example.nomoneytrade.profile
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -13,6 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -22,15 +27,22 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.example.nomoneytrade.R
+import com.example.nomoneytrade.SIGN_IN_SCREEN
+import com.example.nomoneytrade.ui.utils.UiUtilsToolbarButton
 
 @Composable
 fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
+    BackHandler {}
 
     val profileState = viewModel.profile.collectAsState()
 
     Column(modifier = Modifier
         .fillMaxWidth()
         .verticalScroll(rememberScrollState())) {
+
+        UiUtilsToolbarButton(navController = navController, destination = SIGN_IN_SCREEN, icon = R.drawable.ic_exit)
+
         Image(
             painter = rememberAsyncImagePainter(
                 ImageRequest.Builder(LocalContext.current)
@@ -39,9 +51,10 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
                     .build()
             ),
             modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp)
-                .align(Alignment.CenterHorizontally),
+                .size(250.dp)
+                .align(Alignment.CenterHorizontally)
+                .offset(y = (-10).dp)
+                .clip(CircleShape)   ,
             contentDescription = "App Icon",
             contentScale = ContentScale.Crop,
         )
@@ -64,7 +77,6 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
                 .padding(top = 8.dp),
             textAlign = TextAlign.Center,
         )
-
 
         Text(
             text = profileState.value.email,

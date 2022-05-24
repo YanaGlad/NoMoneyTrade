@@ -74,7 +74,7 @@ fun ColumnScope.UiUtilsTextField(text: String, label: String, padding: Int, colo
 }
 
 @Composable
-fun ColumnScope.UiUtilsCloseButton(navController: NavController, destination: String) {
+fun ColumnScope.UiUtilsToolbarButton(navController: NavController, destination: String, icon: Int) {
     FloatingActionButton(
         onClick = {
             navController.navigate(destination)
@@ -91,31 +91,7 @@ fun ColumnScope.UiUtilsCloseButton(navController: NavController, destination: St
             modifier = Modifier
                 .width(34.dp)
                 .height(34.dp),
-            imageVector = ImageVector.vectorResource(R.drawable.ic_close),
-            contentDescription = "Close",
-        )
-    }
-}
-
-@Composable
-fun ColumnScope.UiUtilsBackButton(navController: NavController, destination: String) {
-    FloatingActionButton(
-        onClick = {
-            navController.navigate(destination)
-        },
-        modifier = Modifier
-            .width(84.dp)
-            .height(84.dp)
-            .align(Alignment.Start)
-            .padding(top = 16.dp, end = 16.dp),
-        backgroundColor = Color.Transparent,
-        elevation = FloatingActionButtonDefaults.elevation(0.dp),
-    ) {
-        Icon(
-            modifier = Modifier
-                .width(34.dp)
-                .height(34.dp),
-            imageVector = ImageVector.vectorResource(R.drawable.ic_back),
+            imageVector = ImageVector.vectorResource(icon),
             contentDescription = "Close",
         )
     }

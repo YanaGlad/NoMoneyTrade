@@ -50,7 +50,7 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
     private suspend fun signUp(email: String, username: String, password: String) {
         val signUpBody = SignUpBody(username, email, password)
 
-        val response = api.signUp(signUpBody)
+        val response = api.signUp(signUpBody, null)
 
         if (response.isSuccessful) {
             val jsonUser = response.body()!!
@@ -60,7 +60,8 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
                     jsonUser.username,
                     jsonUser.password,
                     jsonUser.email,
-                    jsonUser.isEnabled
+                    jsonUser.isEnabled,
+                    jsonUser.imagePath
                 )
             )
 
@@ -94,7 +95,8 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
                     jsonUser.username,
                     jsonUser.password,
                     jsonUser.email,
-                    jsonUser.isEnabled
+                    jsonUser.isEnabled,
+                    jsonUser.imagePath
                 )
             )
 

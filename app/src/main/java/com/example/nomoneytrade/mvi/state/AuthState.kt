@@ -5,5 +5,5 @@ import com.example.nomoneytrade.api.dto.User
 data class AuthState(
     val user: User
 ) {
-    constructor() : this(User(0, "", "", "", true))
+    constructor() : this(User(0, "", "", "", true, ""))
 }

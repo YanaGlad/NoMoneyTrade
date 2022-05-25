@@ -8,6 +8,7 @@
         <entry key="..\:/Users/glad/AndroidStudioProjects/NoMoneyTrade/app/src/main/res/drawable/ic_camera_mini.xml" value="0.183" />
         <entry key="..\:/Users/glad/AndroidStudioProjects/NoMoneyTrade/app/src/main/res/drawable/ic_circle_backg.xml" value="0.183" />
         <entry key="..\:/Users/glad/AndroidStudioProjects/NoMoneyTrade/app/src/main/res/drawable/ic_close.xml" value="0.183" />
+        <entry key="..\:/Users/glad/AndroidStudioProjects/NoMoneyTrade/app/src/main/res/drawable/ic_exit.xml" value="0.191" />
         <entry key="..\:/Users/glad/AndroidStudioProjects/NoMoneyTrade/app/src/main/res/drawable/ic_handshake.xml" value="0.1" />
         <entry key="..\:/Users/glad/AndroidStudioProjects/NoMoneyTrade/app/src/main/res/drawable/ic_launcher_background.xml" value="0.183" />
         <entry key="..\:/Users/glad/AndroidStudioProjects/NoMoneyTrade/app/src/main/res/drawable/ic_listing.xml" value="0.1" />
@@ -17,10 +18,12 @@
         <entry key="..\:/Users/glad/AndroidStudioProjects/NoMoneyTrade/app/src/main/res/drawable/ic_profile.xml" value="0.1885" />
         <entry key="..\:/Users/glad/AndroidStudioProjects/NoMoneyTrade/app/src/main/res/drawable/ic_right.xml" value="0.191" />
         <entry key="..\:/Users/glad/AndroidStudioProjects/NoMoneyTrade/app/src/main/res/drawable/separator.xml" value="0.1355" />
+        <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.1865" />
+        <entry key="app/src/main/res/drawable/ic_right.xml" value="0.1865" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

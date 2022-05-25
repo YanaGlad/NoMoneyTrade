@@ -20,7 +20,8 @@ interface Api {
     @Headers("Content-Type: application/json")
     @POST("/auth/signup")
     suspend fun signUp(
-        @Body signUpBody: SignUpBody
+        @Part signUpBody: SignUpBody,
+        @Part image: MultipartBody.Part?
     ): Response<User>
 
     @POST("/auth/signout")

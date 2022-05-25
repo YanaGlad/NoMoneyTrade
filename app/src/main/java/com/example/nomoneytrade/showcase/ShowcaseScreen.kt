@@ -15,13 +15,14 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.withStyle
 import androidx.navigation.NavController
+import com.example.nomoneytrade.PRODUCT_INFO_SCREEN
 import com.example.nomoneytrade.mvi.event.ShowcaseEvent
 import com.example.nomoneytrade.ui.utils.ComposeScreen
 import com.example.nomoneytrade.ui.utils.SearchView
 import internal.ProductListItem
 import java.util.*
 
-class ShowcaseScreen(navController: NavController, private val viewModel: ShowcaseViewModel) : ComposeScreen<ShowcaseViewModel>(navController, viewModel) {
+class ShowcaseScreen(val navController: NavController, private val viewModel: ShowcaseViewModel) : ComposeScreen<ShowcaseViewModel>(navController, viewModel) {
 
     override val ON_CLOSE_DESTINATION: String? = null
     override val ON_BACK_DESTINATION: String? = null
@@ -37,14 +38,14 @@ class ShowcaseScreen(navController: NavController, private val viewModel: Showca
             ShowcaseEvent.Error -> {}
             ShowcaseEvent.Loading -> {}
             is ShowcaseEvent.Success -> {
-                ProductList(event.products)
+                ProductList(navController, event.products)
             }
         }
     }
 }
 
 @Composable
-private fun ProductList(list: List<ProductPreview>) {
+private fun ProductList(navController: NavController, list: List<ProductPreview>) {
 
     Column {
         val textState = remember { mutableStateOf(TextFieldValue("")) }
@@ -58,7 +59,9 @@ private fun ProductList(list: List<ProductPreview>) {
             list.filter { product ->
                 product.title.lowercase(Locale.getDefault()).contains(textState.value.text.lowercase(Locale.getDefault()))
             }.forEach {
-                ProductListItem(productPreview = it)
+                ProductListItem(productPreview = it) {
+                    navController.navigate("$PRODUCT_INFO_SCREEN/${it.id}/${it.userId}/${it.title}/${it.description}")
+                }
             }
         }
     }

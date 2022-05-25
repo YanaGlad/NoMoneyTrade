@@ -1,5 +1,6 @@
 package com.example.nomoneytrade
 
+import com.example.nomoneytrade.profile.entity.Profile
 import com.example.nomoneytrade.showcase.ProductPreview
 
 var CURRENT_USER_ID = -1
@@ -41,4 +42,14 @@ val stubList =  listOf(
         favourites = false,
         tags = listOf("ручка", "канцелярия", "самсунг")
     )
+)
+
+val stubUser = Profile(id = 1,
+    username = "Vova",
+    fio = "Abubakirov Vladimir",
+    email = "mailemail@yandex.ru",
+    iconUrl = "",
+    city = "Москва",
+    address = "Метро ЮгоЗападная",
+    phoneNumber = "8 800 555 35 35",
 )

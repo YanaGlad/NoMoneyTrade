@@ -14,4 +14,5 @@
     <string name="offers">Offers</string>
     <string name="listings">Listings</string>
     <string name="profile">Profile</string>
+    <string name="user">User:</string>
 </resources>

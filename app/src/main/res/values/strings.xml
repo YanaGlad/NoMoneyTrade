@@ -14,4 +14,5 @@
     <string name="offers">Запросы</string>
     <string name="listings">Объявления</string>
     <string name="profile">Профиль</string>
+    <string name="user">Пользователь:</string>
 </resources>

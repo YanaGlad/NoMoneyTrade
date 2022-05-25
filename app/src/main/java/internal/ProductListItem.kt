@@ -1,6 +1,7 @@
 package internal
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,12 +25,18 @@ import com.example.nomoneytrade.R
 import com.example.nomoneytrade.showcase.ProductPreview
 
 @Composable
-fun ProductListItem(productPreview: ProductPreview) {
+fun ProductListItem(productPreview: ProductPreview, onClick: ()-> Unit) {
     //TODO загрузка по url
     Card(
         shape = RoundedCornerShape(8.dp),
         backgroundColor = MaterialTheme.colors.surface,
-        modifier = Modifier.padding(top = 16.dp, end = 8.dp, start = 8.dp)
+        modifier = Modifier
+            .padding(top = 16.dp, end = 8.dp, start = 8.dp)
+            .clickable(
+                onClick = {
+                    onClick()
+                }
+            )
     ) {
         Row(modifier = Modifier
             .fillMaxWidth()

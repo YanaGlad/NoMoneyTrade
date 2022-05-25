@@ -1,8 +1,8 @@
 package com.example.nomoneytrade.productView
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,6 +16,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -34,6 +35,7 @@ import com.example.nomoneytrade.showcase.ProductPreview
 fun ProductInfoScreen(product: ProductPreview, viewModel: ProductInfoViewModel) {
     Column(modifier = Modifier
         .fillMaxSize()
+        .padding(start = 12.dp)
         .verticalScroll(rememberScrollState())) {
 
         val userState = viewModel.sellerInfo.collectAsState()
@@ -74,44 +76,49 @@ fun ProductInfoScreen(product: ProductPreview, viewModel: ProductInfoViewModel) 
             textAlign = TextAlign.Start,
         )
 
-        Text(
-            text = stringResource(R.string.user),
-            fontSize = 20.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 8.dp),
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Start,
-        )
-        Text(
-            text = userState.value.username,
-            fontSize = 18.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 8.dp),
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Start,
-        )
+        Row(modifier = Modifier.height(60.dp)) {
+            Image(
+                painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(LocalContext.current)
+                        .data(data = userState.value.iconUrl)
+                        .allowHardware(false)
+                        .build()
+                ),
+                modifier = Modifier
+                    .size(60.dp)
+                    .padding(top = 12.dp)
+                    .clip(CircleShape),
+                contentDescription = "",
+                contentScale = ContentScale.Crop,
+            )
+            Text(
+                text = "${userState.value.username} (${userState.value.fio})",
+                fontSize = 18.sp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(CenterVertically)
+                    .padding(start = 8.dp)
+                    .padding(top = 8.dp),
+                textAlign = TextAlign.Start,
+            )
+        }
+
         Text(
             text = userState.value.city,
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 8.dp),
-            fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start,
         )
         Text(
             text = userState.value.address,
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 8.dp),
-            fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start,
         )
     }

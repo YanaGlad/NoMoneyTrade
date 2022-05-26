@@ -1,5 +1,10 @@
 package com.example.nomoneytrade.profile
 
+import android.app.Activity
+import android.app.Application
+import android.content.Intent
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nomoneytrade.api.Api
@@ -9,9 +14,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
 class ProfileViewModel @Inject constructor(private val api: Api) : ViewModel() {
-
+    private lateinit var interactionResult: ActivityResultLauncher<Intent>
     val profile = MutableStateFlow(Profile(-1,"","", "","","","", ""))
 
     init {
@@ -33,6 +39,7 @@ class ProfileViewModel @Inject constructor(private val api: Api) : ViewModel() {
             address = "Propect Verndskogo",
             phoneNumber = "+7(930)410-46-11"
         )
+
     }
 
     suspend fun getUserProducts() {

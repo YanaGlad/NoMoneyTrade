@@ -10,4 +10,5 @@ data class User(
     @SerialName("password") val password: String,
     @SerialName("email") val email: String,
     @SerialName("enabled") val isEnabled: Boolean,
+    @SerialName("imagePath") val imagePath: String
 )

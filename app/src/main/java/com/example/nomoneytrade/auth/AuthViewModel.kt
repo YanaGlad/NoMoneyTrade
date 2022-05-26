@@ -1,13 +1,8 @@
 package com.example.nomoneytrade.auth
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nomoneytrade.CURRENT_USER_ID
@@ -21,11 +16,7 @@ import com.example.nomoneytrade.mvi.state.AuthState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import java.io.File
 import javax.inject.Inject
 
 
@@ -50,7 +41,7 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
     fun signUpClick(username: String, password: String, email: String) {
         event.value = AuthEvent.Loading
         this.viewModelScope.launch {
-            signUp(email, username, password, imageFile!!)
+            signUp(email, username, password, imageFile)
         }
     }
 
@@ -70,11 +61,10 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
         effect.value = AuthEffect.NavigateShowcase
     }
 
-    private suspend fun signUp(email: String, username: String, password: String, imageBody: MultipartBody.Part) {
+    private suspend fun signUp(email: String, username: String, password: String, imageBody: MultipartBody.Part?) {
         val signUpBody = SignUpBody(username, email, password)
 
-        Log.d("Resp", (imageBody.body.contentLength()).toString())
-        val response = api.signUp(imageBody)
+        val response = api.signUp(signUpBody, imageBody)
 
         if (response.isSuccessful) {
             val jsonUser = response.body()!!

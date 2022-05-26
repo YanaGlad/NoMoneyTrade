@@ -65,8 +65,8 @@ class AuthSignUpScreen(
 
                 val bitmap = MediaStore.Images.Media.getBitmap(navController.context.contentResolver, it.data?.data)
                 val bos = ByteArrayOutputStream()
-                bitmap.compress(CompressFormat.JPEG, 0 /*ignored for PNG*/, bos)
-                val bitmapdata: ByteArray = bos.toByteArray()
+                bitmap.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos)
+                val byteArray: ByteArray = bos.toByteArray()
                 var fos: FileOutputStream? = null
                 try {
                     fos = FileOutputStream(f)
@@ -74,7 +74,7 @@ class AuthSignUpScreen(
                     e.printStackTrace()
                 }
                 try {
-                    fos!!.write(bitmapdata)
+                    fos!!.write(byteArray)
                     fos.flush()
                     fos.close()
                 } catch (e: IOException) {

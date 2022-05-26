@@ -20,7 +20,8 @@ interface Api {
     @Multipart
     @POST("/auth/signup")
     suspend fun signUp(
-        @Part file: MultipartBody.Part
+        @Part("user_data") sighUpBody: SignUpBody,
+        @Part file: MultipartBody.Part?
     ): Response<User>
 
     @POST("/auth/signout")

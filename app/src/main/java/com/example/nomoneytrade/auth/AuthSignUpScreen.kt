@@ -1,24 +1,20 @@
 package com.example.nomoneytrade.auth
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap.CompressFormat
+import android.provider.MediaStore
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -39,9 +35,17 @@ import com.example.nomoneytrade.mvi.event.AuthEvent
 import com.example.nomoneytrade.ui.utils.ComposeScreen
 import com.example.nomoneytrade.ui.utils.UiUtilsExtendedFloatingButton
 import com.example.nomoneytrade.ui.utils.UiUtilsTextField
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.*
 
 
-class AuthSignUpScreen(private val navController: NavController, private val viewModel: AuthViewModel) :
+class AuthSignUpScreen(
+    private val navController: NavController,
+    private val viewModel: AuthViewModel
+) :
     ComposeScreen<AuthViewModel>(navController, viewModel) {
 
     override val ON_CLOSE_DESTINATION: String? = null
@@ -50,14 +54,45 @@ class AuthSignUpScreen(private val navController: NavController, private val vie
     override val showCloseButton: Boolean = false
     override val showBackButton: Boolean = true
 
+    private lateinit var interactionResult: ActivityResultLauncher<Intent>
+
     @Composable
     override fun Screen() {
+        val interactionResult = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val f: File = File(navController.context.cacheDir, "test.jpeg")
+                f.createNewFile()
+
+                val bitmap = MediaStore.Images.Media.getBitmap(navController.context.contentResolver, it.data?.data)
+                val bos = ByteArrayOutputStream()
+                bitmap.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos)
+                val byteArray: ByteArray = bos.toByteArray()
+                var fos: FileOutputStream? = null
+                try {
+                    fos = FileOutputStream(f)
+                } catch (e: FileNotFoundException) {
+                    e.printStackTrace()
+                }
+                try {
+                    fos!!.write(byteArray)
+                    fos.flush()
+                    fos.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+                val reqFile: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), f)
+                viewModel.imageFile = MultipartBody.Part.createFormData("file", f.name, reqFile)
+                Log.d("Resp", viewModel.imageFile.toString())
+            }
+        }
+
         var progressState by remember { mutableStateOf(false) }
 
         val eventState = viewModel.event.collectAsState()
 
         when (val event = eventState.value) {
-            is AuthEvent.Error -> {}
+            is AuthEvent.Error -> {
+            }
             is AuthEvent.Loading -> {
                 progressState = true
             }
@@ -68,7 +103,8 @@ class AuthSignUpScreen(private val navController: NavController, private val vie
             is AuthEvent.FailedToLogin -> {
 
             }
-            AuthEvent.None -> {}
+            AuthEvent.None -> {
+            }
         }
 
         val effectState = viewModel.effect.collectAsState()
@@ -86,21 +122,28 @@ class AuthSignUpScreen(private val navController: NavController, private val vie
         }
 
         Toolbar()
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .verticalScroll(rememberScrollState())) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+        ) {
 
-            Box(modifier = Modifier
-                .wrapContentWidth()
-                .height(170.dp)
-                .align(CenterHorizontally)
-                .padding(top = 20.dp)) {
+            Box(
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .height(170.dp)
+                    .align(CenterHorizontally)
+                    .padding(top = 20.dp)
+            ) {
                 Image(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_circle_backg),
                     modifier = Modifier
                         .wrapContentWidth()
                         .fillMaxHeight()
                         .align(Center)
+                        .clickable {
+                            viewModel.chooseImage(interactionResult)
+                        }
                         .padding(top = 20.dp),
                     contentDescription = "profile photo",
                     contentScale = ContentScale.Crop,
@@ -128,26 +171,45 @@ class AuthSignUpScreen(private val navController: NavController, private val vie
 
 
             var username by remember { mutableStateOf("") }
-            UiUtilsTextField(label = stringResource(R.string.username), padding = 15, text = username) { text ->
+            UiUtilsTextField(
+                label = stringResource(R.string.username),
+                padding = 15,
+                text = username
+            ) { text ->
                 username = text
             }
 
             var email by remember { mutableStateOf("") }
-            UiUtilsTextField(label = stringResource(R.string.email), padding = 15, text = email) { text ->
+            UiUtilsTextField(
+                label = stringResource(R.string.email),
+                padding = 15,
+                text = email
+            ) { text ->
                 email = text
             }
 
             var password by remember { mutableStateOf("") }
-            UiUtilsTextField(label = stringResource(R.string.password), padding = 15, text = password) { text ->
+            UiUtilsTextField(
+                label = stringResource(R.string.password),
+                padding = 15,
+                text = password
+            ) { text ->
                 password = text
             }
 
             var confirmPassword by remember { mutableStateOf("") }
-            UiUtilsTextField(label = stringResource(R.string.confirmPassword), padding = 15, text = confirmPassword) { text ->
+            UiUtilsTextField(
+                label = stringResource(R.string.confirmPassword),
+                padding = 15,
+                text = confirmPassword
+            ) { text ->
                 confirmPassword = text
             }
 
-            UiUtilsExtendedFloatingButton(stringResource(R.string.sign_up), showProgress = progressState) {
+            UiUtilsExtendedFloatingButton(
+                stringResource(R.string.sign_up),
+                showProgress = progressState
+            ) {
                 viewModel.signUpClick(username = username, password = password, email = email)
             }
 

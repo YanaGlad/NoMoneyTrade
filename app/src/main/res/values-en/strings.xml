@@ -15,4 +15,9 @@
     <string name="listings">Listings</string>
     <string name="profile">Profile</string>
     <string name="user">User:</string>
+    <string name="new_listing">New listing</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="tags">Tags</string>
+    <string name="upload_image">Upload image</string>
 </resources>

@@ -69,8 +69,12 @@ fun OfferItem(offer: Offer) {
         }
 
         Row {
-            OfferCard(1f, Color.Green, R.drawable.ic_checkmark)
-            OfferCard(1f, Color.Red, R.drawable.ic_close)
+            OfferCard(1f, Color.Green, R.drawable.ic_checkmark) {
+                //POST accepted offer
+            }
+            OfferCard(1f, Color.Red, R.drawable.ic_close){
+                // POST declined offer
+            }
         }
     }
 }
@@ -120,7 +124,7 @@ fun RowScope.ShortInfo(itemIcon: String, userIcon: String, title: String) {
 }
 
 @Composable
-fun RowScope.OfferCard(weight: Float, color: Color, icon: Int) {
+fun RowScope.OfferCard(weight: Float, color: Color, icon: Int, onClick: ()-> Unit) {
     Card(
         shape = RoundedCornerShape(8.dp),
         backgroundColor = color,
@@ -130,7 +134,7 @@ fun RowScope.OfferCard(weight: Float, color: Color, icon: Int) {
             .padding(top = 12.dp, end = 8.dp, start = 8.dp)
             .clickable(
                 onClick = {
-
+                    onClick()
                 }
             )) {
         Image(

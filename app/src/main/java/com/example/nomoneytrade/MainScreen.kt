@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.nomoneytrade.create.CreateProductScreen
 import com.example.nomoneytrade.mvi.event.BottomNavEvent
 import com.example.nomoneytrade.offers.OffersScreen
 import com.example.nomoneytrade.profile.ProfileScreen
@@ -31,23 +32,25 @@ fun MainScreen(navController: NavController) {
             }
         },
         floatingActionButton = {
-            FloatingActionButton(
-                backgroundColor = MaterialTheme.colors.primary,
-                onClick = {
-
+            if (eventState is BottomNavEvent.Showcase)
+                FloatingActionButton(
+                    backgroundColor = MaterialTheme.colors.primary,
+                    onClick = {
+                        eventState = BottomNavEvent.CreateProduct
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Add,
+                        contentDescription = "Add new product",
+                    )
                 }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = "Add new product",
-                )
-            }
         }
     ) {
         when (eventState) {
             BottomNavEvent.Offers -> OffersScreen(navController, hiltViewModel())
             BottomNavEvent.Profile -> ProfileScreen(navController, hiltViewModel())
             BottomNavEvent.Showcase -> ShowcaseScreen(navController, hiltViewModel()).ShowScreen()
+            BottomNavEvent.CreateProduct -> CreateProductScreen(navController)
         }
     }
 }

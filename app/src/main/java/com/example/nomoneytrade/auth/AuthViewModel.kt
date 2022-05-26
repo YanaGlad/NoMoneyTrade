@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.nomoneytrade.CURRENT_USER_ID
 import com.example.nomoneytrade.api.Api
 import com.example.nomoneytrade.api.dto.UserDto
-import com.example.nomoneytrade.api.dto.UserDto
 import com.example.nomoneytrade.api.requests.SignInBody
 import com.example.nomoneytrade.api.requests.SignUpBody
 import com.example.nomoneytrade.mvi.effect.AuthEffect

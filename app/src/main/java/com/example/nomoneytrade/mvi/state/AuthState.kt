@@ -1,6 +1,5 @@
 package com.example.nomoneytrade.mvi.state
 
-import com.example.nomoneytrade.api.dto.User
 import com.example.nomoneytrade.api.dto.UserDto
 
 data class AuthState(

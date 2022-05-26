@@ -63,7 +63,7 @@ fun OffersScreen(navController: NavController, viewModel: OffersViewModel) {
 fun OfferItem(offer: Offer) {
     Column(modifier = Modifier.fillMaxWidth()) {
 
-        Row {
+        Row(modifier = Modifier.padding(top = 16.dp)) {
             ShortInfo(itemIcon = offer.userListing.imageUrl, userIcon = offer.user.iconUrl, title = offer.userListing.title)
             ShortInfo(itemIcon = offer.theirListing.imageUrl, userIcon = offer.seller.iconUrl, title = offer.theirListing.title)
         }
@@ -127,7 +127,7 @@ fun RowScope.OfferCard(weight: Float, color: Color, icon: Int) {
         modifier = Modifier
             .weight(weight)
             .wrapContentHeight()
-            .padding(top = 16.dp, end = 8.dp, start = 8.dp)
+            .padding(top = 12.dp, end = 8.dp, start = 8.dp)
             .clickable(
                 onClick = {
 

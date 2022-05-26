@@ -4,7 +4,7 @@ interface UserI
 
 object NoImpl: UserI
 
-data class Profile(
+data class User(
     val id: Int,
     val username: String,
     val fio: String,

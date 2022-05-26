@@ -1,9 +1,9 @@
 package com.example.nomoneytrade.mvi.state
 
-import com.example.nomoneytrade.api.dto.User
+import com.example.nomoneytrade.api.dto.UserDto
 
 data class AuthState(
-    val user: User
+    val userDto: UserDto
 ) {
-    constructor() : this(User(0, "", "", "", true))
+    constructor() : this(UserDto(0, "", "", "", true))
 }

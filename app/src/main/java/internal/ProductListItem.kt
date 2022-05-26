@@ -22,10 +22,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.nomoneytrade.R
-import com.example.nomoneytrade.showcase.ProductPreview
+import com.example.nomoneytrade.entity.Product
 
 @Composable
-fun ProductListItem(productPreview: ProductPreview, onClick: ()-> Unit) {
+fun ProductListItem(product: Product, onClick: ()-> Unit) {
     //TODO загрузка по url
     Card(
         shape = RoundedCornerShape(8.dp),
@@ -52,7 +52,7 @@ fun ProductListItem(productPreview: ProductPreview, onClick: ()-> Unit) {
             )
             Column(modifier = Modifier.padding(start = 6.dp, top = 5.dp)) {
                 Text(
-                    text = productPreview.title,
+                    text = product.title,
                     fontSize = 18.sp,
                     modifier = Modifier
                         .fillMaxWidth(),
@@ -60,7 +60,7 @@ fun ProductListItem(productPreview: ProductPreview, onClick: ()-> Unit) {
                 )
 
                 Text(
-                    text = productPreview.tags.getTags(),
+                    text = product.tags.getTags(),
                     fontSize = 10.sp,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -68,7 +68,7 @@ fun ProductListItem(productPreview: ProductPreview, onClick: ()-> Unit) {
                 )
 
                 Text(
-                    text = productPreview.description.getModifiedText(),
+                    text = product.description.getModifiedText(),
                     fontSize = 15.sp,
                     modifier = Modifier
                         .fillMaxWidth()

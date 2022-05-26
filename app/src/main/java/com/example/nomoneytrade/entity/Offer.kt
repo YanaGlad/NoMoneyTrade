@@ -1,10 +1,12 @@
-package com.example.nomoneytrade.offers.entity
+package com.example.nomoneytrade.entity
+
+import com.example.nomoneytrade.profile.entity.User
 
 data class Offer(
-    val userId: Int,
-    val theirId: Int,
-    val userListingId: Int,
-    val theirListingId: Int,
+    val user: User,
+    val seller: User,
+    val userListing: Product,
+    val theirListing: Product,
     val place: String,
     val time: String,
 ) {

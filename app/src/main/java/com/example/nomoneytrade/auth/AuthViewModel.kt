@@ -7,7 +7,7 @@ import com.example.nomoneytrade.CURRENT_USER_ID
 import com.example.nomoneytrade.api.Api
 import com.example.nomoneytrade.api.requests.SignInBody
 import com.example.nomoneytrade.api.requests.SignUpBody
-import com.example.nomoneytrade.api.dto.User
+import com.example.nomoneytrade.api.dto.UserDto
 import com.example.nomoneytrade.mvi.effect.AuthEffect
 import com.example.nomoneytrade.mvi.event.AuthEvent
 import com.example.nomoneytrade.mvi.state.AuthState
@@ -55,7 +55,7 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
         if (response.isSuccessful) {
             val jsonUser = response.body()!!
             state = state.copy(
-                user = User(
+                userDto = UserDto(
                     jsonUser.id,
                     jsonUser.username,
                     jsonUser.password,
@@ -89,7 +89,7 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
         if (response.isSuccessful) {
             val jsonUser = response.body()!!
             state = state.copy(
-                user = User(
+                userDto = UserDto(
                     jsonUser.id,
                     jsonUser.username,
                     jsonUser.password,

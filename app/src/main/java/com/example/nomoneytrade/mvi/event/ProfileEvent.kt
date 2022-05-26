@@ -1,9 +1,9 @@
 package com.example.nomoneytrade.mvi.event
 
-import com.example.nomoneytrade.profile.entity.Profile
+import com.example.nomoneytrade.profile.entity.User
 
 sealed class ProfileEvent {
-    class Success(state: Profile): ProfileEvent() //Loaded products + profile info into state!
+    class Success(state: User): ProfileEvent() //Loaded products + profile info into state!
     object Error: ProfileEvent()
     object Loading: ProfileEvent()
 }

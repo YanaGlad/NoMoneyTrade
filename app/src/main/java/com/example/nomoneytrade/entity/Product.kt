@@ -1,10 +1,10 @@
-package com.example.nomoneytrade.showcase
+package com.example.nomoneytrade.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class ProductPreview(
+data class Product(
     val id: Int = -1,
     val userId: Int = -1,
     val title: String = "",

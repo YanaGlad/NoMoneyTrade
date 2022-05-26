@@ -40,7 +40,7 @@ fun MainScreen(navController: NavController) {
                 Icon(
                     imageVector = Icons.Filled.Add,
                     contentDescription = "Add new product",
-                    )
+                )
             }
         }
     ) {

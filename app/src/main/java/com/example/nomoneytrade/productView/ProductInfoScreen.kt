@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -21,18 +20,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.example.nomoneytrade.R
-import com.example.nomoneytrade.showcase.ProductPreview
+import com.example.nomoneytrade.entity.Product
 
 @Composable
-fun ProductInfoScreen(product: ProductPreview, viewModel: ProductInfoViewModel) {
+fun ProductInfoScreen(product: Product, viewModel: ProductInfoViewModel) {
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(start = 12.dp)

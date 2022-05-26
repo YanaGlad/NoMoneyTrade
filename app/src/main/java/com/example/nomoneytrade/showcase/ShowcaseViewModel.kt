@@ -13,7 +13,6 @@ class ShowcaseViewModel @Inject constructor() : ViewModel()  {
 
     val event = MutableStateFlow<ShowcaseEvent>(ShowcaseEvent.Loading)
 
-
     init {
 
         //Stub!

@@ -54,7 +54,7 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
                 .size(250.dp)
                 .align(Alignment.CenterHorizontally)
                 .offset(y = (-10).dp)
-                .clip(CircleShape)   ,
+                .clip(CircleShape),
             contentDescription = "App Icon",
             contentScale = ContentScale.Crop,
         )
@@ -78,32 +78,11 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
             textAlign = TextAlign.Center,
         )
 
-        Text(
-            text = profileState.value.email,
-            fontSize = 18.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp, start = 16.dp),
-            textAlign = TextAlign.Start,
-        )
+        DefaultTextField(profileState.value.email)
 
-        Text(
-            text = profileState.value.phoneNumber,
-            fontSize = 18.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 12.dp, start = 16.dp),
-            textAlign = TextAlign.Start,
-        )
+        DefaultTextField(profileState.value.phoneNumber)
 
-        Text(
-            text = "${profileState.value.city}, ${profileState.value.address}",
-            fontSize = 18.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 12.dp, start = 16.dp),
-            textAlign = TextAlign.Start,
-        )
+        DefaultTextField("${profileState.value.city}, ${profileState.value.address}")
 
         Text(
             text = "Active offers: ",
@@ -118,8 +97,17 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
         Column(modifier = Modifier.fillMaxWidth()) {
 
         }
-
-        // Button active offers -> (from compose demo?)
-        // quit button with door in the right top corner
     }
+}
+
+@Composable
+private fun DefaultTextField(text: String) {
+    Text(
+        text = text,
+        fontSize = 18.sp,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 12.dp, start = 16.dp),
+        textAlign = TextAlign.Start,
+    )
 }

@@ -16,6 +16,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.withStyle
 import androidx.navigation.NavController
 import com.example.nomoneytrade.PRODUCT_INFO_SCREEN
+import com.example.nomoneytrade.entity.Product
 import com.example.nomoneytrade.mvi.event.ShowcaseEvent
 import com.example.nomoneytrade.ui.utils.ComposeScreen
 import com.example.nomoneytrade.ui.utils.SearchView
@@ -45,7 +46,7 @@ class ShowcaseScreen(val navController: NavController, private val viewModel: Sh
 }
 
 @Composable
-private fun ProductList(navController: NavController, list: List<ProductPreview>) {
+private fun ProductList(navController: NavController, list: List<Product>) {
 
     Column {
         val textState = remember { mutableStateOf(TextFieldValue("")) }
@@ -59,7 +60,7 @@ private fun ProductList(navController: NavController, list: List<ProductPreview>
             list.filter { product ->
                 product.title.lowercase(Locale.getDefault()).contains(textState.value.text.lowercase(Locale.getDefault()))
             }.forEach {
-                ProductListItem(productPreview = it) {
+                ProductListItem(product = it) {
                     navController.navigate("$PRODUCT_INFO_SCREEN/${it.id}/${it.userId}/${it.title}/${it.description}")
                 }
             }

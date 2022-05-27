@@ -6,6 +6,7 @@ import com.example.nomoneytrade.api.requests.SignInBody
 import com.example.nomoneytrade.api.requests.SignUpBody
 import com.example.nomoneytrade.api.responses.BaseResponse
 import com.example.nomoneytrade.api.dto.UserDto
+import com.example.nomoneytrade.api.requests.ProductRequest
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -29,11 +30,11 @@ interface Api {
     suspend fun signOut(): Response<BaseResponse>
 
     @Multipart
-    @POST("/api/put_image")
-    suspend fun putImage(@Part image: MultipartBody.Part): Response<BaseResponse>
-
     @POST("/api/new_post")
-    suspend fun newProduct(@Body productDto: ProductDto): Response<BaseResponse>
+    suspend fun newProduct(
+        @Part("post_content") productRequest: ProductRequest,
+        @Part file: MultipartBody.Part?
+   ): Response<BaseResponse>
 
     @GET("/api/get_posts")
     suspend fun getAllProducts(): Response<AllPostResponse>

@@ -17,6 +17,17 @@ val tinkoffBag = Product(
     exchangeTags = listOf("макбук", "рюкзак тинькофф"),
 )
 
+val alienMug = Product(
+    id = 77,
+    userId = 12,
+    title = "Кружка инопланетянин",
+    imageUrl = "https://sun9-east.userapi.com/sun9-20/s/v1/if2/4KUnGZKvbGCNDxCZEpg0-JVZV8X2nz70JU102leWmEkuMRAIVqnxz6RZf-tO6aaYaQDFr7RkK3vPOMHcEMKf-44S.jpg?size=2560x1920&quality=95&type=album",
+    description = "Шикарный рюкзак",
+    favourites = false,
+    tags = listOf("кружка", "посуда", "инопланетяне"), //более 3 тегов только с подпиской/платное объявление,
+    exchangeTags = listOf("книга", "монополия", "тетрадь"),
+)
+
 val samsungPen = Product(
     id = 4,
     userId = 1,
@@ -48,7 +59,7 @@ val stubList = listOf(
         description = "Модель ракеты SpaceX FalconHeavy из пластика",
         favourites = false,
         tags = listOf("spacex", "космос", "модельки", "ракета", "falcon heavy", "пластик"),//более 3 тегов только с подпиской/платное объявление
-        exchangeTags = listOf("старшип", "starship"),
+        exchangeTags = listOf("старшип", "starship", "кружка"),
     ),
     samsungPen,
 )

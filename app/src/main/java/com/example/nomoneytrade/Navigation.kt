@@ -12,6 +12,7 @@ import com.example.nomoneytrade.offers.OffersScreen
 import com.example.nomoneytrade.productView.ProductInfoScreen
 import com.example.nomoneytrade.entity.Product
 import com.example.nomoneytrade.showcase.ShowcaseScreen
+import com.example.nomoneytrade.suggest.SuggestChoiceScreen
 
 @Composable
 fun Navigation() {
@@ -31,9 +32,10 @@ fun Navigation() {
                 navArgument("authorId") { defaultValue = -1 },
                 navArgument("tags") { defaultValue = "AAAAA" },
                 navArgument("extags") { defaultValue = "AAAAA" },
-                )
+            )
         ) {
             ProductInfoScreen(
+                navController = navController,
                 product = Product(
                     id = it.arguments?.getLong("id") ?: -1,
                     userId = it.arguments?.getLong("authorId") ?: -1,
@@ -41,7 +43,7 @@ fun Navigation() {
                     imageUrl = it.arguments?.getString("url") ?: "",
                     description = it.arguments?.getString("description") ?: "",
                     favourites = false,
-                    tags =  listOf(),
+                    tags = listOf(),
                     exchangeTags = listOf()
                 ),
                 tags = it.arguments?.getString("tags") ?: "",
@@ -49,6 +51,9 @@ fun Navigation() {
                 viewModel = hiltViewModel())
         }
         composable(OFFERS_SCREEN) { OffersScreen(navController, hiltViewModel()) }
+        composable("$SUGGEST_SCREEN/{tags}") {
+            SuggestChoiceScreen(it.arguments?.getString("tags") ?: "", navController, hiltViewModel())
+        }
     }
 }
 
@@ -67,3 +72,5 @@ const val PRODUCT_INFO_SCREEN = "product_info_screen"
 //Bottom
 const val PROFILE_SCREEN = "profile_screen"
 const val OFFERS_SCREEN = "notifications_screen"
+const val SUGGEST_SCREEN = "suggest_screen"
+

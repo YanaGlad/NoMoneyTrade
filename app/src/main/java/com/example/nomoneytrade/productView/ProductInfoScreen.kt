@@ -28,14 +28,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.nomoneytrade.R
+import com.example.nomoneytrade.SUGGEST_SCREEN
 import com.example.nomoneytrade.entity.Product
 import com.example.nomoneytrade.ui.utils.UiUtilsExtendedFloatingButton
 
 @Composable
-fun ProductInfoScreen(product: Product, tags: String, extags: String,  viewModel: ProductInfoViewModel) {
+fun ProductInfoScreen(navController: NavController, product: Product, tags: String, extags: String, viewModel: ProductInfoViewModel) {
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(8.dp)
@@ -150,6 +152,8 @@ fun ProductInfoScreen(product: Product, tags: String, extags: String,  viewModel
         UiUtilsExtendedFloatingButton(
             text = stringResource(R.string.suggest_offer),
             showProgress = false
-        ) {}
+        ) {
+            navController.navigate("$SUGGEST_SCREEN/$tags")
+        }
     }
 }

@@ -21,4 +21,5 @@
     <string name="tags">Теги</string>
     <string name="upload_image">Загрузите изображение</string>
     <string name="suggest_offer">Предложить обмен</string>
+    <string name="you_have_no">У вас нет подходящих по категориям товаров на обмен!</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.nomoneytrade.api
 
+import com.example.nomoneytrade.api.dto.AllPostResponse
 import com.example.nomoneytrade.api.dto.ProductDto
 import com.example.nomoneytrade.api.requests.SignInBody
 import com.example.nomoneytrade.api.requests.SignUpBody
@@ -31,7 +32,9 @@ interface Api {
     @POST("/api/put_image")
     suspend fun putImage(@Part image: MultipartBody.Part): Response<BaseResponse>
 
-    @Multipart
     @POST("/api/new_post")
     suspend fun newProduct(@Body productDto: ProductDto): Response<BaseResponse>
+
+    @GET("/api/get_posts")
+    suspend fun getAllProducts(): Response<AllPostResponse>
 }

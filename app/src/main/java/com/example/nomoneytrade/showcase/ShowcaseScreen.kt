@@ -3,6 +3,7 @@ package com.example.nomoneytrade.showcase
 import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -15,6 +16,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.nomoneytrade.PRODUCT_INFO_SCREEN
 import com.example.nomoneytrade.entity.Product
@@ -51,7 +53,7 @@ class ShowcaseScreen(val navController: NavController, private val viewModel: Sh
 @Composable
 private fun ProductList(navController: NavController, list: List<Product>) {
 
-    Column {
+    Column(modifier = Modifier.padding(bottom = 60.dp)) {
         val textState = remember { mutableStateOf(TextFieldValue("")) }
         SearchView(textState)
 
@@ -68,13 +70,10 @@ private fun ProductList(navController: NavController, list: List<Product>) {
 
                     val tags = buildString {
                         it.tags.forEach {
-                            Log.d("SSSS", "$it !!!!!!!!!!!!!!!!!!!")
                             append(" #$it")
                         }
                     }
-
                     val encodedTag = URLEncoder.encode(tags, StandardCharsets.UTF_8.toString()).replace("+", " ")
-                    Log.d("SSSS", "$encodedTag and not $tags")
                     navController.navigate("$PRODUCT_INFO_SCREEN/${it.id}/$encodedUrl/${it.userId}/${it.title}/${it.description}/$encodedTag")
                 }
             }

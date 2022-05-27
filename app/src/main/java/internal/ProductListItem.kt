@@ -16,6 +16,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -56,7 +57,8 @@ fun ProductListItem(product: Product, onClick: () -> Unit) {
                     .fillMaxWidth()
                     .height(170.dp)
                     .align(Alignment.CenterHorizontally)
-                    .padding(top = 10.dp, start = 5.dp, bottom = 10.dp),
+                    .padding(top = 10.dp, start = 5.dp, bottom = 10.dp)
+                    .clip(RoundedCornerShape(16.dp)),
                 contentDescription = "profile photo",
                 contentScale = ContentScale.Crop,
             )

@@ -27,20 +27,13 @@ class CreateProductViewModel @Inject constructor(private val api: Api) : ViewMod
     private suspend fun createProduct(product: Product) {
         event.value = CreateProductEvent.Loading
 
-        val set = mutableSetOf<PostTag>()
-        val mappedList = product.tags.map {
-            PostTag(-1, it) //TODO NEED HELP
-        }.forEach {
-            set.add(it)
-        }
-
         val response = api.newProduct(
             ProductDto(
                 id = product.id,
                 user_id = product.userId,
                 title = product.title,
                 description = product.description,
-                tags = set
+                tags = product.tags,
             )
         )
 

@@ -5,5 +5,5 @@ class ProductDto(
     val title: String,
     val user_id: Long,
     val description: String,
-    val tags: Set<PostTag>, //TODO NEED HELP
+    val tags: List<String>,
 )

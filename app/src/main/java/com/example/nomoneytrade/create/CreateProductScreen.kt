@@ -96,7 +96,7 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
         ) {
             viewModel.clickCreate(
                 Product(
-                    id = 12, //????  TODO NEED HELP
+                    id = 12, //????  TODO Заменить на ProductRequest
                     title = titleText,
                     userId = CURRENT_USER_ID,
                     imageUrl = "",

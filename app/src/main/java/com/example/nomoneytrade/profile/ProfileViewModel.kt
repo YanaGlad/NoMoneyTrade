@@ -28,7 +28,7 @@ class ProfileViewModel @Inject constructor(private val api: Api) : ViewModel() {
         val body = response.body()
         if (response.isSuccessful && body != null) {
             profile.value = User(
-                id = CURRENT_USER_ID.toInt(),
+                id = CURRENT_USER_ID,
                 username = body.username,
                 fio = "Гладких Яна Сергеевна",
                 email = body.email,

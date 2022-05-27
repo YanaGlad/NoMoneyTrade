@@ -5,7 +5,7 @@ interface UserI
 object NoImpl: UserI
 
 data class User(
-    val id: Int,
+    val id: Long,
     val username: String,
     val fio: String,
     val email: String,

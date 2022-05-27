@@ -48,7 +48,7 @@ fun ProductInfoScreen(product: Product, viewModel: ProductInfoViewModel) {
                 .fillMaxWidth()
                 .height(250.dp)
                 .align(Alignment.CenterHorizontally),
-            contentDescription = "App Icon",
+            contentDescription = "Product icon",
             contentScale = ContentScale.Crop,
         )
 

@@ -1,5 +1,6 @@
 package com.example.nomoneytrade.api
 
+import com.example.nomoneytrade.api.dto.ProductDto
 import com.example.nomoneytrade.api.requests.SignInBody
 import com.example.nomoneytrade.api.requests.SignUpBody
 import com.example.nomoneytrade.api.responses.BaseResponse
@@ -14,14 +15,14 @@ interface Api {
     @Headers("Content-Type: application/json")
     @POST("/auth/signin")
     suspend fun signIn(
-        @Body signInBody: SignInBody
+        @Body signInBody: SignInBody,
     ): Response<UserDto>
 
     @Multipart
     @POST("/auth/signup")
     suspend fun signUp(
         @Part("user_data") sighUpBody: SignUpBody,
-        @Part file: MultipartBody.Part?
+        @Part file: MultipartBody.Part?,
     ): Response<UserDto>
 
     @POST("/auth/signout")
@@ -30,4 +31,8 @@ interface Api {
     @Multipart
     @POST("/api/put_image")
     suspend fun putImage(@Part image: MultipartBody.Part): Response<BaseResponse>
+
+    @Multipart
+    @POST("/api/new_post")
+    suspend fun newProduct(@Body productDto: ProductDto): Response<BaseResponse>
 }

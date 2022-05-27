@@ -17,15 +17,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.example.nomoneytrade.R
 import com.example.nomoneytrade.entity.Product
 
 @Composable
-fun ProductListItem(product: Product, onClick: ()-> Unit) {
+fun ProductListItem(product: Product, onClick: () -> Unit) {
     //TODO загрузка по url
     Card(
         shape = RoundedCornerShape(8.dp),
@@ -42,7 +45,12 @@ fun ProductListItem(product: Product, onClick: ()-> Unit) {
             .fillMaxWidth()
             .height(200.dp)) {
             Image(
-                bitmap = ImageBitmap.imageResource(id = R.drawable.stub),
+                painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(LocalContext.current)
+                        .data(data = product.imageUrl)
+                        .allowHardware(false)
+                        .build()
+                ),
                 modifier = Modifier
                     .width(140.dp)
                     .align(Alignment.CenterVertically)

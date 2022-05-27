@@ -3,7 +3,7 @@ package com.example.nomoneytrade
 import com.example.nomoneytrade.profile.entity.User
 import com.example.nomoneytrade.entity.Product
 
-var CURRENT_USER_ID = -1
+var CURRENT_USER_ID = -1L
 
 
 val tinkoffBag = Product(

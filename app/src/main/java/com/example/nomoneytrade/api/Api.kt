@@ -36,6 +36,6 @@ interface Api {
         @Part file: MultipartBody.Part?
    ): Response<BaseResponse>
 
-    @GET("/api/get_posts")
+    @POST("/api/get_posts")
     suspend fun getAllProducts(): Response<AllPostResponse>
 }

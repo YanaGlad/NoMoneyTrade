@@ -7,9 +7,9 @@ import kotlinx.serialization.Serializable
 class ProductDto(
     @SerialName("id") val id: Long,
     @SerialName("title") val title: String,
-    @SerialName("user_id") val user_id: Long,
+    @SerialName("user_id") val userId: Long,
     @SerialName("description") val description: String,
     @SerialName("imagePath") val imagePath: String,
-    @SerialName("tags") val tags: List<String>,
-    @SerialName("tagsExchange") val tagsExchange: List<String>,
+    @SerialName("tags") val tags: List<TagDto>,
+    @SerialName("tags_exchange") val tagsExchange: List<TagExchangeDto>,
 )

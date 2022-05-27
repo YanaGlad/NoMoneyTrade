@@ -29,7 +29,9 @@ class OffersViewModel @Inject constructor(private val api: Api) : ViewModel() {
 
     }
 
-    suspend fun getActiveOffers() { //получаем активыне офферы для текущего юзера. Передаваь параметр не надо, используем глобавльный CURRENT_USER_ID
+    suspend fun getActiveOffers() {
+
+
         event.value = OfferEvent.Loading
        // val response = api.getActiveOffers() TODO
         event.value = OfferEvent.LoadedOffers(

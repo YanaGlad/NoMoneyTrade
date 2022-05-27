@@ -57,6 +57,30 @@ fun OffersScreen(navController: NavController, viewModel: OffersViewModel) {
 }
 
 @Composable
+fun MyOffers() {
+
+}
+
+@Composable
+fun OffersForMe(viewModel: OffersViewModel) {
+    val eventState = viewModel.event.collectAsState()
+
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .verticalScroll(rememberScrollState())) {
+        when (val event = eventState.value) {
+            OfferEvent.Error -> {}
+            is OfferEvent.LoadedOffers -> {
+                event.offers.forEach {
+                    OfferItem(it)
+                }
+            }
+            OfferEvent.Loading -> {}
+        }
+    }
+}
+
+@Composable
 fun OfferItem(offer: Offer) {
     Column(modifier = Modifier.fillMaxWidth()) {
 

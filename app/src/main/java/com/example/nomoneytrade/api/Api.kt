@@ -6,7 +6,9 @@ import com.example.nomoneytrade.api.requests.SignInBody
 import com.example.nomoneytrade.api.requests.SignUpBody
 import com.example.nomoneytrade.api.responses.BaseResponse
 import com.example.nomoneytrade.api.dto.UserDto
+import com.example.nomoneytrade.api.requests.GetOffersRequest
 import com.example.nomoneytrade.api.requests.ProductRequest
+import com.example.nomoneytrade.api.responses.AllOfferResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -38,4 +40,7 @@ interface Api {
 
     @POST("/api/get_posts")
     suspend fun getAllProducts(): Response<AllPostResponse>
+
+    @POST("/api/get_my_offers")
+    suspend fun getMyOffers( @Body getOffersRequest: GetOffersRequest): Response<AllOfferResponse>
 }

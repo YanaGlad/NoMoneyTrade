@@ -21,13 +21,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.nomoneytrade.MAIN_SCREEN
 import com.example.nomoneytrade.R
+import com.example.nomoneytrade.ui.utils.UiUtilsToolbarButton
 
 @Composable
-fun OnboardingScreen(navController: NavController) {
+fun OnboardingScreen(navController: NavController, title: String, description: String, drawable: Int) {
     Column(modifier = Modifier.fillMaxSize()) {
+        UiUtilsToolbarButton(navController, MAIN_SCREEN, R.drawable.ic_close)
         Text(
-            text = "Готово!",
+            text = title,
             textAlign = TextAlign.Center,
             fontSize = 28.sp,
             modifier = Modifier
@@ -36,7 +39,7 @@ fun OnboardingScreen(navController: NavController) {
             fontWeight = FontWeight.Bold,
         )
         Text(
-            text = "Теперь встретьтесь с человеком для проведения обмена",
+            text = stringResource(R.string.now_meent),
             textAlign = TextAlign.Center,
             fontSize = 18.sp,
             modifier = Modifier
@@ -45,7 +48,7 @@ fun OnboardingScreen(navController: NavController) {
         )
 
         Image(
-            imageVector = ImageVector.vectorResource(R.drawable.ic_exchange),
+            imageVector = ImageVector.vectorResource(drawable),
             modifier = Modifier
                 .width(100.dp)
                 .height(100.dp)

@@ -11,6 +11,7 @@ import com.example.nomoneytrade.auth.AuthSignUpScreen
 import com.example.nomoneytrade.offers.OffersScreen
 import com.example.nomoneytrade.productView.ProductInfoScreen
 import com.example.nomoneytrade.entity.Product
+import com.example.nomoneytrade.onboarding.OnboardingScreen
 import com.example.nomoneytrade.showcase.ShowcaseScreen
 import com.example.nomoneytrade.suggest.SuggestChoiceScreen
 
@@ -25,11 +26,11 @@ fun Navigation() {
         composable(SIGN_UP_SCREEN) { AuthSignUpScreen(navController, hiltViewModel()) }
         composable("$PRODUCT_INFO_SCREEN/{id}/{url}/{authorId}/{title}/{description}/{tags}/{extags}",
             arguments = listOf(
-                navArgument("id") { defaultValue = -1 },
+                navArgument("id") { defaultValue = -1L },
                 navArgument("title") { defaultValue = "" },
                 navArgument("description") { defaultValue = "" },
                 navArgument("url") { defaultValue = "" },
-                navArgument("authorId") { defaultValue = -1 },
+                navArgument("authorId") { defaultValue = -1L },
                 navArgument("tags") { defaultValue = "AAAAA" },
                 navArgument("extags") { defaultValue = "AAAAA" },
             )
@@ -51,6 +52,14 @@ fun Navigation() {
                 viewModel = hiltViewModel())
         }
         composable(OFFERS_SCREEN) { OffersScreen(navController, hiltViewModel()) }
+        composable("$ONBOARDING_SCREEN/{title}/{description}/{drawable}") {
+            OnboardingScreen(
+                navController = navController,
+                title = it.arguments?.getString("title") ?: "",
+                description = it.arguments?.getString("description") ?: "",
+                drawable = it.arguments?.getInt("drawable") ?: R.drawable.ic_exchange,
+            )
+        }
         composable("$SUGGEST_SCREEN/{tags}") {
             SuggestChoiceScreen(it.arguments?.getString("tags") ?: "", navController, hiltViewModel())
         }
@@ -65,6 +74,8 @@ const val SIGN_UP_SCREEN = "sign_up_screen"
 
 //showcase
 const val SHOWCASE_SCREEN = "showcase_screen"
+
+const val ONBOARDING_SCREEN = "onboardinge_screen"
 
 //product
 const val PRODUCT_INFO_SCREEN = "product_info_screen"

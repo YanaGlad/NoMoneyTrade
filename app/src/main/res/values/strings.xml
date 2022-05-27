@@ -22,4 +22,8 @@
     <string name="upload_image">Загрузите изображение</string>
     <string name="suggest_offer">Предложить обмен</string>
     <string name="you_have_no">У вас нет подходящих по категориям товаров на обмен!</string>
+    <string name="what_for_exchange">На что меняете</string>
+    <string name="done">Готово!</string>
+    <string name="now_meent">Теперь встретьтесь с человеком для проведения обмена</string>
+    <string name="success_created">Объявление успешно создано</string>
 </resources>

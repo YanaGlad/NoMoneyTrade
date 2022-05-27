@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.provider.MediaStore
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -38,10 +37,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.nomoneytrade.CURRENT_USER_ID
 import com.example.nomoneytrade.MAIN_SCREEN
+import com.example.nomoneytrade.ONBOARDING_SCREEN
 import com.example.nomoneytrade.R
-import com.example.nomoneytrade.api.dto.ProductDto
 import com.example.nomoneytrade.api.requests.ProductRequest
-import com.example.nomoneytrade.entity.Product
 import com.example.nomoneytrade.mvi.event.CreateProductEvent
 import com.example.nomoneytrade.ui.utils.UiUtilsExtendedFloatingButton
 import com.example.nomoneytrade.ui.utils.UiUtilsTextField
@@ -49,7 +47,11 @@ import com.example.nomoneytrade.ui.utils.UiUtilsToolbarButton
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.io.*
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 
 @Composable
 fun CreateProductScreen(navController: NavController, viewModel: CreateProductViewModel) {
@@ -91,11 +93,16 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
     Column(modifier = Modifier.fillMaxSize()) {
 
         val eventState = viewModel.event.collectAsState()
+        val title = stringResource(R.string.done)
+        val description = stringResource(R.string.success_created)
+        val drawable = R.drawable.ic_checkmark
+
         when(eventState.value){
             CreateProductEvent.Error -> {}
             CreateProductEvent.Loading -> {}
             CreateProductEvent.Success -> {
                 //TODO сделать экран "Объявлеие создано!"
+                navController.navigate("$ONBOARDING_SCREEN/$title/$description/$drawable")
             }
         }
 
@@ -111,8 +118,6 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
             textAlign = TextAlign.Center,
         )
 
-        // TODO згрузка картинок!!!
-
         var titleText by remember { mutableStateOf("") }
 
         UiUtilsTextField(label = stringResource(R.string.title), padding = 15, text = titleText, color = MaterialTheme.colors.primary) { text ->
@@ -126,9 +131,13 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
         }
 
         var tagsText by remember { mutableStateOf("") }
-
         UiUtilsTextField(label = stringResource(R.string.tags), padding = 15, text = tagsText, color = MaterialTheme.colors.primary) { text ->
             tagsText = text
+        }
+
+        var exchangeText by remember { mutableStateOf("") }
+        UiUtilsTextField(label = stringResource(R.string.what_for_exchange), padding = 15, text = exchangeText, color = MaterialTheme.colors.primary) { text ->
+            exchangeText = text
         }
 
         Text(
@@ -137,9 +146,6 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
-                .clickable {
-                    viewModel.chooseImage(interactionResult)
-                }
                 .padding(top = 8.dp),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
@@ -151,7 +157,10 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
                 .width(100.dp)
                 .height(100.dp)
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 10.dp, start = 5.dp),
+                .padding(top = 10.dp, start = 5.dp)
+                .clickable {
+                    viewModel.chooseImage(interactionResult)
+                },
             contentDescription = "upload icon",
             contentScale = ContentScale.Crop,
         )
@@ -166,7 +175,7 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
                     user_id = CURRENT_USER_ID,
                     tags = tagsText.split(" #"),
                     description = descriptionText,
-                    tagsExchange = tagsText.split(" #"),
+                    tagsExchange = exchangeText.split(" #"),
                     // TODO add tagsExchange
                 )
             )

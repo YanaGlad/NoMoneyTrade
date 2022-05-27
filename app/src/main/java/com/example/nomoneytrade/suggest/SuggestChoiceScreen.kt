@@ -15,6 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.nomoneytrade.ONBOARDING_SCREEN
 import com.example.nomoneytrade.R
 import com.example.nomoneytrade.entity.Product
 import com.example.nomoneytrade.mvi.event.SuggestChoiceEvent
@@ -28,6 +29,10 @@ fun SuggestChoiceScreen(tags: String, navController: NavController, viewModel: S
     Log.d("AAAAA", "$tagsList got...")
 
     Column(modifier = Modifier.fillMaxWidth()) {
+        val title = stringResource(R.string.done)
+        val description = stringResource(R.string.now_meent)
+        val drawable = R.drawable.ic_exchange
+
         when (val event = eventState.value) {
             SuggestChoiceEvent.Error -> {}
             SuggestChoiceEvent.Loading -> {}
@@ -47,6 +52,7 @@ fun SuggestChoiceScreen(tags: String, navController: NavController, viewModel: S
                     filteredItems.forEach {
                         ProductListItem(it) {
 
+                            navController.navigate("$ONBOARDING_SCREEN/$title/$description/$drawable")
                         }
                     }
                 } else {

@@ -22,4 +22,8 @@
     <string name="upload_image">Upload image</string>
     <string name="suggest_offer">Suggest offer</string>
     <string name="you_have_no">You have no goods fitting suggested categories!</string>
+    <string name="what_for_exchange">What do you want in return</string>
+    <string name="done">Done!</string>
+    <string name="now_meent">Now meet the person to conduct an exchange</string>
+    <string name="success_created">Listing successfully created</string>
 </resources>

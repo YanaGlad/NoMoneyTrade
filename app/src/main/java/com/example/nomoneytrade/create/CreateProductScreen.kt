@@ -119,13 +119,11 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
         )
 
         var titleText by remember { mutableStateOf("") }
-
         UiUtilsTextField(label = stringResource(R.string.title), padding = 15, text = titleText, color = MaterialTheme.colors.primary) { text ->
             titleText = text
         }
 
         var descriptionText by remember { mutableStateOf("") }
-
         UiUtilsTextField(label = stringResource(R.string.description), padding = 15, text = descriptionText, color = MaterialTheme.colors.primary) { text ->
             descriptionText = text
         }
@@ -138,6 +136,16 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
         var exchangeText by remember { mutableStateOf("") }
         UiUtilsTextField(label = stringResource(R.string.what_for_exchange), padding = 15, text = exchangeText, color = MaterialTheme.colors.primary) { text ->
             exchangeText = text
+        }
+
+        var cityText by remember { mutableStateOf("") }
+        UiUtilsTextField(label = stringResource(R.string.meeting_place), padding = 15, text = cityText, color = MaterialTheme.colors.primary) { text ->
+            cityText = text
+        }
+
+        var timeText by remember { mutableStateOf("") }
+        UiUtilsTextField(label = stringResource(R.string.meeting_time), padding = 15, text = timeText, color = MaterialTheme.colors.primary) { text ->
+            timeText = text
         }
 
         Text(
@@ -176,7 +184,8 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
                     tags = tagsText.split(" #"),
                     description = descriptionText,
                     tagsExchange = exchangeText.split(" #"),
-                    // TODO add tagsExchange
+                    city = cityText,
+                    time = timeText,
                 )
             )
         }

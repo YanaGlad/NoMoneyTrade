@@ -26,4 +26,6 @@
     <string name="done">Done!</string>
     <string name="now_meent">Now meet the person to conduct an exchange</string>
     <string name="success_created">Listing successfully created</string>
+    <string name="meeting_place">Meeting place</string>
+    <string name="meeting_time">Meeting time</string>
 </resources>

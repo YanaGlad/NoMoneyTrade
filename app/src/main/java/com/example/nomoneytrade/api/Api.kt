@@ -6,7 +6,6 @@ import com.example.nomoneytrade.api.requests.SignUpBody
 import com.example.nomoneytrade.api.responses.BaseResponse
 import com.example.nomoneytrade.api.dto.UserDto
 import okhttp3.MultipartBody
-import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.*
 

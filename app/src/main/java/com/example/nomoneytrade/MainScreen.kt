@@ -50,7 +50,7 @@ fun MainScreen(navController: NavController) {
             BottomNavEvent.Offers -> OffersScreen(navController, hiltViewModel())
             BottomNavEvent.Profile -> ProfileScreen(navController, hiltViewModel())
             BottomNavEvent.Showcase -> ShowcaseScreen(navController, hiltViewModel()).ShowScreen()
-            BottomNavEvent.CreateProduct -> CreateProductScreen(navController)
+            BottomNavEvent.CreateProduct -> CreateProductScreen(navController, hiltViewModel())
         }
     }
 }

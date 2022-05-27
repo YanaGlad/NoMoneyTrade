@@ -18,7 +18,6 @@ import javax.inject.Inject
 class OffersViewModel @Inject constructor(private val api: Api) : ViewModel() {
 
     val event = MutableStateFlow<OfferEvent>(OfferEvent.Loading)
-    val offers = MutableStateFlow<String>("")
 
     init {
         this.viewModelScope.launch {

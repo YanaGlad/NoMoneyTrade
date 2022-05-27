@@ -1,12 +1,12 @@
 package com.example.nomoneytrade.create
 
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nomoneytrade.api.Api
 import com.example.nomoneytrade.api.dto.PostTag
 import com.example.nomoneytrade.api.dto.ProductDto
 import com.example.nomoneytrade.entity.Product
-import com.example.nomoneytrade.mvi.event.AuthEvent
 import com.example.nomoneytrade.mvi.event.CreateProductEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,10 +17,6 @@ import javax.inject.Inject
 class CreateProductViewModel @Inject constructor(private val api: Api) : ViewModel() {
 
     val event = MutableStateFlow<CreateProductEvent>(CreateProductEvent.Loading)
-
-    init {
-
-    }
 
     fun clickCreate(product: Product) {
         this.viewModelScope.launch {

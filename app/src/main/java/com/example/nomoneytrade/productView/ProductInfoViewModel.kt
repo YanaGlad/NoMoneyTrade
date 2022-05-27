@@ -23,7 +23,7 @@ class ProductInfoViewModel @Inject constructor(private val api: Api) : ViewModel
         }
     }
 
-    suspend fun getSellerUserInfo(id: Int) {
+    suspend fun getSellerUserInfo(id: Long) {
         //api.getUserById(id)
         sellerInfo.value = stubUser
     }

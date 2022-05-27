@@ -19,9 +19,9 @@ import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
-
 @HiltViewModel
 class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
+
     private val pickImageRequest = 71
     private lateinit var interactionResult: ActivityResultLauncher<Intent>
     var imageFile: MultipartBody.Part? = null
@@ -75,11 +75,14 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
                     jsonUser.password,
                     jsonUser.email,
                     jsonUser.isEnabled,
-                    jsonUser.imagePath
+                    jsonUser.imagePath,
+                    jsonUser.city,
+                    jsonUser.address,
+                    jsonUser.phoneNumber,
                 )
             )
 
-            CURRENT_USER_ID = jsonUser.id
+            CURRENT_USER_ID = jsonUser.id.toLong()
 
             event.emit(
                 AuthEvent.Success(
@@ -111,11 +114,14 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
                     jsonUser.password,
                     jsonUser.email,
                     jsonUser.isEnabled,
-                    jsonUser.imagePath
+                    jsonUser.imagePath,
+                    jsonUser.city,
+                    jsonUser.address,
+                    jsonUser.phoneNumber,
                 )
             )
 
-            CURRENT_USER_ID = jsonUser.id
+            CURRENT_USER_ID = jsonUser.id.toLong()
 
             event.emit(
                 AuthEvent.Success(

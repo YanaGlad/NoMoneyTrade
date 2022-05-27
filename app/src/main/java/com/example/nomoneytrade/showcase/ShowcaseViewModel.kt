@@ -16,12 +16,7 @@ class ShowcaseViewModel @Inject constructor() : ViewModel()  {
     init {
 
         //Stub!
-        event.value = ShowcaseEvent.Success(
-            stubList
-        )
-        stubList.forEach {
-            Log.d("TATAT", "Len: ${it.description.length}")
-        }
+        event.value = ShowcaseEvent.Success(stubList)
     }
 
     suspend fun loadProducts() {

@@ -10,5 +10,8 @@ data class UserDto(
     @SerialName("password") val password: String,
     @SerialName("email") val email: String,
     @SerialName("enabled") val isEnabled: Boolean,
-    @SerialName("imagePath") val imagePath: String
+    @SerialName("imagePath") val imagePath: String,
+    @SerialName("city") val city: String,
+    @SerialName("address") val address: String,
+    @SerialName("phoneNumber") val phoneNumber: String,
 )

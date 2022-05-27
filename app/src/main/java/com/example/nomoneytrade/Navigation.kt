@@ -34,8 +34,8 @@ fun Navigation() {
         ) {
             ProductInfoScreen(
                 product = Product(
-                    id = it.arguments?.getInt("id") ?: -1,
-                    userId = it.arguments?.getInt("authorId") ?: -1,
+                    id = it.arguments?.getLong("id") ?: -1,
+                    userId = it.arguments?.getLong("authorId") ?: -1,
                     title = it.arguments?.getString("title") ?: "",
                     imageUrl = it.arguments?.getString("url") ?: "",
                     description = it.arguments?.getString("description") ?: "",

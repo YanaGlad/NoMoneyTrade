@@ -4,7 +4,6 @@ package com.example.nomoneytrade.create
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nomoneytrade.api.Api
-import com.example.nomoneytrade.api.dto.PostTag
 import com.example.nomoneytrade.api.dto.ProductDto
 import com.example.nomoneytrade.entity.Product
 import com.example.nomoneytrade.mvi.event.CreateProductEvent

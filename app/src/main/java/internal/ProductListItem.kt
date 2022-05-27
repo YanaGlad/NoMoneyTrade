@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -29,7 +30,6 @@ import com.example.nomoneytrade.entity.Product
 
 @Composable
 fun ProductListItem(product: Product, onClick: () -> Unit) {
-    //TODO загрузка по url
     Card(
         shape = RoundedCornerShape(8.dp),
         backgroundColor = MaterialTheme.colors.surface,
@@ -41,9 +41,10 @@ fun ProductListItem(product: Product, onClick: () -> Unit) {
                 }
             )
     ) {
-        Row(modifier = Modifier
+        Column(modifier = Modifier
             .fillMaxWidth()
-            .height(200.dp)) {
+            .wrapContentHeight()
+            .padding(8.dp)) {
             Image(
                 painter = rememberAsyncImagePainter(
                     ImageRequest.Builder(LocalContext.current)
@@ -52,37 +53,36 @@ fun ProductListItem(product: Product, onClick: () -> Unit) {
                         .build()
                 ),
                 modifier = Modifier
-                    .width(140.dp)
-                    .align(Alignment.CenterVertically)
+                    .fillMaxWidth()
+                    .height(170.dp)
+                    .align(Alignment.CenterHorizontally)
                     .padding(top = 10.dp, start = 5.dp, bottom = 10.dp),
                 contentDescription = "profile photo",
                 contentScale = ContentScale.Crop,
             )
-            Column(modifier = Modifier.padding(start = 6.dp, top = 5.dp)) {
-                Text(
-                    text = product.title,
-                    fontSize = 18.sp,
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    fontWeight = FontWeight.Bold,
-                )
+            Text(
+                text = product.title,
+                fontSize = 18.sp,
+                modifier = Modifier
+                    .fillMaxWidth(),
+                fontWeight = FontWeight.Bold,
+            )
 
-                Text(
-                    text = product.tags.getTags(),
-                    fontSize = 10.sp,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 5.dp)
-                )
+            Text(
+                text = product.tags.getTags(),
+                fontSize = 10.sp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 5.dp)
+            )
 
-                Text(
-                    text = product.description.getModifiedText(),
-                    fontSize = 15.sp,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 5.dp, bottom = 5.dp),
-                )
-            }
+            Text(
+                text = product.description.getModifiedText(),
+                fontSize = 15.sp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 5.dp, bottom = 5.dp),
+            )
         }
     }
 }

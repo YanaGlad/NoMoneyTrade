@@ -1,8 +1,10 @@
 package com.example.nomoneytrade.showcase
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nomoneytrade.api.Api
+import com.example.nomoneytrade.api.dto.TagDto
 import com.example.nomoneytrade.entity.Product
 import com.example.nomoneytrade.mvi.event.ShowcaseEvent
 import com.example.nomoneytrade.stubList
@@ -20,27 +22,37 @@ class ShowcaseViewModel @Inject constructor(val api: Api) : ViewModel() {
         event.value = ShowcaseEvent.Loading
         event.value = ShowcaseEvent.Success(stubList)
         this.viewModelScope.launch {
-            //   loadProducts()
+            loadProducts()
         }
     }
 
     private suspend fun loadProducts() {
         val response = api.getAllProducts()
         val body = response.body()
+        Log.d("Resp", response.body().toString())
         if (response.isSuccessful && body != null) {
             event.value = ShowcaseEvent.Success(body.posts.map {
                 Product(
                     id = it.id,
-                    userId = it.user_id,
+                    userId = it.userId,
                     title = it.title,
-                    imageUrl = "", //TODO почему у нас в дто нет картинки?
+                    imageUrl = it.imagePath,
                     description = it.description,
                     favourites = false,
-                    tags = it.tags
+                    tags = tagDtoToString(it.tags)
                 )
             })
         } else {
             event.value = ShowcaseEvent.Error
         }
+    }
+
+
+    private fun tagDtoToString(list: List<TagDto>): List<String> {
+        var returnList = arrayListOf<String>()
+        for (tag in list) {
+            returnList.add(tag.tag)
+        }
+        return returnList
     }
 }

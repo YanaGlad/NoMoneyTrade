@@ -22,14 +22,14 @@ fun Navigation() {
         composable(SIGN_IN_SCREEN) { AuthSignInScreen(navController, hiltViewModel()).ShowScreen() }
         composable(SHOWCASE_SCREEN) { ShowcaseScreen(navController, hiltViewModel()).ShowScreen() }
         composable(SIGN_UP_SCREEN) { AuthSignUpScreen(navController, hiltViewModel()).ShowScreen() }
-        composable("$PRODUCT_INFO_SCREEN/{id}/{url}/{authorId}/{title}/{description}",
+        composable("$PRODUCT_INFO_SCREEN/{id}/{url}/{authorId}/{title}/{description}/{tags}",
             arguments = listOf(
                 navArgument("id") { defaultValue = -1 },
                 navArgument("title") { defaultValue = "" },
                 navArgument("description") { defaultValue = "" },
                 navArgument("url") { defaultValue = "" },
                 navArgument("authorId") { defaultValue = -1 },
-                navArgument("tags") { defaultValue = "" },
+                navArgument("tags") { defaultValue = "AAAAA" },
             )
         ) {
             ProductInfoScreen(
@@ -40,8 +40,9 @@ fun Navigation() {
                     imageUrl = it.arguments?.getString("url") ?: "",
                     description = it.arguments?.getString("description") ?: "",
                     favourites = false,
-                    tags = it.arguments?.getString("tags")?.split(" ") ?: listOf(),
+                    tags =  listOf(),
                 ),
+                tags = it.arguments?.getString("tags") ?: "",
                 viewModel = hiltViewModel())
         }
         composable(OFFERS_SCREEN) { OffersScreen(navController, hiltViewModel()) }

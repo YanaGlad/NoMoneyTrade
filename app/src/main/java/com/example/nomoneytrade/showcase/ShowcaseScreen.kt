@@ -1,5 +1,6 @@
 package com.example.nomoneytrade.showcase
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
@@ -65,7 +66,16 @@ private fun ProductList(navController: NavController, list: List<Product>) {
                 ProductListItem(product = it) {
                     val encodedUrl = URLEncoder.encode(it.imageUrl, StandardCharsets.UTF_8.toString())
 
-                    navController.navigate("$PRODUCT_INFO_SCREEN/${it.id}/$encodedUrl/${it.userId}/${it.title}/${it.description}")
+                    val tags = buildString {
+                        it.tags.forEach {
+                            Log.d("SSSS", "$it !!!!!!!!!!!!!!!!!!!")
+                            append(" #$it")
+                        }
+                    }
+
+                    val encodedTag = URLEncoder.encode(tags, StandardCharsets.UTF_8.toString()).replace("+", " ")
+                    Log.d("SSSS", "$encodedTag and not $tags")
+                    navController.navigate("$PRODUCT_INFO_SCREEN/${it.id}/$encodedUrl/${it.userId}/${it.title}/${it.description}/$encodedTag")
                 }
             }
         }

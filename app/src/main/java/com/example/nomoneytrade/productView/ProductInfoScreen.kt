@@ -33,7 +33,7 @@ import com.example.nomoneytrade.entity.Product
 import com.example.nomoneytrade.ui.utils.UiUtilsExtendedFloatingButton
 
 @Composable
-fun ProductInfoScreen(product: Product, viewModel: ProductInfoViewModel) {
+fun ProductInfoScreen(product: Product, tags: String, viewModel: ProductInfoViewModel) {
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(8.dp)
@@ -65,6 +65,16 @@ fun ProductInfoScreen(product: Product, viewModel: ProductInfoViewModel) {
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 8.dp),
             fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+        )
+
+        Text(
+            text = tags,
+            fontSize = 14.sp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)
+                .padding(top = 8.dp),
             textAlign = TextAlign.Center,
         )
 

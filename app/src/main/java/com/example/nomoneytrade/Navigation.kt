@@ -22,7 +22,7 @@ fun Navigation() {
         //  composable(PROFILE_SCREEN) { ProfileScreen(navController, hiltViewModel()).ShowScreen() }
         composable(SIGN_IN_SCREEN) { AuthSignInScreen(navController, hiltViewModel()).ShowScreen() }
         composable(SHOWCASE_SCREEN) { ShowcaseScreen(navController, hiltViewModel()).ShowScreen() }
-        composable(SIGN_UP_SCREEN) { AuthSignUpScreen(navController, hiltViewModel()).ShowScreen() }
+        composable(SIGN_UP_SCREEN) { AuthSignUpScreen(navController, hiltViewModel()) }
         composable("$PRODUCT_INFO_SCREEN/{id}/{url}/{authorId}/{title}/{description}/{tags}/{extags}",
             arguments = listOf(
                 navArgument("id") { defaultValue = -1 },

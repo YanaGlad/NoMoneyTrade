@@ -1,5 +1,6 @@
 package com.example.nomoneytrade.mvi.event
 
+import android.graphics.Bitmap
 import com.example.nomoneytrade.mvi.effect.AuthEffect
 import com.example.nomoneytrade.mvi.state.AuthState
 
@@ -14,4 +15,5 @@ sealed class AuthEvent {
     object FailedToLogin: AuthEvent()
     object Error: AuthEvent()
     object None: AuthEvent()
+    class UpdatedPhoto(val bitmap: Bitmap): AuthEvent()
 }

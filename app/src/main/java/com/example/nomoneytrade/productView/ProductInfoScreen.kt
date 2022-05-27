@@ -1,5 +1,6 @@
 package com.example.nomoneytrade.productView
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,6 +36,8 @@ import com.example.nomoneytrade.R
 import com.example.nomoneytrade.SUGGEST_SCREEN
 import com.example.nomoneytrade.entity.Product
 import com.example.nomoneytrade.ui.utils.UiUtilsExtendedFloatingButton
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 @Composable
 fun ProductInfoScreen(navController: NavController, product: Product, tags: String, extags: String, viewModel: ProductInfoViewModel) {
@@ -153,7 +156,19 @@ fun ProductInfoScreen(navController: NavController, product: Product, tags: Stri
             text = stringResource(R.string.suggest_offer),
             showProgress = false
         ) {
-            navController.navigate("$SUGGEST_SCREEN/$tags")
+
+
+            Log.d("AAAAA", "$tags enc")
+
+            val extags2 = buildString {
+                product.exchangeTags.forEach {
+                    append(" #$it")
+                }
+            }
+
+            val encodedTag = URLEncoder.encode(extags, StandardCharsets.UTF_8.toString()).replace("+#", " #")
+
+            navController.navigate("$SUGGEST_SCREEN/$encodedTag")
         }
     }
 }

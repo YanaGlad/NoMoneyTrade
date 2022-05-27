@@ -74,7 +74,7 @@ fun ColumnScope.UiUtilsTextField(text: String, label: String, padding: Int, colo
 }
 
 @Composable
-fun ColumnScope.UiUtilsToolbarButton(navController: NavController, destination: String, icon: Int) {
+fun ColumnScope.UiUtilsToolbarButton(navController: NavController, destination: String, icon: Int, alignment: Alignment.Horizontal = Alignment.End) {
     FloatingActionButton(
         onClick = {
             navController.navigate(destination)
@@ -82,7 +82,7 @@ fun ColumnScope.UiUtilsToolbarButton(navController: NavController, destination: 
         modifier = Modifier
             .width(84.dp)
             .height(84.dp)
-            .align(Alignment.End)
+            .align(alignment)
             .padding(top = 16.dp, end = 16.dp),
         backgroundColor = Color.Transparent,
         elevation = FloatingActionButtonDefaults.elevation(0.dp),

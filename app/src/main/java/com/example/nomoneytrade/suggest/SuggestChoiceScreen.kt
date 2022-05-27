@@ -1,5 +1,6 @@
 package com.example.nomoneytrade.suggest
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,8 +22,10 @@ import internal.ProductListItem
 
 @Composable
 fun SuggestChoiceScreen(tags: String, navController: NavController, viewModel: SuggestChoiceViewModel) {
-    val tagsList = tags.split(" ")
+    val tagsList = tags.replace("+#", " #").split(" #")
     val eventState = viewModel.event.collectAsState()
+
+    Log.d("AAAAA", "$tagsList got...")
 
     Column(modifier = Modifier.fillMaxWidth()) {
         when (val event = eventState.value) {
@@ -34,14 +37,14 @@ fun SuggestChoiceScreen(tags: String, navController: NavController, viewModel: S
                         var check = false
                         for (t in product.tags) {
                             for (exT in tagsList) {
-                                check = t == exT
+                                if (!check) check = t == exT
                             }
                         }
                         check
                     }
 
                 if (filteredItems.isNotEmpty()) {
-                    event.availableProducts.forEach {
+                    filteredItems.forEach {
                         ProductListItem(it) {
 
                         }

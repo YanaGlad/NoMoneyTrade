@@ -1,6 +1,7 @@
 package com.example.nomoneytrade.auth
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.ViewModel
@@ -30,6 +31,10 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
     val effect = MutableStateFlow<AuthEffect?>(AuthEffect.None)
 
     private var state = AuthState()
+
+    fun updatePhoto(bitmap: Bitmap) {
+        event.value = AuthEvent.UpdatedPhoto(bitmap)
+    }
 
     fun signInClick(username: String, password: String) {
         event.value = AuthEvent.Loading

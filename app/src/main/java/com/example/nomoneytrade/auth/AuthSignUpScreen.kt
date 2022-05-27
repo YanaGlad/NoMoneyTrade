@@ -58,14 +58,14 @@ fun AuthSignUpScreen(
 
     val interactionResult = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
-            val f: File = File(navController.context.cacheDir, "test.jpeg")
+            val f = File(navController.context.cacheDir, "test.jpeg")
             f.createNewFile()
 
             val bitmap = MediaStore.Images.Media.getBitmap(navController.context.contentResolver, it.data?.data)
             val bos = ByteArrayOutputStream()
             bitmap.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos)
 
-            viewModel.event.value = AuthEvent.UpdatedPhoto(bitmap)
+            viewModel.updatePhoto(bitmap)
 
             val byteArray: ByteArray = bos.toByteArray()
             var fos: FileOutputStream? = null
@@ -113,7 +113,7 @@ fun AuthSignUpScreen(
 
     val effectState = viewModel.effect.collectAsState()
 
-    when (val effect = effectState.value) {
+    when (effectState.value) {
         is AuthEffect.NavigateShowcase -> {}
         is AuthEffect.Navigate -> {
             navController.navigate(SHOWCASE_SCREEN)

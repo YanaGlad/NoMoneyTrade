@@ -20,7 +20,7 @@ class ShowcaseViewModel @Inject constructor(val api: Api) : ViewModel() {
         event.value = ShowcaseEvent.Loading
         event.value = ShowcaseEvent.Success(stubList)
         this.viewModelScope.launch {
-            //loadProducts()
+            //   loadProducts()
         }
     }
 

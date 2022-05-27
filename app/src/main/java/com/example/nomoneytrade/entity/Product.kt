@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Product( //TODO Product и ProductRequest
+data class Product(
     val id: Long = -1,
     val userId: Long = -1,
     val title: String = "",

@@ -9,5 +9,7 @@ class ProductDto(
     @SerialName("title") val title: String,
     @SerialName("user_id") val user_id: Long,
     @SerialName("description") val description: String,
+    @SerialName("imagePath") val imagePath: String,
     @SerialName("tags") val tags: List<String>,
+    @SerialName("tagsExchange") val tagsExchange: List<String>,
 )

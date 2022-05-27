@@ -1,6 +1,15 @@
 package com.example.nomoneytrade.create
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.provider.MediaStore
+import android.util.Log
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,14 +33,51 @@ import androidx.navigation.NavController
 import com.example.nomoneytrade.CURRENT_USER_ID
 import com.example.nomoneytrade.MAIN_SCREEN
 import com.example.nomoneytrade.R
+import com.example.nomoneytrade.api.dto.ProductDto
+import com.example.nomoneytrade.api.requests.ProductRequest
 import com.example.nomoneytrade.entity.Product
 import com.example.nomoneytrade.mvi.event.CreateProductEvent
 import com.example.nomoneytrade.ui.utils.UiUtilsExtendedFloatingButton
 import com.example.nomoneytrade.ui.utils.UiUtilsTextField
 import com.example.nomoneytrade.ui.utils.UiUtilsToolbarButton
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.*
 
 @Composable
 fun CreateProductScreen(navController: NavController, viewModel: CreateProductViewModel) {
+    val interactionResult: ActivityResultLauncher<Intent> = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val f: File = File(navController.context.cacheDir, "test.jpeg")
+            f.createNewFile()
+
+            val bitmap = MediaStore.Images.Media.getBitmap(
+                navController.context.contentResolver,
+                it.data?.data
+            )
+            val bos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos)
+            val byteArray: ByteArray = bos.toByteArray()
+            var fos: FileOutputStream? = null
+            try {
+                fos = FileOutputStream(f)
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
+            }
+            try {
+                fos!!.write(byteArray)
+                fos.flush()
+                fos.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            val reqFile: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), f)
+            viewModel.imageFile = MultipartBody.Part.createFormData("file", f.name, reqFile)
+        }
+    }
+
     BackHandler {
         navController.navigate(MAIN_SCREEN)
     }
@@ -85,6 +131,9 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
+                .clickable {
+                    viewModel.chooseImage(interactionResult)
+                }
                 .padding(top = 8.dp),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
@@ -95,14 +144,13 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
             showProgress = false //state.loading
         ) {
             viewModel.clickCreate(
-                Product(
-                    id = 12, //????  TODO Заменить на ProductRequest
+                ProductRequest(
                     title = titleText,
-                    userId = CURRENT_USER_ID,
-                    imageUrl = "",
-                    favourites = false,
+                    user_id = CURRENT_USER_ID,
                     tags = tagsText.split(" #"),
                     description = descriptionText,
+                    tagsExchange = tagsText.split(" #"),
+                    // TODO add tagsExchange
                 )
             )
         }

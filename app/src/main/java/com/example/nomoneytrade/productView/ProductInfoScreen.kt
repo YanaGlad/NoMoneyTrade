@@ -157,15 +157,6 @@ fun ProductInfoScreen(navController: NavController, product: Product, tags: Stri
             showProgress = false
         ) {
 
-
-            Log.d("AAAAA", "$tags enc")
-
-            val extags2 = buildString {
-                product.exchangeTags.forEach {
-                    append(" #$it")
-                }
-            }
-
             val encodedTag = URLEncoder.encode(extags, StandardCharsets.UTF_8.toString()).replace("+#", " #")
 
             navController.navigate("$SUGGEST_SCREEN/$encodedTag")

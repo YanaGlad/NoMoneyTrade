@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nomoneytrade.api.Api
 import com.example.nomoneytrade.api.dto.TagDto
+import com.example.nomoneytrade.api.dto.TagExchangeDto
 import com.example.nomoneytrade.entity.Product
 import com.example.nomoneytrade.mvi.event.ShowcaseEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,7 +38,8 @@ class ShowcaseViewModel @Inject constructor(val api: Api) : ViewModel() {
                     imageUrl = it.imagePath,
                     description = it.description,
                     favourites = false,
-                    tags = tagDtoToString(it.tags)
+                    tags = tagDtoToString(it.tags),
+                    exchangeTags = tagExchangeDtoToString(it.tagsExchange)
                 )
             })
         } else {
@@ -50,6 +52,14 @@ class ShowcaseViewModel @Inject constructor(val api: Api) : ViewModel() {
         var returnList = arrayListOf<String>()
         for (tag in list) {
             returnList.add(tag.tag)
+        }
+        return returnList
+    }
+
+    private fun tagExchangeDtoToString(list: List<TagExchangeDto>): List<String> {
+        var returnList = arrayListOf<String>()
+        for (tag in list) {
+            returnList.add(tag.tagExchange)
         }
         return returnList
     }

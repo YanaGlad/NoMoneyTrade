@@ -95,7 +95,7 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
         val eventState = viewModel.event.collectAsState()
         val title = stringResource(R.string.done)
         val description = stringResource(R.string.success_created)
-        val drawable = R.drawable.ic_checkmark
+        val drawable = R.drawable.ic_exchange
 
         when(eventState.value){
             CreateProductEvent.Error -> {}

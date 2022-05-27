@@ -21,6 +21,8 @@ import com.example.nomoneytrade.mvi.event.ShowcaseEvent
 import com.example.nomoneytrade.ui.utils.ComposeScreen
 import com.example.nomoneytrade.ui.utils.SearchView
 import internal.ProductListItem
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 import java.util.*
 
 class ShowcaseScreen(val navController: NavController, private val viewModel: ShowcaseViewModel) : ComposeScreen<ShowcaseViewModel>(navController, viewModel) {
@@ -61,7 +63,9 @@ private fun ProductList(navController: NavController, list: List<Product>) {
                 product.title.lowercase(Locale.getDefault()).contains(textState.value.text.lowercase(Locale.getDefault()))
             }.forEach {
                 ProductListItem(product = it) {
-                    navController.navigate("$PRODUCT_INFO_SCREEN/${it.id}/${it.userId}/${it.title}/${it.description}")
+                    val encodedUrl = URLEncoder.encode(it.imageUrl, StandardCharsets.UTF_8.toString())
+
+                    navController.navigate("$PRODUCT_INFO_SCREEN/${it.id}/$encodedUrl/${it.userId}/${it.title}/${it.description}")
                 }
             }
         }

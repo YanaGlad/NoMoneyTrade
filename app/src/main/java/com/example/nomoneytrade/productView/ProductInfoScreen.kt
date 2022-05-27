@@ -10,7 +10,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -27,12 +30,13 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.nomoneytrade.entity.Product
+import com.example.nomoneytrade.ui.utils.UiUtilsExtendedFloatingButton
 
 @Composable
 fun ProductInfoScreen(product: Product, viewModel: ProductInfoViewModel) {
     Column(modifier = Modifier
         .fillMaxSize()
-        .padding(start = 12.dp)
+        .padding(8.dp)
         .verticalScroll(rememberScrollState())) {
 
         val userState = viewModel.sellerInfo.collectAsState()
@@ -47,7 +51,8 @@ fun ProductInfoScreen(product: Product, viewModel: ProductInfoViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(250.dp)
-                .align(Alignment.CenterHorizontally),
+                .align(Alignment.CenterHorizontally)
+                .clip(RoundedCornerShape(16.dp)),
             contentDescription = "Product icon",
             contentScale = ContentScale.Crop,
         )
@@ -70,7 +75,7 @@ fun ProductInfoScreen(product: Product, viewModel: ProductInfoViewModel) {
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 12.dp),
-            textAlign = TextAlign.Start,
+            textAlign = TextAlign.Center,
         )
 
         Row(modifier = Modifier.height(60.dp)) {
@@ -83,14 +88,14 @@ fun ProductInfoScreen(product: Product, viewModel: ProductInfoViewModel) {
                 ),
                 modifier = Modifier
                     .size(60.dp)
-                    .padding(top = 12.dp)
+                    .padding(top = 18.dp)
                     .clip(CircleShape),
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
             )
             Text(
                 text = "${userState.value.username} (${userState.value.fio})",
-                fontSize = 18.sp,
+                fontSize = 16.sp,
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(CenterVertically)
@@ -102,7 +107,7 @@ fun ProductInfoScreen(product: Product, viewModel: ProductInfoViewModel) {
 
         Text(
             text = userState.value.city,
-            fontSize = 16.sp,
+            fontSize = 14.sp,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
@@ -111,12 +116,17 @@ fun ProductInfoScreen(product: Product, viewModel: ProductInfoViewModel) {
         )
         Text(
             text = userState.value.address,
-            fontSize = 16.sp,
+            fontSize = 14.sp,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 8.dp),
             textAlign = TextAlign.Start,
         )
+
+        UiUtilsExtendedFloatingButton(
+            text = "Предложить обмен",
+            showProgress = false
+        ){}
     }
 }

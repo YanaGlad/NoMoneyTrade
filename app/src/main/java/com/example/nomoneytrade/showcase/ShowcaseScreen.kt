@@ -74,7 +74,14 @@ private fun ProductList(navController: NavController, list: List<Product>) {
                         }
                     }
                     val encodedTag = URLEncoder.encode(tags, StandardCharsets.UTF_8.toString()).replace("+", " ")
-                    navController.navigate("$PRODUCT_INFO_SCREEN/${it.id}/$encodedUrl/${it.userId}/${it.title}/${it.description}/$encodedTag")
+
+                    val extags = buildString {
+                        it.exchangeTags.forEach {
+                            append(" #$it")
+                        }
+                    }
+                    val encodedExTag = URLEncoder.encode(extags, StandardCharsets.UTF_8.toString()).replace("+", " ")
+                    navController.navigate("$PRODUCT_INFO_SCREEN/${it.id}/$encodedUrl/${it.userId}/${it.title}/${it.description}/$encodedTag/$encodedExTag")
                 }
             }
         }

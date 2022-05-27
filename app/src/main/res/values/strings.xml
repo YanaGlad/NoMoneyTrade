@@ -20,4 +20,5 @@
     <string name="description">Описание</string>
     <string name="tags">Теги</string>
     <string name="upload_image">Загрузите изображение</string>
+    <string name="suggest_offer">Предложить обмен</string>
 </resources>

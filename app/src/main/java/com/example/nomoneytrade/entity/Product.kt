@@ -12,4 +12,5 @@ data class Product( //TODO Product и ProductRequest
     val description: String = "", //.substring(0,100) ?
     val favourites: Boolean = false, //favs
     val tags: List<String> = listOf(),
+    val exchangeTags: List<String> = listOf()
 ) : Parcelable

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.nomoneytrade.api.Api
 import com.example.nomoneytrade.entity.Product
 import com.example.nomoneytrade.mvi.event.ShowcaseEvent
+import com.example.nomoneytrade.stubList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -17,12 +18,11 @@ class ShowcaseViewModel @Inject constructor(val api: Api) : ViewModel() {
 
     init {
         event.value = ShowcaseEvent.Loading
-
+        event.value = ShowcaseEvent.Success(stubList)
         this.viewModelScope.launch {
-            loadProducts()
+            //loadProducts()
         }
     }
-
 
     private suspend fun loadProducts() {
         val response = api.getAllProducts()

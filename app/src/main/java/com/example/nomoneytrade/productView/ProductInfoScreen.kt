@@ -23,17 +23,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.example.nomoneytrade.R
 import com.example.nomoneytrade.entity.Product
 import com.example.nomoneytrade.ui.utils.UiUtilsExtendedFloatingButton
 
 @Composable
-fun ProductInfoScreen(product: Product, tags: String, viewModel: ProductInfoViewModel) {
+fun ProductInfoScreen(product: Product, tags: String, extags: String,  viewModel: ProductInfoViewModel) {
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(8.dp)
@@ -134,9 +136,20 @@ fun ProductInfoScreen(product: Product, tags: String, viewModel: ProductInfoView
             textAlign = TextAlign.Start,
         )
 
+        Text(
+            text = "Меняется на: $extags",
+            fontSize = 16.sp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)
+                .padding(top = 8.dp),
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start,
+        )
+
         UiUtilsExtendedFloatingButton(
-            text = "Предложить обмен",
+            text = stringResource(R.string.suggest_offer),
             showProgress = false
-        ){}
+        ) {}
     }
 }

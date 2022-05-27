@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.nomoneytrade.auth.AuthSignInScreen
 import com.example.nomoneytrade.create.CreateProductScreen
 import com.example.nomoneytrade.mvi.event.BottomNavEvent
 import com.example.nomoneytrade.offers.OffersScreen
@@ -48,7 +49,13 @@ fun MainScreen(navController: NavController) {
     ) {
         when (eventState) {
             BottomNavEvent.Offers -> OffersScreen(navController, hiltViewModel())
-            BottomNavEvent.Profile -> ProfileScreen(navController, hiltViewModel())
+            BottomNavEvent.Profile -> {
+                if (CURRENT_USER_ID == -1L) {
+                    AuthSignInScreen(navController, hiltViewModel())
+                } else {
+                    ProfileScreen(navController = navController, viewModel = hiltViewModel())
+                }
+            }
             BottomNavEvent.Showcase -> ShowcaseScreen(navController, hiltViewModel()).ShowScreen()
             BottomNavEvent.CreateProduct -> CreateProductScreen(navController, hiltViewModel())
         }

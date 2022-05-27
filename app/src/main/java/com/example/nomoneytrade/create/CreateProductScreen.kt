@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -90,7 +92,9 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
         navController.navigate(MAIN_SCREEN)
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .verticalScroll(rememberScrollState())) {
 
         val eventState = viewModel.event.collectAsState()
         val title = stringResource(R.string.done)
@@ -174,8 +178,9 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
         )
 
         UiUtilsExtendedFloatingButton(
-            text = "Создать",
-            showProgress = false //state.loading
+            text = stringResource(R.string.create),
+            showProgress = false,
+            padding = 0
         ) {
             viewModel.clickCreate(
                 ProductRequest(

@@ -9,6 +9,7 @@ import com.example.nomoneytrade.api.dto.UserDto
 import com.example.nomoneytrade.api.requests.GetOffersRequest
 import com.example.nomoneytrade.api.requests.ProductRequest
 import com.example.nomoneytrade.api.responses.AllOfferResponse
+import com.example.nomoneytrade.api.responses.UserResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -43,4 +44,9 @@ interface Api {
 
     @POST("/api/get_my_offers")
     suspend fun getMyOffers( @Body getOffersRequest: GetOffersRequest): Response<AllOfferResponse>
+
+    @POST("/api/get_user_by_id")
+    suspend fun getUserById(@Body userId: UserId): Response<UserResponse>
 }
+
+class UserId(val userId: Long)

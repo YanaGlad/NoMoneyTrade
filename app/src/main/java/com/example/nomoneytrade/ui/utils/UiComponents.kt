@@ -98,7 +98,7 @@ fun ColumnScope.UiUtilsToolbarButton(navController: NavController, destination: 
 }
 
 @Composable
-fun ColumnScope.UiUtilsExtendedFloatingButton(text: String, showProgress: Boolean = false, onClick: () -> Unit) {
+fun ColumnScope.UiUtilsExtendedFloatingButton(text: String, showProgress: Boolean = false, padding: Int = 15,   onClick: () -> Unit) {
 
     ExtendedFloatingActionButton(
         onClick = {
@@ -106,7 +106,7 @@ fun ColumnScope.UiUtilsExtendedFloatingButton(text: String, showProgress: Boolea
         },
         modifier = Modifier
             .padding(10.dp)
-            .padding(top = 15.dp)
+            .padding(top = padding.dp)
             .wrapContentWidth()
             .align(Alignment.CenterHorizontally),
         elevation = FloatingActionButtonDefaults.elevation(0.dp),

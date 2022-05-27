@@ -21,7 +21,7 @@ fun Navigation() {
     NavHost(navController, startDestination = MAIN_SCREEN) {  //temp
         composable(MAIN_SCREEN) { MainScreen(navController) }
         //  composable(PROFILE_SCREEN) { ProfileScreen(navController, hiltViewModel()).ShowScreen() }
-        composable(SIGN_IN_SCREEN) { AuthSignInScreen(navController, hiltViewModel()).ShowScreen() }
+        composable(SIGN_IN_SCREEN) { AuthSignInScreen(navController, hiltViewModel())  }
         composable(SHOWCASE_SCREEN) { ShowcaseScreen(navController, hiltViewModel()).ShowScreen() }
         composable(SIGN_UP_SCREEN) { AuthSignUpScreen(navController, hiltViewModel()) }
         composable("$PRODUCT_INFO_SCREEN/{id}/{url}/{authorId}/{title}/{description}/{tags}/{extags}",

@@ -28,127 +28,119 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.nomoneytrade.CURRENT_USER_ID
 import com.example.nomoneytrade.R
 import com.example.nomoneytrade.SHOWCASE_SCREEN
 import com.example.nomoneytrade.SIGN_UP_SCREEN
 import com.example.nomoneytrade.mvi.effect.AuthEffect
 import com.example.nomoneytrade.mvi.event.AuthEvent
-import com.example.nomoneytrade.ui.utils.ComposeScreen
 import com.example.nomoneytrade.ui.utils.UiUtilsExtendedFloatingButton
 import com.example.nomoneytrade.ui.utils.UiUtilsTextField
 
-class AuthSignInScreen(private val navController: NavController, private val viewModel: AuthViewModel) :
-    ComposeScreen<AuthViewModel>(navController, viewModel) {
+@Composable
+fun AuthSignInScreen(navController: NavController, viewModel: AuthViewModel) {
 
-    override val ON_CLOSE_DESTINATION: String = SHOWCASE_SCREEN
-    override val showCloseButton: Boolean = true
-    override val showBackButton: Boolean = false
-    override val ON_BACK_DESTINATION: String? = null
+    val color = MaterialTheme.colors.primary
 
-    @Composable
-    override fun Screen() {
+    var passwordText by remember { mutableStateOf("") }
+    var emailText by remember { mutableStateOf("") }
+    var colorState by remember { mutableStateOf(color) }
+    var progressState by remember { mutableStateOf(false) }
 
-        val color = MaterialTheme.colors.primary
+    val eventState = viewModel.event.collectAsState()
 
-        var passwordText by remember { mutableStateOf("") }
-        var emailText by remember { mutableStateOf("") }
-        var colorState by remember { mutableStateOf(color) }
-        var progressState by remember { mutableStateOf(false) }
+    when (val event = eventState.value) {
+        is AuthEvent.Error -> {}
+        is AuthEvent.Loading -> {
+            progressState = true
+        }
+        is AuthEvent.Success -> {
+            colorState = color
+            progressState = false
+            viewModel.navigateShowcase()
+            CURRENT_USER_ID = event.state.user.id.toLong()
+        }
+        is AuthEvent.FailedToLogin -> {
+            colorState = Color.Red
+        }
+        AuthEvent.None -> {}
+    }
 
-        val eventState = viewModel.event.collectAsState()
+    val effectState = viewModel.effect.collectAsState()
 
-        when (val event = eventState.value) {
-            is AuthEvent.Error -> {}
-            is AuthEvent.Loading -> {
-                progressState = true
-            }
-            is AuthEvent.Success -> {
-                colorState = color
-                progressState = false
-                viewModel.navigateShowcase()
-            }
-            is AuthEvent.FailedToLogin -> {
-                colorState = Color.Red
-            }
-            AuthEvent.None -> {}
+    when (val effect = effectState.value) {
+        is AuthEffect.NavigateShowcase -> {
+            navController.navigate(SHOWCASE_SCREEN)
+            viewModel.effect.value = AuthEffect.None
+        }
+        is AuthEffect.Navigate -> {
+            navController.navigate(SIGN_UP_SCREEN)
+            viewModel.effect.value = AuthEffect.None
+        }
+        is AuthEffect.None -> {
+        }
+    }
+
+    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+
+        Image(
+            imageVector = ImageVector.vectorResource(R.drawable.ic_handshake),
+            modifier = Modifier
+                .wrapContentWidth()
+                .height(170.dp)
+                .align(Alignment.CenterHorizontally)
+                .padding(top = 10.dp),
+            contentDescription = "App Icon",
+        )
+        Text(
+            text = stringResource(R.string.app_name),
+            textAlign = TextAlign.Center,
+            fontSize = 35.sp,
+            modifier = Modifier.fillMaxWidth(),
+            fontWeight = FontWeight.Bold,
+        )
+
+        Text(
+            text = stringResource(R.string.exchange_service),
+            textAlign = TextAlign.Center,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 5.dp),
+        )
+
+        Text(
+            text = stringResource(R.string.authentication),
+            textAlign = TextAlign.Center,
+            fontSize = 18.sp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 18.dp),
+        )
+
+        UiUtilsTextField(label = stringResource(R.string.email), padding = 15, text = emailText, color = colorState) { text ->
+            emailText = text
         }
 
-        val effectState = viewModel.effect.collectAsState()
-
-        when (val effect = effectState.value) {
-            is AuthEffect.NavigateShowcase -> {
-                navController.navigate(SHOWCASE_SCREEN)
-                viewModel.effect.value = AuthEffect.None
-            }
-            is AuthEffect.Navigate -> {
-                navController.navigate(SIGN_UP_SCREEN)
-                viewModel.effect.value = AuthEffect.None
-            }
-            is AuthEffect.None -> {
-            }
+        UiUtilsTextField(label = stringResource(R.string.password), padding = 15, text = passwordText, color = colorState) { text ->
+            passwordText = text
         }
 
-        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-            Toolbar()
-            Image(
-                imageVector = ImageVector.vectorResource(R.drawable.ic_handshake),
-                modifier = Modifier
-                    .wrapContentWidth()
-                    .height(170.dp)
-                    .align(Alignment.CenterHorizontally)
-                    .padding(top = 10.dp),
-                contentDescription = "App Icon",
-            )
-            Text(
-                text = stringResource(R.string.app_name),
-                textAlign = TextAlign.Center,
-                fontSize = 35.sp,
-                modifier = Modifier.fillMaxWidth(),
-                fontWeight = FontWeight.Bold,
-            )
-
-            Text(
-                text = stringResource(R.string.exchange_service),
-                textAlign = TextAlign.Center,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 5.dp),
-            )
-
-            Text(
-                text = stringResource(R.string.authentication),
-                textAlign = TextAlign.Center,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 18.dp),
-            )
-
-            UiUtilsTextField(label = stringResource(R.string.email), padding = 15, text = emailText, color = colorState) { text ->
-                emailText = text
-            }
-
-            UiUtilsTextField(label = stringResource(R.string.password), padding = 15, text = passwordText, color = colorState) { text ->
-                passwordText = text
-            }
-
-            UiUtilsExtendedFloatingButton(stringResource(R.string.sign_in), showProgress = progressState) {
-                viewModel.signInClick(username = emailText, password = passwordText)
-            }
-
-            Text(
-                text = stringResource(R.string.no_account_yet),
-                textAlign = TextAlign.Center,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable(enabled = true) {
-                        viewModel.navigate()
-                    },
-            )
+        UiUtilsExtendedFloatingButton(stringResource(R.string.sign_in), showProgress = progressState) {
+            viewModel.signInClick(username = emailText, password = passwordText)
         }
+
+        Text(
+            text = stringResource(R.string.no_account_yet),
+            textAlign = TextAlign.Center,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(enabled = true) {
+                    viewModel.navigate()
+                },
+        )
     }
 }

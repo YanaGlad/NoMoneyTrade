@@ -84,18 +84,17 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
 
         DefaultTextField("${profileState.value.city}, ${profileState.value.address}")
 
-        Text(
-            text = "Active offers: ",
-            fontSize = 22.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 12.dp, start = 16.dp),
-            textAlign = TextAlign.Start,
-            fontWeight = FontWeight.Bold,
-        )
+//        Text(
+//            text = "Active offers: ",
+//            fontSize = 22.sp,
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(top = 12.dp, start = 16.dp),
+//            textAlign = TextAlign.Start,
+//            fontWeight = FontWeight.Bold,
+//        )
 
         Column(modifier = Modifier.fillMaxWidth()) {
-
         }
     }
 }

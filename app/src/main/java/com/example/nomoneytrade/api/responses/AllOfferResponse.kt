@@ -1,5 +1,6 @@
 package com.example.nomoneytrade.api.responses
 
-import com.example.nomoneytrade.entity.Offer
+import kotlinx.serialization.Serializable
 
-class AllOfferResponse(var offers: List<Offer>)
+@Serializable
+class AllOfferResponse(var offers: List<OfferResponse>)

@@ -12,21 +12,27 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
+import androidx.compose.material.ExtendedFloatingActionButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,17 +47,55 @@ import com.example.nomoneytrade.mvi.event.OfferEvent
 fun OffersScreen(navController: NavController, viewModel: OffersViewModel) {
     val eventState = viewModel.event.collectAsState()
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .verticalScroll(rememberScrollState())) {
-        when (val event = eventState.value) {
-            OfferEvent.Error -> {}
-            is OfferEvent.LoadedOffers -> {
-                event.offers.forEach {
-                    OfferItem(it)
+    Column {
+        Row(modifier = Modifier.fillMaxWidth()) {
+            ExtendedFloatingActionButton(
+                text = {
+                    Text(
+                        text = stringResource(R.string.offers),
+                        fontSize = 16.sp,
+                        textAlign = TextAlign.Center,
+                    )
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .padding(8.dp),
+                onClick = {
+
+                },
+                backgroundColor = MaterialTheme.colors.primary,
+            )
+            ExtendedFloatingActionButton(
+                text = {
+                    Text(
+                        text = stringResource(R.string.sent),
+                        fontSize = 16.sp,
+                        textAlign = TextAlign.Center,
+                    )
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .padding(8.dp),
+                onClick = {
+
+                },
+                backgroundColor = MaterialTheme.colors.primary,
+                )
+        }
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())) {
+            when (val event = eventState.value) {
+                OfferEvent.Error -> {}
+                is OfferEvent.LoadedOffers -> {
+                    event.offers.forEach {
+                        OfferItem(it)
+                    }
                 }
+                OfferEvent.Loading -> {}
             }
-            OfferEvent.Loading -> {}
         }
     }
 }
@@ -65,19 +109,6 @@ fun MyOffers() {
 fun OffersForMe(viewModel: OffersViewModel) {
     val eventState = viewModel.event.collectAsState()
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .verticalScroll(rememberScrollState())) {
-        when (val event = eventState.value) {
-            OfferEvent.Error -> {}
-            is OfferEvent.LoadedOffers -> {
-                event.offers.forEach {
-                    OfferItem(it)
-                }
-            }
-            OfferEvent.Loading -> {}
-        }
-    }
 }
 
 @Composable
@@ -93,7 +124,7 @@ fun OfferItem(offer: Offer) {
             OfferCard(1f, Color.Green, R.drawable.ic_checkmark) {
                 //POST accepted offer
             }
-            OfferCard(1f, Color.Red, R.drawable.ic_close){
+            OfferCard(1f, Color.Red, R.drawable.ic_close) {
                 // POST declined offer
             }
         }
@@ -145,7 +176,7 @@ fun RowScope.ShortInfo(itemIcon: String, userIcon: String, title: String) {
 }
 
 @Composable
-fun RowScope.OfferCard(weight: Float, color: Color, icon: Int, onClick: ()-> Unit) {
+fun RowScope.OfferCard(weight: Float, color: Color, icon: Int, onClick: () -> Unit) {
     Card(
         shape = RoundedCornerShape(8.dp),
         backgroundColor = color,

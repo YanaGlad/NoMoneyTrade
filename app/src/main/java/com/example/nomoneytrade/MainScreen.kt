@@ -56,7 +56,7 @@ fun MainScreen(navController: NavController) {
                     ProfileScreen(navController = navController, viewModel = hiltViewModel())
                 }
             }
-            BottomNavEvent.Showcase -> ShowcaseScreen(navController, hiltViewModel()).ShowScreen()
+            BottomNavEvent.Showcase -> ShowcaseScreen(navController, hiltViewModel())
             BottomNavEvent.CreateProduct -> CreateProductScreen(navController, hiltViewModel())
         }
     }

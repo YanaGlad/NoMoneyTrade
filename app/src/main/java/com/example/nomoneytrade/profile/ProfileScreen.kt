@@ -44,7 +44,6 @@ import com.example.nomoneytrade.ui.utils.UiUtilsToolbarButton
 @Composable
 fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
     BackHandler {}
-    UiUtilsLoadingFullScreen()
     val profileState = viewModel.profile.collectAsState()
 
     when (val event = profileState.value) {

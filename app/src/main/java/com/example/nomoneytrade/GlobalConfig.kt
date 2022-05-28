@@ -32,7 +32,7 @@ val samsungPen = Product(
     id = 4,
     userId = 1,
     title = "Ручка it школа",
-    imageUrl = "https://sun9-east.userapi.com/sun9-75/s/v1/if2/C1NnmI9UO3QpuDf4za9Kt9XooGMzRDbpk1WrfXdH918RfqKFdg1jNypW9Wfv6m1U7D8bhU8_KpsMlBcwy8H1wjOl.jpg?size=1200x1600&quality=95&type=album",
+    imageUrl = "https://sun9-east.userapi.com/sun9-60/s/v1/if2/EHplOy14ciNYBzdgBRAcEgzy_dpyvvDuOa_LAOklnQT8CTyPhKIFXYPqWQWGCzXgMkip7w-LgyhHtfesnuoh49Lz.jpg?size=1620x2160&quality=96&type=album",
     description = "Бесценная ручка",
     favourites = false,
     tags = listOf("ручка", "канцелярия", "самсунг"),

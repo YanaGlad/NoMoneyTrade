@@ -198,6 +198,11 @@ fun AuthSignUpScreen(
             email = text
         }
 
+        var phone by remember { mutableStateOf("") }
+        UiUtilsTextField(label = stringResource(R.string.phone_number), padding = 15, text = phone) { text ->
+            phone = text
+        }
+
         var password by remember { mutableStateOf("") }
         UiUtilsTextField(label = stringResource(R.string.password), padding = 15, text = password) { text ->
             password = text
@@ -209,7 +214,7 @@ fun AuthSignUpScreen(
         }
 
         UiUtilsExtendedFloatingButton(stringResource(R.string.sign_up), showProgress = progressState) {
-            viewModel.signUpClick(username = username, password = password, email = email)
+            viewModel.signUpClick(username = username, password = password, email = email, phoneNumber = phone)
         }
 
         Text(

@@ -27,8 +27,9 @@ import com.example.nomoneytrade.ui.utils.UiUtilsToolbarButton
 
 @Composable
 fun OnboardingScreen(navController: NavController, title: String, description: String, drawable: Int) {
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().padding(12.dp)) {
         UiUtilsToolbarButton(navController, MAIN_SCREEN, R.drawable.ic_close)
+
         Text(
             text = title,
             textAlign = TextAlign.Center,
@@ -38,6 +39,16 @@ fun OnboardingScreen(navController: NavController, title: String, description: S
                 .padding(top = 18.dp),
             fontWeight = FontWeight.Bold,
         )
+        Image(
+            imageVector = ImageVector.vectorResource(R.drawable.ic_checkmark),
+            modifier = Modifier
+                .width(150.dp)
+                .height(150.dp)
+                .align(CenterHorizontally)
+                .padding(top = 10.dp, start = 5.dp),
+            contentDescription = "profile photo",
+            contentScale = ContentScale.Crop,
+        )
         Text(
             text = stringResource(R.string.now_meent),
             textAlign = TextAlign.Center,
@@ -45,17 +56,6 @@ fun OnboardingScreen(navController: NavController, title: String, description: S
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 18.dp),
-        )
-
-        Image(
-            imageVector = ImageVector.vectorResource(drawable),
-            modifier = Modifier
-                .width(100.dp)
-                .height(100.dp)
-                .align(CenterHorizontally)
-                .padding(top = 10.dp, start = 5.dp),
-            contentDescription = "profile photo",
-            contentScale = ContentScale.Crop,
         )
     }
 }

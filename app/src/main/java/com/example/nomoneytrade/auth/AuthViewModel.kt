@@ -43,10 +43,10 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
         }
     }
 
-    fun signUpClick(username: String, password: String, email: String) {
+    fun signUpClick(username: String, password: String, email: String, phoneNumber: String) {
         event.value = AuthEvent.Loading
         this.viewModelScope.launch {
-            signUp(email, username, password, imageFile)
+            signUp(email, username, password, imageFile, phoneNumber)
         }
     }
 
@@ -66,8 +66,8 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
         effect.value = AuthEffect.NavigateShowcase
     }
 
-    private suspend fun signUp(email: String, username: String, password: String, imageBody: MultipartBody.Part?) {
-        val signUpBody = SignUpBody(username, email, password)
+    private suspend fun signUp(email: String, username: String, password: String, imageBody: MultipartBody.Part?, phoneNumber: String) {
+        val signUpBody = SignUpBody(username, email, password, phoneNumber)
 
         val response = api.signUp(signUpBody, imageBody)
 

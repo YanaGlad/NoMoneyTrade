@@ -6,5 +6,6 @@ import kotlinx.serialization.Serializable
 class SignUpBody(
     val username: String,
     val email: String,
-    val password: String
+    val password: String,
+    val phoneNumber: String,
 )

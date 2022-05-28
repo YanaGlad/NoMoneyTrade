@@ -30,4 +30,5 @@
     <string name="meeting_time">Время встречи</string>
     <string name="create">Создать</string>
     <string name="sent">Отправленные</string>
+    <string name="phone_number">Номер телефона</string>
 </resources>

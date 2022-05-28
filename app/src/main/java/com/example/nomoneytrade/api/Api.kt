@@ -11,6 +11,7 @@ import com.example.nomoneytrade.api.requests.MakeOfferRequest
 import com.example.nomoneytrade.api.requests.ProductRequest
 import com.example.nomoneytrade.api.responses.AllOfferResponse
 import com.example.nomoneytrade.api.responses.UserResponse
+import kotlinx.serialization.Serializable
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -49,7 +50,7 @@ interface Api {
     @POST("/offers/get_my_offers")
     suspend fun getMyOffers(@Body getOffersRequest: GetOffersRequest): Response<AllOfferResponse>
 
-    @POST("/api/get_user_by_id")
+    @POST("/auth/get_user_by_id")
     suspend fun getUserById(@Body userId: UserId): Response<UserResponse>
 
     @Multipart
@@ -60,4 +61,5 @@ interface Api {
 
 }
 
+@Serializable
 class UserId(val userId: Long)

@@ -1,29 +1,39 @@
 package com.example.nomoneytrade.auth
 
 import android.app.Activity
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
-import android.graphics.drawable.BitmapDrawable
 import android.provider.MediaStore
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -36,20 +46,20 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.nomoneytrade.MAIN_SCREEN
 import com.example.nomoneytrade.R
-import com.example.nomoneytrade.SHOWCASE_SCREEN
 import com.example.nomoneytrade.SIGN_IN_SCREEN
-import com.example.nomoneytrade.mvi.effect.AuthEffect
 import com.example.nomoneytrade.mvi.event.AuthEvent
-import com.example.nomoneytrade.ui.utils.ComposeScreen
 import com.example.nomoneytrade.ui.utils.UiUtilsExtendedFloatingButton
 import com.example.nomoneytrade.ui.utils.UiUtilsPasswordTextField
 import com.example.nomoneytrade.ui.utils.UiUtilsTextField
 import com.example.nomoneytrade.ui.utils.UiUtilsToolbarButton
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.io.*
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 
 @Composable
 fun AuthSignUpScreen(
@@ -101,7 +111,7 @@ fun AuthSignUpScreen(
         }
         is AuthEvent.Success -> {
             progressState = false
-            viewModel.navigate()
+            navController.navigate(MAIN_SCREEN)
         }
         is AuthEvent.FailedToLogin -> {
 
@@ -113,17 +123,6 @@ fun AuthSignUpScreen(
         }
     }
 
-    val effectState = viewModel.effect.collectAsState()
-
-    when (effectState.value) {
-        is AuthEffect.NavigateShowcase -> {}
-        is AuthEffect.Navigate -> {
-            navController.navigate(MAIN_SCREEN)
-            viewModel.effect.value = AuthEffect.None
-        }
-        is AuthEffect.None -> {}
-    }
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -133,22 +132,21 @@ fun AuthSignUpScreen(
 
         Box(
             modifier = Modifier
-                .wrapContentWidth()
-                .height(170.dp)
+                .wrapContentSize()
                 .align(CenterHorizontally)
                 .padding(top = 20.dp)
+                .clip(CircleShape)
         ) {
             if (bitmapState == null) {
                 Image(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_circle_backg),
                     modifier = Modifier
                         .wrapContentWidth()
-                        .fillMaxHeight()
+                        .size(170.dp)
                         .align(Center)
                         .clickable {
                             viewModel.chooseImage(interactionResult)
-                        }
-                        .padding(top = 20.dp),
+                        } ,
                     contentDescription = "profile photo",
                     contentScale = ContentScale.Crop,
                 )
@@ -158,7 +156,7 @@ fun AuthSignUpScreen(
                         .width(100.dp)
                         .height(100.dp)
                         .align(Center)
-                        .padding(top = 10.dp, start = 5.dp),
+                        .padding(start = 5.dp),
                     contentDescription = "profile photo",
                     contentScale = ContentScale.Crop,
                 )
@@ -227,7 +225,7 @@ fun AuthSignUpScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable(enabled = true) {
-                    //to signIn
+                   navController.navigate(SIGN_IN_SCREEN)
                 },
         )
     }

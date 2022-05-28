@@ -6,6 +6,7 @@ import com.example.nomoneytrade.CURRENT_USER_ID
 import com.example.nomoneytrade.api.Api
 import com.example.nomoneytrade.api.UserId
 import com.example.nomoneytrade.entity.User
+import com.example.nomoneytrade.mvi.event.ProfileEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -14,8 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(private val api: Api) : ViewModel() {
 
-    //TODO заменить на стейт!
-    val profile = MutableStateFlow(User(-1, "", "", "", "", "",))
+    val profile = MutableStateFlow<ProfileEvent>(ProfileEvent.Loading)
 
     init {
         this.viewModelScope.launch {
@@ -23,11 +23,11 @@ class ProfileViewModel @Inject constructor(private val api: Api) : ViewModel() {
         }
     }
 
-    suspend fun getCurrentUserInfo() {
+    private suspend fun getCurrentUserInfo() {
         val response = api.getUserById(UserId(CURRENT_USER_ID))
         val body = response.body()
         if (response.isSuccessful && body != null) {
-            profile.value = User(
+            profile.value = ProfileEvent.Success(User(
                 id = CURRENT_USER_ID,
                 username = body.username,
                 fio = "Гладких Яна Сергеевна",
@@ -35,8 +35,9 @@ class ProfileViewModel @Inject constructor(private val api: Api) : ViewModel() {
                 iconUrl = body.imagePath,
                 phoneNumber = body.phoneNumber,
             )
+            )
         } else {
-
+            profile.value = ProfileEvent.Error
         }
     }
 

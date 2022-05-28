@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.nomoneytrade.CURRENT_USER_ID
+import com.example.nomoneytrade.MAIN_SCREEN
 import com.example.nomoneytrade.R
 import com.example.nomoneytrade.SHOWCASE_SCREEN
 import com.example.nomoneytrade.SIGN_UP_SCREEN
@@ -71,7 +72,7 @@ fun AuthSignInScreen(navController: NavController, viewModel: AuthViewModel) {
 
     when (val effect = effectState.value) {
         is AuthEffect.NavigateShowcase -> {
-            navController.navigate(SHOWCASE_SCREEN)
+            navController.navigate(MAIN_SCREEN)
             viewModel.effect.value = AuthEffect.None
         }
         is AuthEffect.Navigate -> {

@@ -19,6 +19,7 @@ import com.example.nomoneytrade.ONBOARDING_SCREEN
 import com.example.nomoneytrade.R
 import com.example.nomoneytrade.entity.Product
 import com.example.nomoneytrade.mvi.event.SuggestChoiceEvent
+import com.example.nomoneytrade.ui.utils.UiUtilsLoadingFullScreen
 import internal.ProductListItem
 
 @Composable
@@ -33,7 +34,7 @@ fun SuggestChoiceScreen(tags: String, navController: NavController, viewModel: S
 
         when (val event = eventState.value) {
             SuggestChoiceEvent.Error -> {}
-            SuggestChoiceEvent.Loading -> {}
+            SuggestChoiceEvent.Loading -> UiUtilsLoadingFullScreen()
             is SuggestChoiceEvent.Success -> {
                 val filteredItems = event.availableProducts
                     .filter { product ->

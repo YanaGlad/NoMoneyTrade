@@ -1,6 +1,5 @@
 package com.example.nomoneytrade.showcase
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,31 +20,25 @@ import androidx.navigation.NavController
 import com.example.nomoneytrade.PRODUCT_INFO_SCREEN
 import com.example.nomoneytrade.entity.Product
 import com.example.nomoneytrade.mvi.event.ShowcaseEvent
-import com.example.nomoneytrade.ui.utils.ComposeScreen
 import com.example.nomoneytrade.ui.utils.SearchView
+import com.example.nomoneytrade.ui.utils.UiUtilsLoadingFullScreen
 import internal.ProductListItem
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
-import java.util.*
+import java.util.Locale
 
-class ShowcaseScreen(val navController: NavController, private val viewModel: ShowcaseViewModel) : ComposeScreen<ShowcaseViewModel>(navController, viewModel) {
+@Composable
+fun ShowcaseScreen(navController: NavController, viewModel: ShowcaseViewModel) {
 
-    override val ON_CLOSE_DESTINATION: String? = null
-    override val ON_BACK_DESTINATION: String? = null
-    override val showCloseButton: Boolean = false
-    override val showBackButton: Boolean = false
+    val viewState = viewModel.event.collectAsState()
 
-    @Composable
-    override fun Screen() {
-
-        val viewState = viewModel.event.collectAsState()
-
-        when (val event = viewState.value) {
-            ShowcaseEvent.Error -> {}
-            ShowcaseEvent.Loading -> {}
-            is ShowcaseEvent.Success -> {
-                ProductList(navController, event.products)
-            }
+    when (val event = viewState.value) {
+        ShowcaseEvent.Error -> {}
+        ShowcaseEvent.Loading -> {
+            UiUtilsLoadingFullScreen()
+        }
+        is ShowcaseEvent.Success -> {
+            ProductList(navController, event.products)
         }
     }
 }

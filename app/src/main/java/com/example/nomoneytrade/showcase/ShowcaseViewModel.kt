@@ -28,7 +28,7 @@ class ShowcaseViewModel @Inject constructor(val api: Api) : ViewModel() {
     private suspend fun loadProducts() {
         val response = api.getAllProducts()
         val body = response.body()
-        Log.d("Resp", response.body().toString())
+
         if (response.isSuccessful && body != null) {
             event.value = ShowcaseEvent.Success(body.posts.map {
                 Product(

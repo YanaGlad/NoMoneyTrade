@@ -99,14 +99,19 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
         val eventState = viewModel.event.collectAsState()
         val title = stringResource(R.string.done)
         val description = stringResource(R.string.success_created)
-        val drawable = R.drawable.ic_exchange
+        var progressState by remember { mutableStateOf(false) }
 
         when(eventState.value){
-            CreateProductEvent.Error -> {}
-            CreateProductEvent.Loading -> {}
+            CreateProductEvent.Error -> {
+                progressState = false
+                    //TODO тост с ошибкой
+            }
+            CreateProductEvent.Loading -> {
+                progressState = true
+            }
             CreateProductEvent.Success -> {
-                //TODO сделать экран "Объявлеие создано!"
-                navController.navigate("$ONBOARDING_SCREEN/$title/$description/$drawable")
+                progressState = false
+                navController.navigate("$ONBOARDING_SCREEN/$title/$description")
             }
         }
 
@@ -177,9 +182,10 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
             contentScale = ContentScale.Crop,
         )
 
+
         UiUtilsExtendedFloatingButton(
             text = stringResource(R.string.create),
-            showProgress = false,
+            showProgress = progressState,
             padding = 0
         ) {
             viewModel.clickCreate(

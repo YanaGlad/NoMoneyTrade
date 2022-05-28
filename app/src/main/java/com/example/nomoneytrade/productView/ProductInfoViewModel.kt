@@ -15,7 +15,7 @@ import javax.inject.Inject
 class ProductInfoViewModel @Inject constructor(private val api: Api) : ViewModel() {
 
     //TODO everything to state!
-    val sellerInfo = MutableStateFlow(User(-1,"","", "","","","", ""))
+    val sellerInfo = MutableStateFlow(User(-1,"","", "","","",))
 
     init {
         this.viewModelScope.launch {

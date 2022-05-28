@@ -26,8 +26,6 @@ fun SuggestChoiceScreen(tags: String, navController: NavController, viewModel: S
     val tagsList = tags.replace("+#", " #").split(" #")
     val eventState = viewModel.event.collectAsState()
 
-    Log.d("AAAAA", "$tagsList got...")
-
     Column(modifier = Modifier.fillMaxWidth()) {
         val title = stringResource(R.string.done)
         val description = stringResource(R.string.now_meent)
@@ -51,8 +49,7 @@ fun SuggestChoiceScreen(tags: String, navController: NavController, viewModel: S
                 if (filteredItems.isNotEmpty()) {
                     filteredItems.forEach {
                         ProductListItem(it) {
-
-                            navController.navigate("$ONBOARDING_SCREEN/$title/$description/$drawable")
+                            navController.navigate("$ONBOARDING_SCREEN/$title/$description")
                         }
                     }
                 } else {

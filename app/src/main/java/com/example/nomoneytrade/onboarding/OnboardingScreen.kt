@@ -26,7 +26,7 @@ import com.example.nomoneytrade.R
 import com.example.nomoneytrade.ui.utils.UiUtilsToolbarButton
 
 @Composable
-fun OnboardingScreen(navController: NavController, title: String, description: String, drawable: Int) {
+fun OnboardingScreen(navController: NavController, title: String, description: String) {
     Column(modifier = Modifier.fillMaxSize().padding(12.dp)) {
         UiUtilsToolbarButton(navController, MAIN_SCREEN, R.drawable.ic_close)
 

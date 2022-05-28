@@ -52,12 +52,11 @@ fun Navigation() {
                 viewModel = hiltViewModel())
         }
         composable(OFFERS_SCREEN) { OffersScreen(navController, hiltViewModel()) }
-        composable("$ONBOARDING_SCREEN/{title}/{description}/{drawable}") {
+        composable("$ONBOARDING_SCREEN/{title}/{description}") {
             OnboardingScreen(
                 navController = navController,
                 title = it.arguments?.getString("title") ?: "",
                 description = it.arguments?.getString("description") ?: "",
-                drawable = it.arguments?.getInt("drawable") ?: R.drawable.ic_exchange,
             )
         }
         composable("$SUGGEST_SCREEN/{tags}") {

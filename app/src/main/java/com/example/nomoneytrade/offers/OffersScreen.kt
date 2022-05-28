@@ -45,7 +45,6 @@ import com.example.nomoneytrade.mvi.event.OfferEvent
 
 @Composable
 fun OffersScreen(navController: NavController, viewModel: OffersViewModel) {
-    val eventState = viewModel.event.collectAsState()
 
     Column {
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -62,7 +61,7 @@ fun OffersScreen(navController: NavController, viewModel: OffersViewModel) {
                     .weight(1f)
                     .padding(8.dp),
                 onClick = {
-
+                    viewModel.clickGetOffersToMe()
                 },
                 backgroundColor = MaterialTheme.colors.primary,
             )
@@ -79,22 +78,34 @@ fun OffersScreen(navController: NavController, viewModel: OffersViewModel) {
                     .weight(1f)
                     .padding(8.dp),
                 onClick = {
-
+                    viewModel.clickGetMyOffers()
                 },
                 backgroundColor = MaterialTheme.colors.primary,
-                )
+            )
         }
+        val eventState = viewModel.event.collectAsState()
+
         Column(modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())) {
             when (val event = eventState.value) {
                 OfferEvent.Error -> {}
                 is OfferEvent.LoadedOffers -> {
-                    event.offers.forEach {
-                        OfferItem(it)
+                    event.offers.forEach { offer ->
+                        OfferItem(
+                            offer = offer,
+                            clickAccept = {
+                                viewModel.clickAcceptOffer()
+                            },
+                            clickDecline = {
+                               viewModel.clickDeclineOffer()
+                            }
+                        )
                     }
                 }
-                OfferEvent.Loading -> {}
+                OfferEvent.Loading -> {
+
+                }
             }
         }
     }
@@ -112,7 +123,7 @@ fun OffersForMe(viewModel: OffersViewModel) {
 }
 
 @Composable
-fun OfferItem(offer: Offer) {
+fun OfferItem(offer: Offer, clickAccept: () -> Unit, clickDecline: () -> Unit) {
     Column(modifier = Modifier.fillMaxWidth()) {
 
         Row(modifier = Modifier.padding(top = 16.dp)) {
@@ -122,10 +133,10 @@ fun OfferItem(offer: Offer) {
 
         Row {
             OfferCard(1f, Color.Green, R.drawable.ic_checkmark) {
-                //POST accepted offer
+                clickAccept()
             }
             OfferCard(1f, Color.Red, R.drawable.ic_close) {
-                // POST declined offer
+                clickDecline()
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.example.nomoneytrade.productView
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,13 +10,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -47,6 +48,7 @@ fun ProductInfoScreen(navController: NavController, product: Product, tags: Stri
         .verticalScroll(rememberScrollState())) {
 
         val userState = viewModel.sellerInfo.collectAsState()
+        var progressState by remember { mutableStateOf(false) }
 
         Image(
             painter = rememberAsyncImagePainter(
@@ -122,24 +124,24 @@ fun ProductInfoScreen(navController: NavController, product: Product, tags: Stri
             )
         }
 
-        Text(
-            text = userState.value.city,
-            fontSize = 14.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 8.dp),
-            textAlign = TextAlign.Start,
-        )
-        Text(
-            text = userState.value.address,
-            fontSize = 14.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 8.dp),
-            textAlign = TextAlign.Start,
-        )
+//        Text(
+//            text = userState.value.city,
+//            fontSize = 14.sp,
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .align(Alignment.CenterHorizontally)
+//                .padding(top = 8.dp),
+//            textAlign = TextAlign.Start,
+//        )
+//        Text(
+//            text = userState.value.address,
+//            fontSize = 14.sp,
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .align(Alignment.CenterHorizontally)
+//                .padding(top = 8.dp),
+//            textAlign = TextAlign.Start,
+//        )
 
         Text(
             text = "Меняется на: $extags",
@@ -154,7 +156,7 @@ fun ProductInfoScreen(navController: NavController, product: Product, tags: Stri
 
         UiUtilsExtendedFloatingButton(
             text = stringResource(R.string.suggest_offer),
-            showProgress = false
+            showProgress = progressState
         ) {
 
             val encodedTag = URLEncoder.encode(extags, StandardCharsets.UTF_8.toString()).replace("+#", " #")

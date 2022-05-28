@@ -42,7 +42,10 @@ interface Api {
     @POST("/api/get_posts")
     suspend fun getAllProducts(): Response<AllPostResponse>
 
-    @POST("/api/get_my_offers")
+    @POST("/offers/get_to_me_offers")
+    suspend fun getToMeOffers( @Body getOffersRequest: GetOffersRequest): Response<AllOfferResponse>
+
+    @POST("/offers/get_my_offers")
     suspend fun getMyOffers( @Body getOffersRequest: GetOffersRequest): Response<AllOfferResponse>
 
     @POST("/api/get_user_by_id")

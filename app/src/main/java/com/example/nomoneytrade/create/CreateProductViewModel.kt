@@ -20,7 +20,7 @@ import javax.inject.Inject
 class CreateProductViewModel @Inject constructor(private val api: Api) : ViewModel() {
     var imageFile: MultipartBody.Part? = null
     private val pickImageRequest = 71
-    val event = MutableStateFlow<CreateProductEvent>(CreateProductEvent.Loading)
+    val event = MutableStateFlow<CreateProductEvent?>(CreateProductEvent.Loading)
 
     fun clickCreate(product: ProductRequest) {
         this.viewModelScope.launch {

@@ -49,6 +49,7 @@ import com.example.nomoneytrade.R
 import com.example.nomoneytrade.SIGN_IN_SCREEN
 import com.example.nomoneytrade.mvi.event.AuthEvent
 import com.example.nomoneytrade.ui.utils.UiUtilsExtendedFloatingButton
+import com.example.nomoneytrade.ui.utils.UiUtilsNoPhotoPlaceholder
 import com.example.nomoneytrade.ui.utils.UiUtilsPasswordTextField
 import com.example.nomoneytrade.ui.utils.UiUtilsTextField
 import com.example.nomoneytrade.ui.utils.UiUtilsToolbarButton
@@ -130,52 +131,12 @@ fun AuthSignUpScreen(
     ) {
         UiUtilsToolbarButton(navController = navController, destination = SIGN_IN_SCREEN, icon = R.drawable.ic_back, alignment = Alignment.Start)
 
-        Box(
-            modifier = Modifier
-                .wrapContentSize()
-                .align(CenterHorizontally)
-                .padding(top = 20.dp)
-                .clip(CircleShape)
+        UiUtilsNoPhotoPlaceholder(
+            size = 170,
+            cameraSize = 100,
+            paddingTop = 0
         ) {
-            if (bitmapState == null) {
-                Image(
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_circle_backg),
-                    modifier = Modifier
-                        .wrapContentWidth()
-                        .size(170.dp)
-                        .align(Center)
-                        .clickable {
-                            viewModel.chooseImage(interactionResult)
-                        } ,
-                    contentDescription = "profile photo",
-                    contentScale = ContentScale.Crop,
-                )
-                Image(
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_camera),
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(100.dp)
-                        .align(Center)
-                        .padding(start = 5.dp),
-                    contentDescription = "profile photo",
-                    contentScale = ContentScale.Crop,
-                )
-            } else {
-                Image(
-                    bitmap = bitmapState!!.asImageBitmap(),
-                    modifier = Modifier
-                        .wrapContentWidth()
-                        .fillMaxHeight()
-                        .align(Center)
-                        .clip(CircleShape)
-                        .clickable {
-                            viewModel.chooseImage(interactionResult)
-                        }
-                        .padding(top = 10.dp, start = 5.dp),
-                    contentDescription = "profile photo",
-                    contentScale = ContentScale.Fit,
-                )
-            }
+            viewModel.chooseImage(interactionResult)
         }
 
         Text(

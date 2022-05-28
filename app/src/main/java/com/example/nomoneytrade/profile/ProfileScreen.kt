@@ -39,6 +39,7 @@ import com.example.nomoneytrade.R
 import com.example.nomoneytrade.SIGN_IN_SCREEN
 import com.example.nomoneytrade.mvi.event.ProfileEvent
 import com.example.nomoneytrade.ui.utils.UiUtilsLoadingFullScreen
+import com.example.nomoneytrade.ui.utils.UiUtilsNoPhotoPlaceholder
 import com.example.nomoneytrade.ui.utils.UiUtilsToolbarButton
 
 @Composable
@@ -84,31 +85,15 @@ private fun Profile(
                 contentScale = ContentScale.Crop,
             )
         } else {
-            Box(modifier = Modifier.size(250.dp).clip(CircleShape).align(CenterHorizontally)) {
-                Image(
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_circle_backg),
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .align(Center)
-                        .clickable {
-                            //CHOOSE PHOTO
-                        }
-                        .padding(top = 20.dp),
-                    contentDescription = "profile photo stub",
-                    contentScale = ContentScale.Crop,
-                )
-                Image(
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_camera),
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(100.dp)
-                        .align(Center)
-                        .padding(top = 10.dp, start = 5.dp),
-                    contentDescription = "profile photo sub camera",
-                    contentScale = ContentScale.Crop,
-                )
+            UiUtilsNoPhotoPlaceholder(
+                size = 170,
+                cameraSize = 100,
+                paddingTop = 0
+            ) {
+                //TODO choose photo
             }
         }
+
         Text(
             text = profileState.user.username,
             fontSize = 28.sp,
@@ -131,7 +116,7 @@ private fun Profile(
 
         DefaultTextField("${stringResource(R.string.email)}: ${profileState.user.email}")
 
-        DefaultTextField("$${stringResource(R.string.phone_number)}: ${profileState.user.phoneNumber}")
+        DefaultTextField("${stringResource(R.string.phone_number)}: ${profileState.user.phoneNumber}")
 
         //TODO возможность редактировать профиль, добавлять город, адрес
         //   DefaultTextField("${profileState.value.city}, ${profileState.value.address}")

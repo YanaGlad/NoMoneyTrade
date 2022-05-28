@@ -17,12 +17,6 @@ class ProductInfoViewModel @Inject constructor(private val api: Api) : ViewModel
 
     val event = MutableStateFlow<ProductInfoEvent>(ProductInfoEvent.Loading)
 
-    init {
-        this.viewModelScope.launch {
-            getSellerUserInfo(CURRENT_USER_ID)
-        }
-    }
-
     fun getSellerUserInfo(id: Long) {
         this.viewModelScope.launch {
             val response = api.getUserById(UserId(id))

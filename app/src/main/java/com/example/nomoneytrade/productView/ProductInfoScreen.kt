@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -40,6 +41,7 @@ import com.example.nomoneytrade.entity.Product
 import com.example.nomoneytrade.mvi.event.ProductInfoEvent
 import com.example.nomoneytrade.ui.utils.UiUtilsExtendedFloatingButton
 import com.example.nomoneytrade.ui.utils.UiUtilsLoadingFullScreen
+import com.example.nomoneytrade.ui.utils.UiUtilsNoPhotoPlaceholder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
@@ -53,7 +55,7 @@ fun ProductInfoScreen(navController: NavController, product: Product, tags: Stri
         viewModel.getSellerUserInfo(product.userId)
 
         val eventState = viewModel.event.collectAsState()
-        when(val event = eventState.value) {
+        when (val event = eventState.value) {
             ProductInfoEvent.Error -> {}
             ProductInfoEvent.Loading -> UiUtilsLoadingFullScreen()
             is ProductInfoEvent.Success -> {
@@ -120,24 +122,34 @@ private fun ColumnScope.ProductInfo(
         textAlign = TextAlign.Center,
     )
 
-    Row(modifier = Modifier.height(60.dp)) {
-        Image(
-            painter = rememberAsyncImagePainter(
-                ImageRequest.Builder(LocalContext.current)
-                    .data(data = event.user.iconUrl)
-                    .allowHardware(false)
-                    .build()
-            ),
-            modifier = Modifier
-                .size(60.dp)
-                .padding(top = 18.dp)
-                .clip(CircleShape),
-            contentDescription = "",
-            contentScale = ContentScale.Crop,
-        )
+    Row(modifier = Modifier.wrapContentSize()) {
+        if (event.user.iconUrl != "") {
+            Image(
+                painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(LocalContext.current)
+                        .data(data = event.user.iconUrl)
+                        .allowHardware(false)
+                        .build()
+                ),
+                modifier = Modifier
+                    .size(60.dp)
+                    .padding(top = 18.dp)
+                    .clip(CircleShape),
+                contentDescription = "",
+                contentScale = ContentScale.Crop,
+            )
+        } else {
+            Column {
+                UiUtilsNoPhotoPlaceholder(
+                    size = 70,
+                    cameraSize = 30,
+                    paddingTop = 0
+                ) {}
+            }
+        }
         Text(
-            text = "${event.user.username} (${event.user.fio})",
-            fontSize = 16.sp,
+            text = event.user.username,
+            fontSize = 18.sp,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(CenterVertically)

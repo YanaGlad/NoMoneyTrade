@@ -112,6 +112,7 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
             CreateProductEvent.Success -> {
                 progressState = false
                 navController.navigate("$ONBOARDING_SCREEN/$title/$description")
+                viewModel.event.value = null
             }
         }
 

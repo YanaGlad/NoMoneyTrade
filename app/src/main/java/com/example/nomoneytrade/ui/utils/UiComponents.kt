@@ -223,7 +223,6 @@ fun UiUtilsNextButton(navController: NavController, destination: String, padding
 fun ColumnScope.UiUtilsNoPhotoPlaceholder(
     size: Int,
     cameraSize: Int,
-    loadedSize: Int = 100,
     paddingTop: Int,
     bitmap: Bitmap? = null,
     state: Boolean = true,
@@ -260,9 +259,13 @@ fun ColumnScope.UiUtilsNoPhotoPlaceholder(
                 Image(
                     bitmap = it.asImageBitmap(),
                     modifier = Modifier
-                        .height(100.dp)
+                        .size(size.dp)
                         .align(Alignment.Center)
-                        .padding(top = 10.dp, start = 5.dp),
+                        .padding(top = 10.dp, start = 5.dp)
+                        .clip(CircleShape)
+                        .clickable {
+                            onClick()
+                        },
                     contentDescription = "profile photo",
                     contentScale = ContentScale.Crop,
                 )

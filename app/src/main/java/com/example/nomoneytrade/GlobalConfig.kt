@@ -1,6 +1,6 @@
 package com.example.nomoneytrade
 
-import com.example.nomoneytrade.profile.entity.User
+import com.example.nomoneytrade.entity.User
 import com.example.nomoneytrade.entity.Product
 
 var CURRENT_USER_ID = -1L
@@ -70,8 +70,6 @@ val stubUser = User(
     fio = "Abubakirov Vladimir",
     email = "mailemail@yandex.ru",
     iconUrl = "https://sun9-west.userapi.com/sun9-10/s/v1/if2/wUqxyUpWCsLumpLhdL6MHfOvWdGXYsR9B4HPuiZ-ZH9BlFo4tWZcPA-5C5o9ozGVKSxBxdS1zZZ8BxU-ogsG-gPc.jpg?size=2560x1440&quality=96&type=album",
-    city = "Москва",
-    address = "Метро ЮгоЗападная",
     phoneNumber = "8 800 555 35 35",
 )
 
@@ -81,7 +79,5 @@ val stubMyUser = User(
     fio = "Yana Gladkikh",
     email = "yana@tink.ru",
     iconUrl = "https://sun9-west.userapi.com/sun9-10/s/v1/if2/CD95zKfRD7sMS1uCn74Q2azAwyAylz010GDGCOsjMxXkpGfZmacIr56BCA9SmWJ1DQFwVRlVXalzq_EwWSrzS4rS.jpg?size=688x631&quality=95&type=album",
-    city = "Воронеж",
-    address = "Село Воронежское",
     phoneNumber = "8 777 555 77 35",
 )

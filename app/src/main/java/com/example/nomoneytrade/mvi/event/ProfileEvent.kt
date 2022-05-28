@@ -1,6 +1,6 @@
 package com.example.nomoneytrade.mvi.event
 
-import com.example.nomoneytrade.profile.entity.User
+import com.example.nomoneytrade.entity.User
 
 sealed class ProfileEvent {
     class Success(state: User): ProfileEvent() //Loaded products + profile info into state!

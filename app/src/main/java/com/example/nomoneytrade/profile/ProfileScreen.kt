@@ -4,7 +4,6 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -82,7 +81,8 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
 
         DefaultTextField(profileState.value.phoneNumber)
 
-        DefaultTextField("${profileState.value.city}, ${profileState.value.address}")
+        //TODO возможность редактировать профиль, добавлять город, адрес
+     //   DefaultTextField("${profileState.value.city}, ${profileState.value.address}")
 
 //        Text(
 //            text = "Active offers: ",

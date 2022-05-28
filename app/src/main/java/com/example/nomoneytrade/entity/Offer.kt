@@ -1,7 +1,5 @@
 package com.example.nomoneytrade.entity
 
-import com.example.nomoneytrade.profile.entity.User
-
 data class Offer(
     val user: User,
     val seller: User,

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nomoneytrade.CURRENT_USER_ID
 import com.example.nomoneytrade.api.Api
-import com.example.nomoneytrade.profile.entity.User
+import com.example.nomoneytrade.entity.User
 import com.example.nomoneytrade.stubUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

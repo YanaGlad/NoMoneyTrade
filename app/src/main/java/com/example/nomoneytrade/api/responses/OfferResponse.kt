@@ -1,6 +1,5 @@
 package com.example.nomoneytrade.api.responses
 
-import com.example.nomoneytrade.profile.entity.User
 import kotlinx.serialization.Serializable
 
 @Serializable

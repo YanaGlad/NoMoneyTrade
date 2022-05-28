@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.nomoneytrade.CURRENT_USER_ID
 import com.example.nomoneytrade.api.Api
 import com.example.nomoneytrade.api.UserId
-import com.example.nomoneytrade.profile.entity.User
+import com.example.nomoneytrade.entity.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(private val api: Api) : ViewModel() {
 
     //TODO заменить на стейт!
-    val profile = MutableStateFlow(User(-1, "", "", "", "", "", "", ""))
+    val profile = MutableStateFlow(User(-1, "", "", "", "", "",))
 
     init {
         this.viewModelScope.launch {
@@ -33,8 +33,6 @@ class ProfileViewModel @Inject constructor(private val api: Api) : ViewModel() {
                 fio = "Гладких Яна Сергеевна",
                 email = body.email,
                 iconUrl = body.imagePath,
-                city = body.city,
-                address = body.address,
                 phoneNumber = body.phoneNumber,
             )
         } else {

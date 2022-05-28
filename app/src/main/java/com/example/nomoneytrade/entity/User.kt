@@ -1,4 +1,4 @@
-package com.example.nomoneytrade.profile.entity
+package com.example.nomoneytrade.entity
 
 interface UserI
 
@@ -10,7 +10,5 @@ data class User(
     val fio: String,
     val email: String,
     val iconUrl: String,
-    val city: String,
-    val address: String,
     val phoneNumber: String,
 ): UserI

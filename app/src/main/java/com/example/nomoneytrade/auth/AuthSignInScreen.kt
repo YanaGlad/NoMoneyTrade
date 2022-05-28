@@ -35,6 +35,7 @@ import com.example.nomoneytrade.SIGN_UP_SCREEN
 import com.example.nomoneytrade.mvi.effect.AuthEffect
 import com.example.nomoneytrade.mvi.event.AuthEvent
 import com.example.nomoneytrade.ui.utils.UiUtilsExtendedFloatingButton
+import com.example.nomoneytrade.ui.utils.UiUtilsPasswordTextField
 import com.example.nomoneytrade.ui.utils.UiUtilsTextField
 
 @Composable
@@ -123,7 +124,7 @@ fun AuthSignInScreen(navController: NavController, viewModel: AuthViewModel) {
             emailText = text
         }
 
-        UiUtilsTextField(label = stringResource(R.string.password), padding = 15, text = passwordText, color = colorState) { text ->
+        UiUtilsPasswordTextField(label = stringResource(R.string.password), padding = 15, text = passwordText, color = colorState) { text ->
             passwordText = text
         }
 

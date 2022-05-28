@@ -81,8 +81,6 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
                     jsonUser.email,
                     jsonUser.isEnabled,
                     jsonUser.imagePath,
-                    jsonUser.city,
-                    jsonUser.address,
                     jsonUser.phoneNumber,
                 )
             )
@@ -120,8 +118,6 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
                     jsonUser.email,
                     jsonUser.isEnabled,
                     jsonUser.imagePath,
-                    jsonUser.city,
-                    jsonUser.address,
                     jsonUser.phoneNumber,
                 )
             )

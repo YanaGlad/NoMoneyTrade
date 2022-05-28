@@ -31,4 +31,6 @@
     <string name="create">Создать</string>
     <string name="sent">Отправленные</string>
     <string name="phone_number">Номер телефона</string>
+    <string name="hide_password">Скрыть пароль</string>
+    <string name="show_password">Показать пароль</string>
 </resources>

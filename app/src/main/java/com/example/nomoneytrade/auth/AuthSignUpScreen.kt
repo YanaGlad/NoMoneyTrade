@@ -34,6 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.nomoneytrade.MAIN_SCREEN
 import com.example.nomoneytrade.R
 import com.example.nomoneytrade.SHOWCASE_SCREEN
 import com.example.nomoneytrade.SIGN_IN_SCREEN
@@ -41,6 +42,7 @@ import com.example.nomoneytrade.mvi.effect.AuthEffect
 import com.example.nomoneytrade.mvi.event.AuthEvent
 import com.example.nomoneytrade.ui.utils.ComposeScreen
 import com.example.nomoneytrade.ui.utils.UiUtilsExtendedFloatingButton
+import com.example.nomoneytrade.ui.utils.UiUtilsPasswordTextField
 import com.example.nomoneytrade.ui.utils.UiUtilsTextField
 import com.example.nomoneytrade.ui.utils.UiUtilsToolbarButton
 import okhttp3.MediaType
@@ -116,7 +118,7 @@ fun AuthSignUpScreen(
     when (effectState.value) {
         is AuthEffect.NavigateShowcase -> {}
         is AuthEffect.Navigate -> {
-            navController.navigate(SHOWCASE_SCREEN)
+            navController.navigate(MAIN_SCREEN)
             viewModel.effect.value = AuthEffect.None
         }
         is AuthEffect.None -> {}
@@ -204,12 +206,12 @@ fun AuthSignUpScreen(
         }
 
         var password by remember { mutableStateOf("") }
-        UiUtilsTextField(label = stringResource(R.string.password), padding = 15, text = password) { text ->
+        UiUtilsPasswordTextField(label = stringResource(R.string.password), padding = 15, text = password) { text ->
             password = text
         }
 
         var confirmPassword by remember { mutableStateOf("") }
-        UiUtilsTextField(label = stringResource(R.string.confirmPassword), padding = 15, text = confirmPassword) { text ->
+        UiUtilsPasswordTextField(label = stringResource(R.string.confirmPassword), padding = 15, text = confirmPassword) { text ->
             confirmPassword = text
         }
 

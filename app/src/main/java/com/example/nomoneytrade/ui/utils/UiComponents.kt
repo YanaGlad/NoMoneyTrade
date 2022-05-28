@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CornerSize
@@ -17,10 +18,12 @@ import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.FloatingActionButtonDefaults
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,15 +33,61 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.nomoneytrade.R
-import kotlinx.coroutines.launch
+
+@Composable
+fun ColumnScope.UiUtilsPasswordTextField(text: String, label: String, padding: Int, color: Color = MaterialTheme.colors.primary, action: (String) -> Unit) {
+    var passwordVisible by remember { mutableStateOf(false) }
+
+    TextField(
+        value = text,
+        onValueChange = { action(it) },
+        label = {
+            Text(
+                text = label,
+                color = MaterialTheme.colors.primary,
+            )
+        },
+        shape = RoundedCornerShape(30f),
+        modifier = Modifier
+            .fillMaxWidth()
+            .align(Alignment.CenterHorizontally)
+            .padding(top = padding.dp, start = 16.dp, end = 16.dp)
+            .border(
+                border = BorderStroke(3.dp, MaterialTheme.colors.primary),
+                shape = RoundedCornerShape(
+                    corner = CornerSize(30f),
+                )
+            ),
+        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = color,
+            focusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            backgroundColor = MaterialTheme.colors.onPrimary,
+        ),
+        trailingIcon = {
+            val image = if (passwordVisible)
+                ImageVector.vectorResource(R.drawable.ic_visibility)
+            else ImageVector.vectorResource(R.drawable.ic_visibility_off)
+
+            val description = if (passwordVisible) stringResource(R.string.hide_password) else stringResource(R.string.show_password)
+
+            IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                Icon(imageVector = image, description, modifier = Modifier.size(24.dp))
+            }
+        },
+    )
+}
 
 @Composable
 fun ColumnScope.UiUtilsTextField(text: String, label: String, padding: Int, color: Color = MaterialTheme.colors.primary, action: (String) -> Unit) {
@@ -98,7 +147,7 @@ fun ColumnScope.UiUtilsToolbarButton(navController: NavController, destination: 
 }
 
 @Composable
-fun ColumnScope.UiUtilsExtendedFloatingButton(text: String, showProgress: Boolean = false, padding: Int = 15,   onClick: () -> Unit) {
+fun ColumnScope.UiUtilsExtendedFloatingButton(text: String, showProgress: Boolean = false, padding: Int = 15, onClick: () -> Unit) {
 
     ExtendedFloatingActionButton(
         onClick = {

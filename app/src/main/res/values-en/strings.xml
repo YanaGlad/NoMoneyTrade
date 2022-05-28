@@ -33,4 +33,5 @@
     <string name="phone_number">Phone number</string>
     <string name="hide_password">Hide password</string>
     <string name="show_password">Show password</string>
+    <string name="exchange_for">Exchange for:</string>
 </resources>

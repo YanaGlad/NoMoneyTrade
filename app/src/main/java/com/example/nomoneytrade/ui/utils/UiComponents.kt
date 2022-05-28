@@ -215,6 +215,6 @@ fun UiUtilsNextButton(navController: NavController, destination: String, padding
 @Composable
 fun UiUtilsLoadingFullScreen() {
     Box(modifier = Modifier.fillMaxSize()) {
-        CircularProgressIndicator(color = MaterialTheme.colors.onPrimary, modifier = Modifier.align(Alignment.Center))
+        CircularProgressIndicator(color = MaterialTheme.colors.primary, modifier = Modifier.align(Alignment.Center))
     }
 }

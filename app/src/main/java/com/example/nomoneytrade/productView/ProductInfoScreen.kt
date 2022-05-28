@@ -2,6 +2,7 @@ package com.example.nomoneytrade.productView
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,7 +37,9 @@ import coil.request.ImageRequest
 import com.example.nomoneytrade.R
 import com.example.nomoneytrade.SUGGEST_SCREEN
 import com.example.nomoneytrade.entity.Product
+import com.example.nomoneytrade.mvi.event.ProductInfoEvent
 import com.example.nomoneytrade.ui.utils.UiUtilsExtendedFloatingButton
+import com.example.nomoneytrade.ui.utils.UiUtilsLoadingFullScreen
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
@@ -47,82 +50,102 @@ fun ProductInfoScreen(navController: NavController, product: Product, tags: Stri
         .padding(8.dp)
         .verticalScroll(rememberScrollState())) {
 
-        val userState = viewModel.sellerInfo.collectAsState()
-        var progressState by remember { mutableStateOf(false) }
+        viewModel.getSellerUserInfo(product.userId)
 
+        val eventState = viewModel.event.collectAsState()
+        when(val event = eventState.value) {
+            ProductInfoEvent.Error -> {}
+            ProductInfoEvent.Loading -> UiUtilsLoadingFullScreen()
+            is ProductInfoEvent.Success -> {
+                ProductInfo(product, tags, event, extags, navController)
+            }
+        }
+    }
+}
+
+@Composable
+private fun ColumnScope.ProductInfo(
+    product: Product,
+    tags: String,
+    event: ProductInfoEvent.Success,
+    extags: String,
+    navController: NavController,
+) {
+    var progressState by remember { mutableStateOf(false) }
+
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(data = product.imageUrl)
+                .allowHardware(false)
+                .build()
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(250.dp)
+            .align(Alignment.CenterHorizontally)
+            .clip(RoundedCornerShape(16.dp)),
+        contentDescription = "Product icon",
+        contentScale = ContentScale.Crop,
+    )
+
+    Text(
+        text = product.title,
+        fontSize = 28.sp,
+        modifier = Modifier
+            .fillMaxWidth()
+            .align(Alignment.CenterHorizontally)
+            .padding(top = 8.dp),
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center,
+    )
+
+    Text(
+        text = tags,
+        fontSize = 14.sp,
+        modifier = Modifier
+            .fillMaxWidth()
+            .align(Alignment.CenterHorizontally)
+            .padding(top = 8.dp),
+        textAlign = TextAlign.Center,
+    )
+
+    Text(
+        text = product.description,
+        fontSize = 18.sp,
+        modifier = Modifier
+            .fillMaxWidth()
+            .align(Alignment.CenterHorizontally)
+            .padding(top = 12.dp),
+        textAlign = TextAlign.Center,
+    )
+
+    Row(modifier = Modifier.height(60.dp)) {
         Image(
             painter = rememberAsyncImagePainter(
                 ImageRequest.Builder(LocalContext.current)
-                    .data(data = product.imageUrl)
+                    .data(data = event.user.iconUrl)
                     .allowHardware(false)
                     .build()
             ),
             modifier = Modifier
-                .fillMaxWidth()
-                .height(250.dp)
-                .align(Alignment.CenterHorizontally)
-                .clip(RoundedCornerShape(16.dp)),
-            contentDescription = "Product icon",
+                .size(60.dp)
+                .padding(top = 18.dp)
+                .clip(CircleShape),
+            contentDescription = "",
             contentScale = ContentScale.Crop,
         )
-
         Text(
-            text = product.title,
-            fontSize = 28.sp,
+            text = "${event.user.username} (${event.user.fio})",
+            fontSize = 16.sp,
             modifier = Modifier
                 .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)
+                .align(CenterVertically)
+                .padding(start = 8.dp)
                 .padding(top = 8.dp),
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Start,
         )
-
-        Text(
-            text = tags,
-            fontSize = 14.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 8.dp),
-            textAlign = TextAlign.Center,
-        )
-
-        Text(
-            text = product.description,
-            fontSize = 18.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 12.dp),
-            textAlign = TextAlign.Center,
-        )
-
-        Row(modifier = Modifier.height(60.dp)) {
-            Image(
-                painter = rememberAsyncImagePainter(
-                    ImageRequest.Builder(LocalContext.current)
-                        .data(data = userState.value.iconUrl)
-                        .allowHardware(false)
-                        .build()
-                ),
-                modifier = Modifier
-                    .size(60.dp)
-                    .padding(top = 18.dp)
-                    .clip(CircleShape),
-                contentDescription = "",
-                contentScale = ContentScale.Crop,
-            )
-            Text(
-                text = "${userState.value.username} (${userState.value.fio})",
-                fontSize = 16.sp,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(CenterVertically)
-                    .padding(start = 8.dp)
-                    .padding(top = 8.dp),
-                textAlign = TextAlign.Start,
-            )
-        }
+    }
 
 //        Text(
 //            text = userState.value.city,
@@ -143,25 +166,24 @@ fun ProductInfoScreen(navController: NavController, product: Product, tags: Stri
 //            textAlign = TextAlign.Start,
 //        )
 
-        Text(
-            text = "Меняется на: $extags",
-            fontSize = 16.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 8.dp),
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Start,
-        )
+    Text(
+        text = " ${stringResource(R.string.exchange_for)} $extags",
+        fontSize = 16.sp,
+        modifier = Modifier
+            .fillMaxWidth()
+            .align(Alignment.CenterHorizontally)
+            .padding(top = 8.dp),
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Start,
+    )
 
-        UiUtilsExtendedFloatingButton(
-            text = stringResource(R.string.suggest_offer),
-            showProgress = progressState
-        ) {
+    UiUtilsExtendedFloatingButton(
+        text = stringResource(R.string.suggest_offer),
+        showProgress = progressState
+    ) {
+        progressState = true
+        val encodedTag = URLEncoder.encode(extags, StandardCharsets.UTF_8.toString()).replace("+#", " #")
 
-            val encodedTag = URLEncoder.encode(extags, StandardCharsets.UTF_8.toString()).replace("+#", " #")
-
-            navController.navigate("$SUGGEST_SCREEN/$encodedTag")
-        }
+        navController.navigate("$SUGGEST_SCREEN/$encodedTag")
     }
 }

@@ -67,7 +67,7 @@ val stubList = listOf(
 val stubUser = User(
     id = 1,
     username = "Vova",
-    fio = "Abubakirov Vladimir",
+    fio = "",
     email = "mailemail@yandex.ru",
     iconUrl = "https://sun9-west.userapi.com/sun9-10/s/v1/if2/wUqxyUpWCsLumpLhdL6MHfOvWdGXYsR9B4HPuiZ-ZH9BlFo4tWZcPA-5C5o9ozGVKSxBxdS1zZZ8BxU-ogsG-gPc.jpg?size=2560x1440&quality=96&type=album",
     phoneNumber = "8 800 555 35 35",

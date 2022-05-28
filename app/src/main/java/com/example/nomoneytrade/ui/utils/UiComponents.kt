@@ -1,5 +1,6 @@
 package com.example.nomoneytrade.ui.utils
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -38,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -218,32 +220,54 @@ fun UiUtilsNextButton(navController: NavController, destination: String, padding
 }
 
 @Composable
-fun ColumnScope.UiUtilsNoPhotoPlaceholder(size: Int, cameraSize: Int, paddingTop: Int, onClick: () -> Unit) {
+fun ColumnScope.UiUtilsNoPhotoPlaceholder(
+    size: Int,
+    cameraSize: Int,
+    loadedSize: Int = 100,
+    paddingTop: Int,
+    bitmap: Bitmap? = null,
+    state: Boolean = true,
+    onClick: () -> Unit,
+) {
     Box(modifier = Modifier
         .size(size.dp)
         .clip(CircleShape)
         .align(Alignment.CenterHorizontally)) {
-        Image(
-            imageVector = ImageVector.vectorResource(R.drawable.ic_circle_backg),
-            modifier = Modifier
-                .fillMaxSize()
-                .align(Alignment.Center)
-                .clickable {
-                    onClick()
-                },
-            contentDescription = "profile photo stub",
-            contentScale = ContentScale.Fit,
-        )
-        Image(
-            imageVector = ImageVector.vectorResource(R.drawable.ic_camera),
-            modifier = Modifier
-                .width(cameraSize.dp)
-                .height(cameraSize.dp)
-                .align(Alignment.Center)
-                .padding(start = 5.dp),
-            contentDescription = "profile photo sub camera",
-            contentScale = ContentScale.Crop,
-        )
+        if (state) {
+            Image(
+                imageVector = ImageVector.vectorResource(R.drawable.ic_circle_backg),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .align(Alignment.Center)
+                    .clickable {
+                        onClick()
+                    },
+                contentDescription = "profile photo stub",
+                contentScale = ContentScale.Fit,
+            )
+            Image(
+                imageVector = ImageVector.vectorResource(R.drawable.ic_camera),
+                modifier = Modifier
+                    .width(cameraSize.dp)
+                    .height(cameraSize.dp)
+                    .align(Alignment.Center)
+                    .padding(start = 5.dp),
+                contentDescription = "profile photo sub camera",
+                contentScale = ContentScale.Crop,
+            )
+        } else {
+            bitmap?.let {
+                Image(
+                    bitmap = it.asImageBitmap(),
+                    modifier = Modifier
+                        .height(100.dp)
+                        .align(Alignment.Center)
+                        .padding(top = 10.dp, start = 5.dp),
+                    contentDescription = "profile photo",
+                    contentScale = ContentScale.Crop,
+                )
+            }
+        }
     }
 }
 

@@ -113,6 +113,7 @@ fun AuthSignUpScreen(
         is AuthEvent.Success -> {
             progressState = false
             navController.navigate(MAIN_SCREEN)
+            viewModel.event.value = null
         }
         is AuthEvent.FailedToLogin -> {
 
@@ -134,7 +135,10 @@ fun AuthSignUpScreen(
         UiUtilsNoPhotoPlaceholder(
             size = 170,
             cameraSize = 100,
-            paddingTop = 0
+            loadedSize = 100,
+            paddingTop = 0,
+            state = bitmapState == null,
+            bitmap = bitmapState
         ) {
             viewModel.chooseImage(interactionResult)
         }
@@ -186,7 +190,7 @@ fun AuthSignUpScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable(enabled = true) {
-                   navController.navigate(SIGN_IN_SCREEN)
+                    navController.navigate(SIGN_IN_SCREEN)
                 },
         )
     }

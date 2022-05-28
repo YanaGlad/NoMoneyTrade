@@ -27,7 +27,7 @@ class AuthViewModel @Inject constructor(private val api: Api) : ViewModel() {
     private lateinit var interactionResult: ActivityResultLauncher<Intent>
     var imageFile: MultipartBody.Part? = null
 
-    val event = MutableStateFlow<AuthEvent>(AuthEvent.None)
+    val event = MutableStateFlow<AuthEvent?>(AuthEvent.None)
     val effect = MutableStateFlow<AuthEffect?>(AuthEffect.None)
 
     private var state = AuthState()

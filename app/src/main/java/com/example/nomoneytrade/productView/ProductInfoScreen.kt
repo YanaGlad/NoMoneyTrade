@@ -1,5 +1,6 @@
 package com.example.nomoneytrade.productView
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -15,12 +16,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -52,7 +48,9 @@ fun ProductInfoScreen(navController: NavController, product: Product, tags: Stri
         .padding(8.dp)
         .verticalScroll(rememberScrollState())) {
 
-        viewModel.getSellerUserInfo(product.userId)
+        LaunchedEffect(Unit) {
+            viewModel.getSellerUserInfo(product.userId)
+        }
 
         val eventState = viewModel.event.collectAsState()
         when (val event = eventState.value) {
@@ -74,7 +72,7 @@ private fun ColumnScope.ProductInfo(
     navController: NavController,
 ) {
     var progressState by remember { mutableStateOf(false) }
-
+    Log.d("Resp", product.imageUrl)
     Image(
         painter = rememberAsyncImagePainter(
             ImageRequest.Builder(LocalContext.current)

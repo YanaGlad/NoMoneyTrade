@@ -21,19 +21,26 @@ fun Navigation() {
     NavHost(navController, startDestination = MAIN_SCREEN) {  //temp
         composable(MAIN_SCREEN) { MainScreen(navController) }
         //  composable(PROFILE_SCREEN) { ProfileScreen(navController, hiltViewModel()).ShowScreen() }
-        composable(SIGN_IN_SCREEN) { AuthSignInScreen(navController, hiltViewModel())  }
+        composable("$SIGN_IN_SCREEN/{showclose}",
+            arguments = listOf(
+                navArgument("showclose") { defaultValue = false })
+        ) {
+            AuthSignInScreen(navController, hiltViewModel(), it.arguments?.getBoolean("showclose") ?: false)
+        }
         composable(SHOWCASE_SCREEN) { ShowcaseScreen(navController, hiltViewModel()) }
         composable(SIGN_UP_SCREEN) { AuthSignUpScreen(navController, hiltViewModel()) }
-        composable("$PRODUCT_INFO_SCREEN/{id}/{url}/{authorId}/{title}/{description}/{tags}/{extags}",
+        composable("$PRODUCT_INFO_SCREEN/{id}/{url}/{authorId}/{title}/{description}/{tags}/{extags}/{city}/{time}",
             arguments = listOf(
                 navArgument("id") { defaultValue = -1L },
                 navArgument("title") { defaultValue = "" },
                 navArgument("description") { defaultValue = "" },
                 navArgument("url") { defaultValue = "" },
                 navArgument("authorId") { defaultValue = -1L },
-                navArgument("tags") { defaultValue = "AAAAA" },
-                navArgument("extags") { defaultValue = "AAAAA" },
-            )
+                navArgument("tags") { defaultValue = "" },
+                navArgument("extags") { defaultValue = "" },
+                navArgument("city") { defaultValue = "" },
+                navArgument("time") { defaultValue = "" },
+                )
         ) {
             ProductInfoScreen(
                 navController = navController,
@@ -45,7 +52,9 @@ fun Navigation() {
                     description = it.arguments?.getString("description") ?: "",
                     favourites = false,
                     tags = listOf(),
-                    exchangeTags = listOf()
+                    exchangeTags = listOf(),
+                    city = it.arguments?.getString("city") ?: "",
+                    time = it.arguments?.getString("time") ?: "",
                 ),
                 tags = it.arguments?.getString("tags") ?: "",
                 extags = it.arguments?.getString("extags") ?: "",

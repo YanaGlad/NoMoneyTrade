@@ -34,4 +34,6 @@
     <string name="hide_password">Hide password</string>
     <string name="show_password">Show password</string>
     <string name="exchange_for">Exchange for:</string>
+    <string name="need_auth">You need to authorize to create new listing</string>
+    <string name="you_have_no_active_offers">You have no active offers</string>
 </resources>

@@ -11,11 +11,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -43,6 +45,7 @@ import com.example.nomoneytrade.CURRENT_USER_ID
 import com.example.nomoneytrade.MAIN_SCREEN
 import com.example.nomoneytrade.ONBOARDING_SCREEN
 import com.example.nomoneytrade.R
+import com.example.nomoneytrade.SIGN_IN_SCREEN
 import com.example.nomoneytrade.api.requests.ProductRequest
 import com.example.nomoneytrade.mvi.event.CreateProductEvent
 import com.example.nomoneytrade.ui.utils.UiUtilsExtendedFloatingButton
@@ -96,17 +99,19 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
 
     Column(modifier = Modifier
         .fillMaxSize()
+        .padding(bottom = 50.dp)
         .verticalScroll(rememberScrollState())) {
 
         val eventState = viewModel.event.collectAsState()
         val title = stringResource(R.string.done)
         val description = stringResource(R.string.success_created)
         var progressState by remember { mutableStateOf(false) }
+        var userSigned by remember { mutableStateOf(CURRENT_USER_ID != -1L) }
 
-        when(eventState.value){
+        when (eventState.value) {
             CreateProductEvent.Error -> {
                 progressState = false
-                    //TODO тост с ошибкой
+                //TODO тост с ошибкой
             }
             CreateProductEvent.Loading -> {}
             CreateProductEvent.Success -> {
@@ -117,91 +122,147 @@ fun CreateProductScreen(navController: NavController, viewModel: CreateProductVi
         }
 
         UiUtilsToolbarButton(navController, MAIN_SCREEN, R.drawable.ic_close)
-        Text(
-            text = stringResource(R.string.new_listing),
-            fontSize = 28.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 8.dp),
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-        )
-
-        var titleText by remember { mutableStateOf("") }
-        UiUtilsTextField(label = stringResource(R.string.title), padding = 15, text = titleText, color = MaterialTheme.colors.primary) { text ->
-            titleText = text
+        if (userSigned) {
+            CreateNewProduct(viewModel, interactionResult, progressState)
+        } else {
+            NeedToSignIn(navController)
         }
+    }
+}
 
-        var descriptionText by remember { mutableStateOf("") }
-        UiUtilsTextField(label = stringResource(R.string.description), padding = 15, text = descriptionText, color = MaterialTheme.colors.primary) { text ->
-            descriptionText = text
-        }
+@Composable
+private fun ColumnScope.NeedToSignIn(navController: NavController) {
+    Text(
+        text = stringResource(R.string.need_auth),
+        fontSize = 28.sp,
+        modifier = Modifier
+            .fillMaxWidth()
+            .align(Alignment.CenterHorizontally)
+            .padding(top = 8.dp),
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center,
+    )
 
-        var tagsText by remember { mutableStateOf("") }
-        UiUtilsTextField(label = stringResource(R.string.tags), padding = 15, text = tagsText, color = MaterialTheme.colors.primary) { text ->
-            tagsText = text
-        }
+    Image(
+        imageVector = ImageVector.vectorResource(R.drawable.ic_exit),
+        modifier = Modifier
+            .width(280.dp)
+            .height(280.dp)
+            .align(Alignment.CenterHorizontally)
+            .padding(top = 40.dp, start = 5.dp)
+            .clickable {
+                navController.navigate("$SIGN_IN_SCREEN/${true}")
+            },
+        contentDescription = "sign in icon",
+        contentScale = ContentScale.Fit,
+    )
+    Text(
+        text = stringResource(R.string.sign_in),
+        fontSize = 22.sp,
+        modifier = Modifier
+            .wrapContentWidth()
+            .align(Alignment.CenterHorizontally)
+            .clickable {
+                navController.navigate(SIGN_IN_SCREEN)
+            }
+            .padding(top = 8.dp),
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center,
+    )
 
-        var exchangeText by remember { mutableStateOf("") }
-        UiUtilsTextField(label = stringResource(R.string.what_for_exchange), padding = 15, text = exchangeText, color = MaterialTheme.colors.primary) { text ->
-            exchangeText = text
-        }
+}
 
-        var cityText by remember { mutableStateOf("") }
-        UiUtilsTextField(label = stringResource(R.string.meeting_place), padding = 15, text = cityText, color = MaterialTheme.colors.primary) { text ->
-            cityText = text
-        }
+@Composable
+private fun ColumnScope.CreateNewProduct(
+    viewModel: CreateProductViewModel,
+    interactionResult: ActivityResultLauncher<Intent>,
+    progressState: Boolean,
+) {
+    var progressState1 = progressState
+    Text(
+        text = stringResource(R.string.new_listing),
+        fontSize = 28.sp,
+        modifier = Modifier
+            .fillMaxWidth()
+            .align(Alignment.CenterHorizontally)
+            .padding(top = 8.dp),
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center,
+    )
 
-        var timeText by remember { mutableStateOf("") }
-        UiUtilsTextField(label = stringResource(R.string.meeting_time), padding = 15, text = timeText, color = MaterialTheme.colors.primary) { text ->
-            timeText = text
-        }
+    var titleText by remember { mutableStateOf("") }
+    UiUtilsTextField(label = stringResource(R.string.title), padding = 15, text = titleText, color = MaterialTheme.colors.primary) { text ->
+        titleText = text
+    }
 
-        Text(
-            text = stringResource(R.string.upload_image),
-            fontSize = 22.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 8.dp),
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-        )
+    var descriptionText by remember { mutableStateOf("") }
+    UiUtilsTextField(label = stringResource(R.string.description), padding = 15, text = descriptionText, color = MaterialTheme.colors.primary) { text ->
+        descriptionText = text
+    }
 
-        Image(
-            imageVector = ImageVector.vectorResource(R.drawable.ic_top_from_arrow),
-            modifier = Modifier
-                .width(100.dp)
-                .height(100.dp)
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 10.dp, start = 5.dp)
-                .clip(CircleShape)
-                .clickable {
-                    viewModel.chooseImage(interactionResult)
-                },
-            contentDescription = "upload icon",
-            contentScale = ContentScale.Crop,
-        )
+    var tagsText by remember { mutableStateOf("") }
+    UiUtilsTextField(label = stringResource(R.string.tags), padding = 15, text = tagsText, color = MaterialTheme.colors.primary) { text ->
+        tagsText = text
+    }
+
+    var exchangeText by remember { mutableStateOf("") }
+    UiUtilsTextField(label = stringResource(R.string.what_for_exchange), padding = 15, text = exchangeText, color = MaterialTheme.colors.primary) { text ->
+        exchangeText = text
+    }
+
+    var cityText by remember { mutableStateOf("") }
+    UiUtilsTextField(label = stringResource(R.string.meeting_place), padding = 15, text = cityText, color = MaterialTheme.colors.primary) { text ->
+        cityText = text
+    }
+
+    var timeText by remember { mutableStateOf("") }
+    UiUtilsTextField(label = stringResource(R.string.meeting_time), padding = 15, text = timeText, color = MaterialTheme.colors.primary) { text ->
+        timeText = text
+    }
+
+    Text(
+        text = stringResource(R.string.upload_image),
+        fontSize = 22.sp,
+        modifier = Modifier
+            .fillMaxWidth()
+            .align(Alignment.CenterHorizontally)
+            .padding(top = 8.dp),
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center,
+    )
+
+    Image(
+        imageVector = ImageVector.vectorResource(R.drawable.ic_top_from_arrow),
+        modifier = Modifier
+            .width(100.dp)
+            .height(100.dp)
+            .align(Alignment.CenterHorizontally)
+            .padding(top = 10.dp, start = 5.dp)
+            .clip(CircleShape)
+            .clickable {
+                viewModel.chooseImage(interactionResult)
+            },
+        contentDescription = "upload icon",
+        contentScale = ContentScale.Crop,
+    )
 
 
-        UiUtilsExtendedFloatingButton(
-            text = stringResource(R.string.create),
-            showProgress = progressState,
-            padding = 0
-        ) {
-            progressState = true
-            viewModel.clickCreate(
-                ProductRequest(
-                    title = titleText,
-                    user_id = CURRENT_USER_ID,
-                    tags = tagsText.split(" #"),
-                    description = descriptionText,
-                    tagsExchange = exchangeText.split(" #"),
-                    city = cityText,
-                    time = timeText,
-                )
+    UiUtilsExtendedFloatingButton(
+        text = stringResource(R.string.create),
+        showProgress = progressState1,
+        padding = 0
+    ) {
+        progressState1 = true
+        viewModel.clickCreate(
+            ProductRequest(
+                title = titleText,
+                user_id = CURRENT_USER_ID,
+                tags = tagsText.split(" #"),
+                description = descriptionText,
+                tagsExchange = exchangeText.split(" #"),
+                city = cityText,
+                time = timeText,
             )
-        }
+        )
     }
 }

@@ -38,9 +38,10 @@ import com.example.nomoneytrade.mvi.event.AuthEvent
 import com.example.nomoneytrade.ui.utils.UiUtilsExtendedFloatingButton
 import com.example.nomoneytrade.ui.utils.UiUtilsPasswordTextField
 import com.example.nomoneytrade.ui.utils.UiUtilsTextField
+import com.example.nomoneytrade.ui.utils.UiUtilsToolbarButton
 
 @Composable
-fun AuthSignInScreen(navController: NavController, viewModel: AuthViewModel) {
+fun AuthSignInScreen(navController: NavController, viewModel: AuthViewModel, showClose: Boolean = false) {
 
     val color = MaterialTheme.colors.primary
 
@@ -84,6 +85,10 @@ fun AuthSignInScreen(navController: NavController, viewModel: AuthViewModel) {
     }
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+
+        if(showClose) {
+            UiUtilsToolbarButton(navController, MAIN_SCREEN, R.drawable.ic_close)
+        }
 
         Image(
             imageVector = ImageVector.vectorResource(R.drawable.ic_handshake),

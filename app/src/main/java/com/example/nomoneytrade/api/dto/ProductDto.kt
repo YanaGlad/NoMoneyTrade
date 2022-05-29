@@ -12,4 +12,6 @@ class ProductDto(
     @SerialName("imagePath") val imagePath: String,
     @SerialName("tags") val tags: List<TagDto>,
     @SerialName("tags_exchange") val tagsExchange: List<TagExchangeDto>,
+    @SerialName("city") val city: String?,
+    @SerialName("time") val time: String?,
 )

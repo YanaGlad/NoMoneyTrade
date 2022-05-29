@@ -124,7 +124,9 @@ class OffersViewModel @Inject constructor(private val api: Api) : ViewModel() {
                     description = userListing.description,
                     favourites = userListing.favourites,
                     tags = userListing.tags,
-                    exchangeTags = userListing.exchangeTags
+                    exchangeTags = userListing.exchangeTags,
+                    city = userListing.city,
+                    time = userListing.time,
                 ),
                 theirListing = Product(
                     id = theirListing.id,
@@ -134,7 +136,9 @@ class OffersViewModel @Inject constructor(private val api: Api) : ViewModel() {
                     description = theirListing.description,
                     favourites = theirListing.favourites,
                     tags = theirListing.tags,
-                    exchangeTags = theirListing.exchangeTags
+                    exchangeTags = theirListing.exchangeTags,
+                    city = theirListing.city,
+                    time = theirListing.time,
                 ),
                 place = place,
                 time = time,

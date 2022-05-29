@@ -15,6 +15,8 @@ val tinkoffBag = Product(
     favourites = false,
     tags = listOf("Вещи", "рюкзаки", "сумки"), //более 3 тегов только с подпиской/платное объявление,
     exchangeTags = listOf("макбук", "рюкзак тинькофф"),
+    city = "Питер",
+    time = "19:00"
 )
 
 val alienMug = Product(
@@ -26,6 +28,8 @@ val alienMug = Product(
     favourites = false,
     tags = listOf("кружка", "посуда", "инопланетяне"), //более 3 тегов только с подпиской/платное объявление,
     exchangeTags = listOf("книга", "монополия", "тетрадь"),
+    city = "Нью Йорк",
+    time = "4 AM"
 )
 
 val samsungPen = Product(
@@ -37,6 +41,8 @@ val samsungPen = Product(
     favourites = false,
     tags = listOf("ручка", "канцелярия", "самсунг"),
     exchangeTags = listOf("карандаш", "рюкзак самсунг"),
+    city = "Воронеж",
+    time = "19:00"
 )
 
 val stubList = listOf(
@@ -50,6 +56,8 @@ val stubList = listOf(
         favourites = false,
         tags = listOf("вещи", "рюкзаки", "тинькофф"), //более 3 тегов только с подпиской/платное объявление
         exchangeTags = listOf("пенал самсунг", "стикеры"),
+        city = "В любом месте",
+        time = "В любое время",
     ),
     Product(
         id = 3,
@@ -60,6 +68,8 @@ val stubList = listOf(
         favourites = false,
         tags = listOf("spacex", "космос", "модельки", "ракета", "falcon heavy", "пластик"),//более 3 тегов только с подпиской/платное объявление
         exchangeTags = listOf("старшип", "starship", "кружка"),
+        city = "Moscow",
+        time = "17"
     ),
     samsungPen,
 )

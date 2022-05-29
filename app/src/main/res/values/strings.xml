@@ -34,4 +34,6 @@
     <string name="hide_password">Скрыть пароль</string>
     <string name="show_password">Показать пароль</string>
     <string name="exchange_for">Меняется на:</string>
+    <string name="need_auth">Вам нужно авторизоваться, чтобы создать новое объявление</string>
+    <string name="you_have_no_active_offers">У вас пока нет активных запросов</string>
 </resources>

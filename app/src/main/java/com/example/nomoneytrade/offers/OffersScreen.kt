@@ -91,16 +91,27 @@ fun OffersScreen(navController: NavController, viewModel: OffersViewModel) {
             when (val event = eventState.value) {
                 OfferEvent.Error -> {}
                 is OfferEvent.LoadedOffers -> {
-                    event.offers.forEach { offer ->
-                        OfferItem(
-                            offer = offer,
-                            clickAccept = {
-                                viewModel.clickAcceptOffer()
-                            },
-                            clickDecline = {
-                               viewModel.clickDeclineOffer()
-                            }
-                        )
+                    if (event.offers.isEmpty()) {
+                        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                            Text(
+                                text = stringResource(R.string.you_have_no_active_offers),
+                                fontSize = 28.sp,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .align(Alignment.Center)
+                                    .padding(top = 8.dp),
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
+                            )
+                        }
+                    } else {
+                        event.offers.forEach { offer ->
+                            OfferItem(
+                                offer = offer,
+                                clickAccept = { viewModel.clickAcceptOffer() },
+                                clickDecline = { viewModel.clickDeclineOffer() }
+                            )
+                        }
                     }
                 }
                 OfferEvent.Loading -> {

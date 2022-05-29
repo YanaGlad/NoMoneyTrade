@@ -14,4 +14,6 @@ class ProductResponse(
     val favourites: Boolean,
     val tags: List<String>,
     val exchangeTags: List<String>,
+    val city: String,
+    val time: String,
 )

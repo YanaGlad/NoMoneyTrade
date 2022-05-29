@@ -39,7 +39,9 @@ class ShowcaseViewModel @Inject constructor(val api: Api) : ViewModel() {
                     description = it.description,
                     favourites = false,
                     tags = tagDtoToString(it.tags),
-                    exchangeTags = tagExchangeDtoToString(it.tagsExchange)
+                    exchangeTags = tagExchangeDtoToString(it.tagsExchange),
+                    city = it.city ?: "",
+                    time = it.time ?: "",
                 )
             })
         } else {

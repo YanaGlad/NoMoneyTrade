@@ -1,6 +1,5 @@
 package com.example.nomoneytrade.suggest
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,7 +16,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.nomoneytrade.ONBOARDING_SCREEN
 import com.example.nomoneytrade.R
-import com.example.nomoneytrade.entity.Product
 import com.example.nomoneytrade.mvi.event.SuggestChoiceEvent
 import com.example.nomoneytrade.ui.utils.UiUtilsLoadingFullScreen
 import internal.ProductListItem
@@ -30,7 +28,6 @@ fun SuggestChoiceScreen(tags: String, navController: NavController, viewModel: S
     Column(modifier = Modifier.fillMaxWidth()) {
         val title = stringResource(R.string.done)
         val description = stringResource(R.string.now_meent)
-        val drawable = R.drawable.ic_exchange
 
         when (val event = eventState.value) {
             SuggestChoiceEvent.Error -> {}
@@ -50,7 +47,7 @@ fun SuggestChoiceScreen(tags: String, navController: NavController, viewModel: S
                 if (filteredItems.isNotEmpty()) {
                     filteredItems.forEach {
                         ProductListItem(it) {
-                            navController.navigate("$ONBOARDING_SCREEN/$title/$description")
+                            viewModel.clickMakeOffer(it)
                         }
                     }
                 } else {
@@ -65,6 +62,10 @@ fun SuggestChoiceScreen(tags: String, navController: NavController, viewModel: S
                         textAlign = TextAlign.Center,
                     )
                 }
+            }
+            is SuggestChoiceEvent.OfferCreated -> {
+                navController.navigate("$ONBOARDING_SCREEN/$title/$description")
+                viewModel.event.value = null
             }
         }
     }

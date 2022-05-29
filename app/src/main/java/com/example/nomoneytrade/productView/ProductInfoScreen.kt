@@ -2,6 +2,7 @@ package com.example.nomoneytrade.productView
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -83,6 +85,7 @@ private fun ColumnScope.ProductInfo(
         modifier = Modifier
             .fillMaxWidth()
             .height(250.dp)
+            .background(MaterialTheme.colors.primary)
             .align(Alignment.CenterHorizontally)
             .clip(RoundedCornerShape(16.dp)),
         contentDescription = "Product icon",

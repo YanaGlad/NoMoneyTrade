@@ -2,6 +2,7 @@ package internal
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,10 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +39,8 @@ import java.nio.charset.StandardCharsets
 
 @Composable
 fun ProductListItem(product: Product, onClick: () -> Unit) {
+    var progressState by remember { mutableStateOf(false) }
+
     Card(
         shape = RoundedCornerShape(8.dp),
         backgroundColor = MaterialTheme.colors.surface,
@@ -45,13 +52,11 @@ fun ProductListItem(product: Product, onClick: () -> Unit) {
                 }
             )
     ) {
-        //   val encodedUrl = URLEncoder.encode(product.imageUrl, StandardCharsets.UTF_8.toString())
-
-        Log.d("CHECK", " Urls ${product.imageUrl}")
         Column(modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(8.dp)) {
+
             Image(
                 painter = rememberAsyncImagePainter(
                     ImageRequest.Builder(LocalContext.current)
@@ -59,12 +64,14 @@ fun ProductListItem(product: Product, onClick: () -> Unit) {
                         .allowHardware(false)
                         .build()
                 ),
+
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(170.dp)
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 10.dp, start = 5.dp, bottom = 10.dp)
-                    .clip(RoundedCornerShape(16.dp)),
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(MaterialTheme.colors.primary),
                 contentDescription = "profile photo",
                 contentScale = ContentScale.Crop,
             )

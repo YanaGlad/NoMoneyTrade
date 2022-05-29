@@ -8,6 +8,7 @@ import com.example.nomoneytrade.api.responses.BaseResponse
 import com.example.nomoneytrade.api.dto.UserDto
 import com.example.nomoneytrade.api.requests.GetOffersRequest
 import com.example.nomoneytrade.api.requests.MakeOfferRequest
+import com.example.nomoneytrade.api.requests.PostByUser
 import com.example.nomoneytrade.api.requests.ProductRequest
 import com.example.nomoneytrade.api.responses.AllOfferResponse
 import com.example.nomoneytrade.api.responses.UserResponse
@@ -43,6 +44,9 @@ interface Api {
 
     @POST("/api/get_posts")
     suspend fun getAllProducts(): Response<AllPostResponse>
+
+    @POST("/api/get_my_posts")
+    suspend fun getMyPosts(@Body postByUser: PostByUser): Response<AllPostResponse>
 
     @POST("/offers/get_to_me_offers")
     suspend fun getToMeOffers(@Body getOffersRequest: GetOffersRequest): Response<AllOfferResponse>

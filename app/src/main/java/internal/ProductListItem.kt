@@ -1,5 +1,6 @@
 package internal
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -28,6 +29,8 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.nomoneytrade.R
 import com.example.nomoneytrade.entity.Product
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 @Composable
 fun ProductListItem(product: Product, onClick: () -> Unit) {
@@ -42,6 +45,9 @@ fun ProductListItem(product: Product, onClick: () -> Unit) {
                 }
             )
     ) {
+        //   val encodedUrl = URLEncoder.encode(product.imageUrl, StandardCharsets.UTF_8.toString())
+
+        Log.d("CHECK", " Urls ${product.imageUrl}")
         Column(modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()

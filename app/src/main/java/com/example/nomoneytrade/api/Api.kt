@@ -57,7 +57,6 @@ interface Api {
     @POST("/auth/get_user_by_id")
     suspend fun getUserById(@Body userId: UserId): Response<UserResponse>
 
-    @Multipart
     @POST("/offers/new_offer")
     suspend fun newOffer(
         @Body makeOfferRequest: MakeOfferRequest,

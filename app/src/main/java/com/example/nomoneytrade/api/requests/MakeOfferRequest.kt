@@ -1,5 +1,8 @@
 package com.example.nomoneytrade.api.requests
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 class MakeOfferRequest(
     val postId: Long,
     val city: String,
@@ -9,6 +12,7 @@ class MakeOfferRequest(
     val state: ConditionEnum,
 )
 
+@Serializable
 enum class ConditionEnum {
     APPROVED,
     REJECTED,

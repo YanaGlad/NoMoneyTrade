@@ -36,13 +36,13 @@ import com.example.nomoneytrade.ui.utils.UiUtilsToolbarButton
 @Composable
 fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
     BackHandler {}
-    val profileState = viewModel.profile.collectAsState()
+    val profileState = viewModel.event.collectAsState()
 
     when (val event = profileState.value) {
         ProfileEvent.Error -> {}
         ProfileEvent.Loading -> UiUtilsLoadingFullScreen()
         is ProfileEvent.Success -> {
-            Profile(navController, event)
+            Profile(navController, event, viewModel)
         }
     }
 
@@ -52,12 +52,15 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
 private fun Profile(
     navController: NavController,
     profileState: ProfileEvent.Success,
+    viewModel: ProfileViewModel,
 ) {
     Column(modifier = Modifier
         .fillMaxWidth()
         .verticalScroll(rememberScrollState())) {
 
-        UiUtilsToolbarButton(navController = navController, destination = SIGN_IN_SCREEN, icon = R.drawable.ic_exit)
+        UiUtilsToolbarButton(navController = navController, destination = "$SIGN_IN_SCREEN/${true}", icon = R.drawable.ic_exit) {
+            viewModel.clickLogOut()
+        }
 
         if (profileState.user.iconUrl != "") {
             Image(

@@ -10,6 +10,11 @@ import com.example.nomoneytrade.entity.Offer
 import com.example.nomoneytrade.entity.Product
 import com.example.nomoneytrade.mvi.event.OfferEvent
 import com.example.nomoneytrade.entity.User
+import com.example.nomoneytrade.samsungPen
+import com.example.nomoneytrade.stubList
+import com.example.nomoneytrade.stubMyUser
+import com.example.nomoneytrade.stubUser
+import com.example.nomoneytrade.tinkoffBag
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -44,56 +49,36 @@ class OffersViewModel @Inject constructor(private val api: Api) : ViewModel() {
 
     }
 
-    private suspend fun getOffersToMe(){
-        val response = api.getToMeOffers(
-            GetOffersRequest(CURRENT_USER_ID)
-        )
-        val body = response.body()
-        if(response.isSuccessful && body!=null) {
-            event.value = OfferEvent.LoadedOffers(
-                body.mapOffers(CURRENT_USER_ID)
+    private suspend fun getOffersToMe() {
+        event.value =  OfferEvent.LoadedOffers(
+            listOf(
+                Offer(
+                    user = stubMyUser,
+                    seller = stubUser,
+                    userListing = tinkoffBag,
+                    theirListing = samsungPen,
+                    place = "Moscow, prospect Vernadskogo",
+                    time = "19:00"
+                ),
             )
-        }else{
-            event.value = OfferEvent.Error
-        }
+        )
     }
 
     private suspend fun getMyActiveOffers() {
-        event.value = OfferEvent.Loading
-        val response = api.getMyOffers(
-            GetOffersRequest(CURRENT_USER_ID)
-        )
-        val body = response.body()
-        if(response.isSuccessful && body!=null) {
-            event.value = OfferEvent.LoadedOffers(
-                body.mapOffers(CURRENT_USER_ID)
-            )
-        }else{
-            event.value = OfferEvent.Error
-        }
-
-       // val response = api.getActiveOffers() TODO
-//        event.value = OfferEvent.LoadedOffers(
-//            offers = listOf(
-//                Offer(
-//                    user = stubMyUser,
-//                    seller = stubUser,
-//                    userListing = tinkoffBag,
-//                    theirListing = samsungPen,
-//                    place = "Sydney",
-//                    time = "4 AM"
-//                ),
-//                Offer(
-//                    user = stubMyUser,
-//                    seller = stubUser,
-//                    userListing = tinkoffBag,
-//                    theirListing = samsungPen,
-//                    place = "Moscow",
-//                    time = "2 AM"
-//                )
-//            )
-//        )
+        event.value =  OfferEvent.LoadedOffers(emptyList())
     }
+
+    //        val response = api.getToMeOffers(
+//            GetOffersRequest(CURRENT_USER_ID)
+//        )
+//        val body = response.body()
+//        if (response.isSuccessful && body != null) {
+//            event.value = OfferEvent.LoadedOffers(
+//                body.mapOffers(CURRENT_USER_ID)
+//            )
+//        } else {
+//            event.value = OfferEvent.Error
+//        }
 
     private fun AllOfferResponse.mapOffers(
         CURRENT_USER_ID: Long,
@@ -102,7 +87,7 @@ class OffersViewModel @Inject constructor(private val api: Api) : ViewModel() {
             Offer(
                 user = User(
                     id = CURRENT_USER_ID,
-                    username  ="", //TODO
+                    username = "", //TODO
                     fio = "",
                     email = "", //TODO
                     iconUrl = "", //TODO Flow

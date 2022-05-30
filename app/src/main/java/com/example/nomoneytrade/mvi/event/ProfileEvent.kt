@@ -6,4 +6,5 @@ sealed class ProfileEvent {
     class Success(val user: User): ProfileEvent() //Loaded products + profile info into state!
     object Error: ProfileEvent()
     object Loading: ProfileEvent()
+    object LogOut: ProfileEvent()
 }

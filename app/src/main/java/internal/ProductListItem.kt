@@ -56,7 +56,7 @@ fun ProductListItem(product: Product, onClick: () -> Unit) {
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(8.dp)) {
-
+            
             Image(
                 painter = rememberAsyncImagePainter(
                     ImageRequest.Builder(LocalContext.current)

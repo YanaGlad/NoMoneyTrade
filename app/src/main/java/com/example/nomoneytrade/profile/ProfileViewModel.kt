@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(private val api: Api) : ViewModel() {
 
-    val profile = MutableStateFlow<ProfileEvent>(ProfileEvent.Loading)
+    val event = MutableStateFlow<ProfileEvent>(ProfileEvent.Loading)
 
     init {
         this.viewModelScope.launch {
@@ -23,11 +23,28 @@ class ProfileViewModel @Inject constructor(private val api: Api) : ViewModel() {
         }
     }
 
+    fun clickLogOut() {
+        this.viewModelScope.launch {
+            logOut()
+        }
+    }
+
+    private suspend fun logOut() {
+        val response = api.signOut()
+        val body = response.body()
+        if (response.isSuccessful && body != null) {
+            CURRENT_USER_ID = -1L
+            event.value = ProfileEvent.LogOut
+        } else {
+            event.value = ProfileEvent.Error
+        }
+    }
+
     private suspend fun getCurrentUserInfo() {
         val response = api.getUserById(UserId(CURRENT_USER_ID))
         val body = response.body()
         if (response.isSuccessful && body != null) {
-            profile.value = ProfileEvent.Success(User(
+            event.value = ProfileEvent.Success(User(
                 id = CURRENT_USER_ID,
                 username = body.username,
                 fio = "Гладких Яна Сергеевна",
@@ -37,7 +54,7 @@ class ProfileViewModel @Inject constructor(private val api: Api) : ViewModel() {
             )
             )
         } else {
-            profile.value = ProfileEvent.Error
+            event.value = ProfileEvent.Error
         }
     }
 
